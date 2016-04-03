@@ -1,6 +1,7 @@
 # Erosoutsider
 
-Library for serial based control of the Erostek ET-312 Electrostimulation Device.
+Documentation for serial based control and firmware implementation of
+the Erostek ET-312 Electrostimulation Device.
 
 ## Project Goals
 
@@ -31,8 +32,9 @@ work, each language has a repo assigned to it:
 
 - Python Library - http://github.com/metafetish/erosoutsider-py
 - Rust Library - http://github.com/metafetish/erosoutsider-rs
-- Javascript Library for Chrome Apps and possibly for a general
-  WebSerial API, should one ever exist - http://github.com/metafetish/erosoutsider-js
+- Javascript Library for Node, Chrome Apps, and possibly for a general
+  WebSerial API, should one ever exist -
+  http://github.com/metafetish/erosoutsider-js
 - Arduino Library - http://github.com/kinkyhacks/venerate
 
 ## License
