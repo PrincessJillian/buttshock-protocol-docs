@@ -37,7 +37,9 @@ Serial connections are 19200/8/N/1, or:
 Communication with the box is encrypted, using a simple XOR stream
 cipher.
 
-** Handshake and Synchronization
+** Handshake
+
+*** HELLO (Connection establishment)
 
 Handshaking consists of a byte sent to the box, and a byte received
 back:
@@ -47,14 +49,36 @@ back:
 
 This needs to happen 3 times in order for the handshake to be valid.
 
-Once this happens, synchronization must be set up. This involves
-sending a 2 byte sequence to the box, and receiving 2 bytes back:
+*** XOR Key Synchronization
+
+After the HELLO ends, XOR keys must be set up. This involves sending a
+2 byte sequence to the box, and receiving 3 bytes back:
 
 - [0x2f, 0x00] sent to ET312
 - [0x21, 0xXX, oxYY] is read from ET312
 
-Where 0xXX is a unsigned 8-bit number, and 0xYY is the 8-bit unsigned
-sum of the first two bytes, possibly wrapped if the sum is > 255. For
-instance, if 0xbb is 0x8f, then 0xcc will be 0xb0.
+Where:
+
+- 0xXX is the stream XOR key, an unsigned 8-bit number
+- 0xYY is a checksum, the 8-bit unsigned sum of the first two bytes,
+  possibly wrapped if the sum is > 255. 
+
+For instance:
+
+- [0x2f, 0x00] is sent to ET312
+- [0x21, 0x8f, 0xb0] is read from ET312, meaning
+  - 0x8f is the XOR key
+  - 0xb0 is the checksum (0x21 + 0x8f)
+
+*** XOR Key Usage
+
+Once the XOR key is agreed upon, all further communication going from
+host to ET312 is required to be encoded using the following scheme,
+using ^ as an XOR operator:
+
+Data Byte ^ XOR Key ^ (XOR Key ^ 0x55)
+
+Only data sent requires encryption, all data received from the ET312
+will be cleartext.
 
 ** Commands
