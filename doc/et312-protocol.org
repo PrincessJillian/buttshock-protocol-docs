@@ -1,0 +1,60 @@
+* ET312 Protocol Documentation
+** Introduction
+
+This document is a specification for the serial communications
+protocol of the ET312 Electrostimulation box by Erostek. The protocol
+was put together through multiple sources:
+
+- Serial monitoring of box communications with various controls
+  software
+- Mapping from the original erosoutsider perl files
+- Message board/Mailing list posts from around the internet
+
+The following specifications are for v1.6 of the Erostek firmware,
+which it is assumed all modern boxes are running.
+
+** Protocol and Communication Basics
+*** Communication via Link Cable
+
+Communicating with the ET312 box happens via an RS-232 Connection to
+the Link port of the box. The link cable consists of a 3.5mm TRS
+(stereo audio) jack, going to some sort of computer connection, be it
+Female DB-9 or a RS232-to-USB converter. The pin connections are as
+follows:
+
+- 3.5mm Tip <-> RX (DB-9 Pin 2)
+- 3.5mm Ring <-> TX (DB-9 Pin 3)
+- 3.5mm Sleeve <-> Ground (DB-9 Pin 5)
+
+Serial connections are 19200/8/N/1, or:
+
+- 19200 baud
+- Data Bits: 8
+- Stop Bits: 1
+- Partity: None
+
+*** Encryption
+Communication with the box is encrypted, using a simple XOR stream
+cipher.
+
+** Handshake and Synchronization
+
+Handshaking consists of a byte sent to the box, and a byte received
+back:
+
+- 0x00 is sent to ET312
+- 0x07 is read from ET312
+
+This needs to happen 3 times in order for the handshake to be valid.
+
+Once this happens, synchronization must be set up. This involves
+sending a 2 byte sequence to the box, and receiving 2 bytes back:
+
+- [0x2f, 0x00] sent to ET312
+- [0x21, 0xXX, oxYY] is read from ET312
+
+Where 0xXX is a unsigned 8-bit number, and 0xYY is the 8-bit unsigned
+sum of the first two bytes, possibly wrapped if the sum is > 255. For
+instance, if 0xbb is 0x8f, then 0xcc will be 0xb0.
+
+** Commands
