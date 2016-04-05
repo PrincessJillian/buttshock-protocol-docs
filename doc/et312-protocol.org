@@ -82,3 +82,102 @@ Only data sent requires encryption, all data received from the ET312
 will be cleartext.
 
 ** Commands
+*** Parameters
+**** Parameter Read/Write Command Format
+
+Commands sent to the ET-312 are a minimum of 3 bytes:
+
+- Byte 0: Read or Write (Read: 0x3C, Write: 0x4D)
+- Byte 1: Port Specifier (A: 0x40, B: 0x41)
+- Byte 2: Parameter Specifier
+- Byte 3-N: Data to be Written (Optional)
+
+So, for example, to read (0x3C) the time on parameter (0x98) for port
+A (0x40), we would send
+
+0x3C 0x40 0x98
+
+Note that this packet would need to be XOR'd using the algorithm laid
+out in the "XOR Key Usage" section above.
+
+**** Parameter Specifier/Format List
+***** 0x98 - Time On
+
+- 1 byte, Range 0-255, 255 is highest
+
+***** 0x99 - Time Off
+
+- 1 byte, Range 0-255, 255 is highest
+
+***** 0x9A - Time Options
+
+- Bits 0-4 (upper nibble): Off Options
+- Bits 5-8 (lower nibble): On Options
+
+***** 0xA5 - Current Level
+
+- 1 byte, Range 128-255
+
+***** 0xA6 - Minimum Level
+
+- 1 byte, Range 128-255
+
+***** 0xA7 - Maximum Level
+
+- 1 byte, Range 128-255
+
+***** 0xA8 - Level Rate
+
+- 1 byte, Range 0-255, 0 is fastest
+
+***** 0xAC - Level Options
+
+- Bits 0-4 (upper nibble): Min Options
+- Bits 5-8 (lower nibble): Rate Options
+
+***** 0xAE - Frequency
+
+- 1 byte, Range 8-255 (?!), 8 is fastest
+
+***** 0xAF - Maximum Frequency
+
+- 1 byte, Range 8-255 (?!), 8 is fastest
+
+***** 0xB0 - Minimum Frequency
+
+- 1 byte, Range 8-255 (?!), 8 is fastest
+
+***** 0xB1 - Frequency Rate
+
+- 1 byte, Range 0-255, 0 is fastest
+
+***** 0xB5 - Frequency Options
+
+- Bits 0-4 (upper nibble): Val Options
+- Bits 5-8 (lower nibble): Rate Options
+
+***** 0xB7 - Current Pulse Width
+
+- 1 byte, Range 64-196 (?!)
+
+***** 0xB8 - Minimum Pulse Width
+
+- 1 byte, Range 64-196 (?!)
+
+***** 0xB9 - Maximum Pulse Width
+
+- 1 byte, Range 64-196 (?!)
+
+***** 0xBA - Pulse Width Rate
+
+- 1 byte, Range 0-255, 0 is fastest
+
+***** 0xBE - Width Options
+
+- Bits 0-4 (upper nibble): Val Options
+- Bits 5-8 (lower nibble): Rate Options
+
+
+*** Memory
+**** Read
+**** Memory Layout Table
