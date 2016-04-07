@@ -14,6 +14,10 @@ of history, we're concentrating on getting nicely formatted protocol
 documentation finished so that anyone can work with the ET-312 via
 their language or program of choice.
 
+The main protocol documentation can be found at
+
+[docs/et312-protocol.org](docs/et312-protocol.org)
+
 We're also interested in analyzing and exploring the firmware for the
 device, two versions of which we include with the repo.
 
