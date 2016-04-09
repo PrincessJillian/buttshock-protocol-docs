@@ -54,21 +54,29 @@ This needs to happen 3 times in order for the handshake to be valid.
 After the HELLO ends, XOR keys must be set up. This involves sending a
 2 byte sequence to the box, and receiving 3 bytes back:
 
-- [0x2f, 0x00] sent to ET312
-- [0x21, 0xXX, oxYY] is read from ET312
+- [0x2f, 0xVV, 0xWW] sent to ET312
+- [0x21, 0xXX, 0xYY] is read from ET312
 
 Where:
 
-- 0xXX is the stream XOR key, an unsigned 8-bit number
-- 0xYY is a checksum, the 8-bit unsigned sum of the first two bytes,
-  possibly wrapped if the sum is > 255. 
+- 0xWW is a random unsigned 8-bit number, chosen by the host, used as
+  the first key
+- 0xXX is a random unsigned 8-bit number, chosen by the ET312, used as 
+  the second key
+- 0xWW/0xYY is a checksum, the 8-bit unsigned sum of the first two
+  bytes, possibly wrapped if the sum is > 255.
 
 For instance:
 
-- [0x2f, 0x00] is sent to ET312
+- [0x2f, 0x04, 0x33] is sent to ET312
+  - 0x04 is the first XOR key
+  - 0x33 is the checksum (0x2f + 0x04)
 - [0x21, 0x8f, 0xb0] is read from ET312, meaning
   - 0x8f is the XOR key
   - 0xb0 is the checksum (0x21 + 0x8f)
+
+Note that the key chosen by the host need never change, it can
+simply be hardcoded into the protocol implementation. 
 
 *** XOR Key Usage
 
@@ -76,7 +84,10 @@ Once the XOR key is agreed upon, all further communication going from
 host to ET312 is required to be encoded using the following scheme,
 using ^ as an XOR operator:
 
-Data Byte ^ XOR Key ^ (XOR Key ^ 0x55)
+Data Byte ^ (XOR Key 1 ^ XOR Key 2 ^ 0x55)
+
+The part of the expression in parenthesis will be constant, and can be
+pre-calculated and stored.
 
 Only data sent requires encryption, all data received from the ET312
 will be cleartext.
