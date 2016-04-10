@@ -44,6 +44,125 @@ To upgrade the firmware on the box, the upgrade file is simply
 transferred via the [[https://en.wikipedia.org/wiki/XMODEM][XMODEM protocol]]. Full instructions for upgrading
 are listed in the Reference section of this document.
 ** Methods
+*** File Comparison/Analysis
+While entropy tests run against the files using the [[https://www.phy.duke.edu/~rgb/General/dieharder.php][Dieharder Test
+Suite]] show that the files themselves are fairly random, comparing the
+files to each other shows some patterns. For instance, here is the
+first 256 bytes of each file:
+
+312-15.upg
+
+#+BEGIN_SRC 
+00000000: ed78 3723 9920 5637 af04 4e2b 4e73 9382  .x7#. V7..N+Ns..
+00000010: 2984 f9ec 0ba5 a382 e9ad 4828 c45f 25e2  ).........H(._%.
+00000020: d0f1 4359 35a3 f574 24e2 4b1c 6d1b b5e6  ..CY5..t$.K.m...
+00000030: 53cc 5e99 d249 e453 c6b6 984d fc1e f530  S.^..I.S...M...0
+00000040: ffe2 4f81 6d1f 75e4 57c0 5c95 124b e85f  ..O.m.u.W.\..K._
+00000050: c4ba 984d bc39 6669 4774 deba 5b2a 6428  ...M.9fiGt..[*d(
+00000060: 62d1 acab 92d2 1dbe 4d51 3132 00e0 a335  b.......MQ12...5
+00000070: 81e0 a729 6ba3 b669 7dec 496e 903a 0129  ...)k..i}.In.:.)
+00000080: c36b 46d3 08ba f630 f5b5 d899 9085 7d46  .kF....0......}F
+00000090: c506 6a6c 12c7 0ac6 e14f 7fad 92de 86bf  ..jl.....O......
+000000a0: 99bc d2df 10c5 9118 1888 b1da 64a6 36f0  ............d.6.
+000000b0: 0509 2947 4f93 31cb 1895 6f31 360c df11  ..)GO.1...o16...
+000000c0: 4869 33ee eabf 080a 143a dc99 5f79 0aef  Hi3......:.._y..
+000000d0: 791d 2523 3c4c 96cf 2fb4 551f af73 fa7d  y.%#<L../.U..s.}
+000000e0: 5395 0736 7734 1f92 846c cc8b 697e 2c43  S..6w4...l..i~,C
+000000f0: 02ad 65ef aff1 f32b 71a3 2c58 4286 24a1  ..e....+q.,XB.$.
+#+END_SRC
+
+312-16.upg
+
+#+BEGIN_SRC 
+00000000: ed78 5f23 9948 5637 c704 4e43 4e73 9382  .x_#.HV7..NCNs..
+00000010: 2984 11ec 0bfd 2582 31c5 4870 425f ed8a  ).....%.1.HpB_..
+00000020: d0b9 4359 eda3 f52c 24e2 961c 6d44 d4e6  ..CY...,$...mD..
+00000030: 8eda 36c2 b321 d145 aebd f925 f108 f53f  ..6..!.E...%...?
+00000040: 9ee2 aa97 6d78 92e4 b2be 34fe f523 e521  ....mx....4..#.!
+00000050: acb1 f925 b12f 0e62 261c d7ac 335d 0540  ...%./.b&...3].@
+00000060: 97c7 d4dc f3aa 14a8 055e 507a 09f6 eb32  .........^Pz...2
+00000070: e0a8 a23f 23a4 d721 44fa 0151 f172 383f  ...?#..!D..Q.r8?
+00000080: 8b50 279b 2dac be17 94fd f98f d8aa 1c0e  .P'.-...........
+00000090: e410 224f 738f 2bd0 a96c 1ee5 b3c8 ce9c  .."Os.+..l......
+000000a0: f8f4 f3c9 58ea f050 319e f9ed 05ee 03e6  ....X..P1.......
+000000b0: 4d3a 480f 7e85 79f8 79dd 5e27 7e3f be59  M:H.~.y.y.^'~?.Y
+000000c0: 757f 7bcd 8bf7 251c 5c11 bdd1 766f 42c4  u.{...%.\...voB.
+000000d0: 1855 0035 746b f787 0aa2 1d38 ce3b df6b  .U.5tk.....8.;.k
+000000e0: 1bbe 667e 5e22 57b5 e524 e59d 2151 4d0b  ..f~^"W..$..!QM.
+000000f0: 2fbb 2dc0 ceb9 de3d 398c 4d10 6f90 6c8a  /.-....=9.M.o.l.
+#+END_SRC
+
+However, if we XOR the two files together, interesting patterns
+emerge:
+
+#+BEGIN_SRC 
+00000000: 0000 6800 0068 0000 6800 0068 0000 0000  ..h..h..h..h....
+00000010: 0000 e800 0058 8600 d868 0058 8600 c868  .....X...h.X...h
+00000020: 0048 0000 d800 0058 0000 dd00 005f 6100  .H.....X....._a.
+00000030: dd16 685b 6168 3516 680b 6168 0d16 000f  ..h[ah5.h.ah....
+00000040: 6100 e516 0067 e700 e57e 686b e768 0d7e  a....g...~hk.h.~
+00000050: 680b 6168 0d16 680b 6168 0916 6877 6168  h.ah..h.ah..hwah
+00000060: f516 7877 6178 0916 480f 6148 0916 4807  ..xwax..H.aH..H.
+00000070: 6148 0516 4807 6148 3916 483f 6148 3916  aH..H.aH9.H?aH9.
+00000080: 483b 6148 2516 4827 6148 2116 482f 6148  H;aH%.H'aH!.H/aH
+00000090: 2116 4823 6148 2116 4823 6148 2116 4823  !.H#aH!.H#aH!.H#
+000000a0: 6148 2116 482f 6148 2916 4837 6148 3516  aH!.H/aH).H7aH5.
+000000b0: 4833 6148 3116 4833 6148 3116 4833 6148  H3aH1.H3aH1.H3aH
+000000c0: 3d16 4823 6148 2d16 482b 6148 2916 482b  =.H#aH-.H+aH).H+
+000000d0: 6148 2516 4827 6148 2516 4827 6148 2516  aH%.H'aH%.H'aH%.
+000000e0: 482b 6148 2916 4827 6148 2916 482f 6148  H+aH).H'aH).H/aH
+000000f0: 2d16 482f 6148 2d16 482f 6148 2d16 482b  -.H/aH-.H/aH-.H+
+#+END_SRC
+
+If we format this into blocks of 6 bytes each, some repetition starts
+to show up:
+
+#+BEGIN_SRC 
+6800 0068 0000
+0000 6800 0068
+0000 0000 0000
+e800 0058 8600
+d868 0058 8600
+c868 0048 0000
+d800 0058 0000
+dd00 005f 6100
+dd16 685b 6168
+3516 680b 6168
+0d16 000f 6100
+e516 0067 e700
+e57e 686b e768
+0d7e 680b 6168
+0d16 680b 6168
+0916 6877 6168
+f516 7877 6178
+0916 480f 6148
+0916 4807 6148
+0516 4807 6148
+3916 483f 6148
+3916 483b 6148
+2516 4827 6148
+2116 482f 6148
+2116 4823 6148
+2116 4823 6148
+2116 4823 6148
+2116 482f 6148
+2916 4837 6148
+3516 4833 6148
+3116 4833 6148
+3116 4833 6148
+3d16 4823 6148
+2d16 482b 6148
+2916 482b 6148
+2516 4827 6148
+2516 4827 6148
+2516 482b 6148
+2916 4827 6148
+2916 482f 6148
+2d16 482f 6148
+2d16 482f 6148
+2d16 482b 6148
+#+END_SRC
+
 *** Brute Force
 *** Upgrade File Analysis
 *** Stack Smashing
