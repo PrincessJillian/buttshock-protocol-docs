@@ -78,8 +78,8 @@ are listed in the Reference section of this document.
 Use either hardware debuggers or screwing with the stack in RAM to get
 at the flash
 **** Activity/Progress
-Dead from the start.
-**** Notes
+No luck here.
+
 JTAG or hardware debugging in general is dead from the start despite
 there being a JTAG header on the board, due to the fuses being set.
 
@@ -98,7 +98,7 @@ heat death of the universe consumes us all.
 **** Activity/Progress
 Still in progress, seems like one of the more likely ways to figure
 this out.
-**** Notes
+
 While entropy tests run against the files using the [[https://www.phy.duke.edu/~rgb/General/dieharder.php][Dieharder Test
 Suite]] show that the files themselves are fairly random, comparing the
 files to each other shows some patterns. For instance, here is the
@@ -231,8 +231,32 @@ only has a certain number of guaranteed writes (yes it's in the 1000s
 but let's assume we're really bad at this and also the fact that...),
 and we've only got 1 box, so if that chip gets ruined before we figure
 this out, we have a problem (and no warranty).
+
+Also, having talked to others that've tried changing the firmware,
+most tries at editing the firmware lead to a non-booting box. It could
+be that there's a checksum that's stored somewhere that isn't being
+changed properly.
 *** LED Signals during Firmware Upload
+**** Basic Idea
+From step 12 of the "Upgrade Instructions" in the References section:
+
+12. Click Send and the file transfer should begin. The Ch A and Ch B
+    lights will flash randomly as the data is transferred to the
+    ET-312. DO NOT interrupt this process in any way.
+
+Nothing ever happens randomly.
+**** Activity/Progress
+Mapped LED A to be controlled by Pin 20 of the ATMega16, attached to a
+logic analyzer. During firmware upload, there's a signal that happens
+on this pin between packet upload and ACK response in the XMODEM
+protocol. The signal is repeatable between uploads. Further analysis
+required.
 *** Chip Uncapping
+**** Basic Idea
+Ship the chip and $800 or so somewhere and have them pop the top off
+and do magic to it.
+**** Activity/Progress
+What fun is that? :(
 ** References
 *** Upgrade Instructions
 This is a copy of the text from the Eroslink ET-312 Upgrade Instructions PDF, available at
@@ -288,3 +312,8 @@ Firmware Upgrade Instructions: ET-312 Version 1.6
 *** Serial Protocol
 [[https://github.com/metafetish/erosoutsider/blob/master/doc/et312-protocol.org][Link to Serial Protocol Documentation]]
 *** Strings
+Known UI Strings
+- Eros Tek ET312-B
+- (c) '04 Eros Tek
+- Press Any Key...
+- Ramp:
