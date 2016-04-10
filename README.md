@@ -5,21 +5,43 @@ the Erostek ET-312 Electrostimulation Device.
 
 ## Project Goals
 
-This project exists to try and map the full RS-232 protocol for the
-Erostek ET-312 Electrostimulation Device. While partial
-implementations have existed for years, they've usually been passed
-around by hand, and have never been well documented. While we'll
-certainly be keeping the original perl code around the repo as a piece
-of history, we're concentrating on getting nicely formatted protocol
-documentation finished so that anyone can work with the ET-312 via
-their language or program of choice.
+This project exists to reverse engineer the Erostek ET-312
+Electrostimulation Device. 
 
-The main protocol documentation can be found at
+This includes
+
+- Mapping the serial communications protocol
+- Unencrypting and reverse engineering the firmware
+- Mapping the circuit board
+
+### Serial Protocol
+
+While partial implementations have existed for years, they've usually
+been passed around by hand, and have never been well documented. While
+we'll certainly be keeping the original perl code around the repo as a
+piece of history, we're concentrating on getting nicely formatted
+protocol documentation finished so that anyone can work with the
+ET-312 via their language or program of choice.
+
+The protocol documentation is in the repo at:
 
 [docs/et312-protocol.org](docs/et312-protocol.org)
 
-We're also interested in analyzing and exploring the firmware for the
-device, two versions of which we include with the repo.
+### Firmware
+
+The last firmware upgrade to the ET-312 happened in 2004, yet the box
+is still sold to this day, for the same price. The serial port
+implementation is broken, and there's quite a few bugs and half
+implemented features hidden around the firmware. We'd like to be able
+to go in, fix those, and distribute new, better firmware to ET-312
+owners.
+
+### Circuit Mapping
+
+The circuit board is most likely a pretty simple 2 layer board,
+meaning it should be easily mappable. There's probably nothing
+groundbreaking happening here, but it's an interesting exercise
+nonetheless.
 
 ## Repo Contents
 
@@ -40,6 +62,27 @@ work, each language has a repo assigned to it:
   WebSerial API, should one ever exist -
   http://github.com/metafetish/erosoutsider-js
 - Arduino Library - http://github.com/kinkyhacks/venerate
+
+## FAQ
+
+### WHY?!
+
+There's probably hundreds if not thousands of ET-312 boxes around the
+world. We'd like them to work better.
+
+### Why not just build a new, better box?
+
+That's certainly a solution, and we've been contacted by multiple
+people who are doing just that. While that's totally awesome, and we
+might take a crack at doing that ourselves at some point, we'd also
+like what's out there to work better than it does right now.
+
+### Why not just reimplement the firmware from the ground up?
+
+The idea is to provide a way to upgrade things without having to crack
+the box open and replace the CPU completely. That's a time consuming
+process not everyone can pull off. If we can just have people reflash
+their box, it saves a lot of trouble for everyone involved.
 
 ## License
 
