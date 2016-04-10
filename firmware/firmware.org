@@ -8,10 +8,40 @@ ET-312B firmware that can be modified and upgraded.
 
 This will hopefully be updated as progress continues, mainly so I
 don't have to repeat myself over IRC/Twitter/Telegram/Etc.
+
+There's also a good chance we're missing something obvious, so if you
+see something here we've missed, please [[https://github.com/metafetish/erosoutsider/issues][file a github issue and let us
+know!]]
+
+** tl;dr Problem Summary
+
+For those that are just curious what we're up to and what we're
+running into:
+
+We want an unencrypted version of the firmware for the ET-312B.
+
+We have:
+
+- An ET-312B Box
+- 2 Firmware upgrade files for the box
+
+These files are somehow obfuscated or encrypted, and the bootloader on
+the ATMega16 undoes that encryption when we upload the firmware to the
+chip. Due to fuses being set on the chip, we can't access the flash or
+bootloader through JTAG or other hardware debugging methods. Due to
+the chip being a harvard architecture, we can't screw with the stack
+and inject instructions 'cause we don't have access to code space.
+While we know that the flash will contain AVR assembly, strings, etc,
+we aren't sure what order the upgrade file is in, or where those
+things might be in it.
+
 ** What We Know Currently
 *** System Specifics 
 The ET-312B runs on an ATMega16A chip. There is no external
 RAM/EEPROM/etc, everything exists in memory on the chip.
+
+All fuses are set on the chip, locking out JTAG access or the ability
+to read out the flash or bootloader.
 *** Firmware Upgrade Files
 **** Files
 Two versions of the firmware, for v1.5 and v1.6, are available via the
@@ -38,13 +68,37 @@ Some assumptions about the upgrade files:
   information on this is available in the serial protocol
   documentation)]], so there's a chance this could be similarly simple.
 
-
 *** Upload/Upgrade Process
 To upgrade the firmware on the box, the upgrade file is simply
 transferred via the [[https://en.wikipedia.org/wiki/XMODEM][XMODEM protocol]]. Full instructions for upgrading
 are listed in the Reference section of this document.
 ** Methods
+*** JTAG/Stack Smashing/Etc to Get At Flash
+**** Basic Idea
+Use either hardware debuggers or screwing with the stack in RAM to get
+at the flash
+**** Activity/Progress
+Dead from the start.
+**** Notes
+JTAG or hardware debugging in general is dead from the start despite
+there being a JTAG header on the board, due to the fuses being set.
+
+Screwing with the stack doesn't do use much good because this is a
+harvard architecture chip, so we can't really inject instructions in a
+useful manner since all of the code sits in another address space
+anyways. The best we might be able to do is play with return addresses
+to figure out where things are in flash and try to match that to the
+upgrade file in order to produce plaintext.
+
 *** File Comparison/Analysis
+**** Basic Idea
+Armed with a spec sheet, knowledge of AVR assembly and binary tools,
+pick at the upgrade files until either something makes sense or the
+heat death of the universe consumes us all.
+**** Activity/Progress
+Still in progress, seems like one of the more likely ways to figure
+this out.
+**** Notes
 While entropy tests run against the files using the [[https://www.phy.duke.edu/~rgb/General/dieharder.php][Dieharder Test
 Suite]] show that the files themselves are fairly random, comparing the
 files to each other shows some patterns. For instance, here is the
@@ -92,8 +146,7 @@ first 256 bytes of each file:
 000000f0: 2fbb 2dc0 ceb9 de3d 398c 4d10 6f90 6c8a  /.-....=9.M.o.l.
 #+END_SRC
 
-However, if we XOR the two files together, interesting patterns
-emerge:
+However, XORing the two files together, interesting patterns emerge:
 
 #+BEGIN_SRC 
 00000000: 0000 6800 0068 0000 6800 0068 0000 0000  ..h..h..h..h....
@@ -114,8 +167,8 @@ emerge:
 000000f0: 2d16 482f 6148 2d16 482f 6148 2d16 482b  -.H/aH-.H/aH-.H+
 #+END_SRC
 
-If we format this into blocks of 6 bytes each, some repetition starts
-to show up:
+If we format the XOR output into blocks of 6 bytes each, some
+repetition starts to show up:
 
 #+BEGIN_SRC 
 6800 0068 0000
@@ -163,11 +216,23 @@ f516 7877 6178
 2d16 482b 6148
 #+END_SRC
 
-*** Brute Force
-*** Upgrade File Analysis
-*** Stack Smashing
+*** Brute Force Writing
+**** Basic Idea
+More a mapping technique than an attack, but by changing every Nth
+byte by a known value, we may be able to map parts of the upgrade file
+as we see strings change in the UI on the box.
+
+For instance, we can increase every 10th byte in a block of the
+firmware by a value of 1. Assuming the firmware runs, we can watch for
+misspelled/changed strings around the box UI.
+**** Activity/Progress
+Haven't started this yet, mainly because it's perilous at best. Flash
+only has a certain number of guaranteed writes (yes it's in the 1000s
+but let's assume we're really bad at this and also the fact that...),
+and we've only got 1 box, so if that chip gets ruined before we figure
+this out, we have a problem (and no warranty).
+*** LED Signals during Firmware Upload
 *** Chip Uncapping
-*** 
 ** References
 *** Upgrade Instructions
 This is a copy of the text from the Eroslink ET-312 Upgrade Instructions PDF, available at
