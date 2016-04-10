@@ -1,0 +1,106 @@
+* ET-312 Firmware Reverse Engineering
+** Introduction
+This document contains notes about the reverse engineering efforts
+against the firmware of the ET-312B Electrostimulation Device,
+including what is currently known about the firmware, and different
+attack vectors. The goal is to provide an unencrypted version of the
+ET-312B firmware that can be modified and upgraded.
+
+This will hopefully be updated as progress continues, mainly so I
+don't have to repeat myself over IRC/Twitter/Telegram/Etc.
+** What We Know Currently
+*** System Specifics 
+The ET-312B runs on an ATMega16A chip. There is no external
+RAM/EEPROM/etc, everything exists in memory on the chip.
+*** Firmware Upgrade Files
+**** Files
+Two versions of the firmware, for v1.5 and v1.6, are available via the
+firmware upgrade website:
+
+[[http://blog.erostek.com/2012/08/27/et-312-firmware-upgrade-1/][http://blog.erostek.com/2012/08/27/et-312-firmware-upgrade-1/]]
+
+These files (312-15.upg and 312-16.upg), are also available in the
+[[http://github.com/metafetish/erosoutsider/][Erosoutsider Repo]].
+
+**** Analysis and Assumptions
+Some assumptions about the upgrade files:
+
+- Neither file is just a flash image. They've been at least
+  obfuscated, and possibly rearranged. Since we don't have access to
+  the bootloader code, there's no telling what they could be. We just
+  know that somewhere in here is the code to run the ET312.
+- Both firmware files are 15872 bytes, which is 16384 - 512. Since the
+  bootloader takes up 512 bytes of the Flash, there's a good chance
+  the upgrade files could just be images of the rest of the flash.
+- It is assumed that these files are encrypted via some sort of stream
+  cipher, mainly due to the patterns that emerge when comparing them
+  (see below). The serial protocol used a simple XOR cipher [[../doc/et312-protocol.org][(more
+  information on this is available in the serial protocol
+  documentation)]], so there's a chance this could be similarly simple.
+
+
+*** Upload/Upgrade Process
+To upgrade the firmware on the box, the upgrade file is simply
+transferred via the [[https://en.wikipedia.org/wiki/XMODEM][XMODEM protocol]]. Full instructions for upgrading
+are listed in the Reference section of this document.
+** Methods
+*** Brute Force
+*** Upgrade File Analysis
+*** Stack Smashing
+*** Chip Uncapping
+*** 
+** References
+*** Upgrade Instructions
+This is a copy of the text from the Eroslink ET-312 Upgrade Instructions PDF, available at
+
+[[http://media.erostek.com.s3.amazonaws.com/support/312-16_firmware_upgrade.pdf][http://media.erostek.com.s3.amazonaws.com/support/312-16_firmware_upgrade.pdf]]
+
+Firmware Upgrade Instructions: ET-312 Version 1.6
+1. Connect the ErosLink cable to an unused Serial port on your PC.
+2. With the ET-312 off, connect the ErosLink cable to the Link jack of the ET-312.
+3. Go to the Start, Programs, Accessories, menu in Windows and find
+   Hyperterminal. It may be under Communications depending on which
+   version of windows you have.
+4. When Hyperterminal starts, wait for the welcome screen to go away
+   and then enter any name in the New Connection box such as "ET312"
+   and click OK.
+5. In the Connect To box, select the serial port used in Step 1 from
+   the Connect Using pull down menu. This will usually be COM1 - COM4.
+   Then click OK.
+6. In the Properties box, select the following options: Bits per
+   second=19200, Data bits=8, Parity=None, Stop bits=1, Flow
+   control=None and click OK.
+7. Hold down the Menu and Up buttons on the ET-312 at the same time,
+   then turn on the ET-312 while keeping them held down. The display
+   should be blank and the Ch A and Ch B LEDs should blink slowly. If
+   the ET-312 powers up normally, you did not hold down the buttons
+   correctly as try again.
+8. In Hyperterminal you should see a string of "C" characters appear
+   at about 1 per second. If you don't see anything or you see
+   different characters, Hyperterminal is not configured correctly or
+   there is a problem with the serial port. Shut down Hyperterminal
+   and try again selecting other available COM ports and make sure the
+   properties in Step 6 are correct.
+9. When you see the string of "C" characters in Hyperterminal, select
+   the Transfer menu and Send file. If you wait too long, you'll have
+   to power the ET-312 off and try again (the LEDs will stop
+   blinking).
+10. In the Send File box, make sure you select Xmodem as the protocol
+    (NOT Zmodem or 1k Xmodem).
+11. After Xmodem is selected, enter or Browse to the filename of the
+    new firmware. For example, the version 1.6 upgrade file is called
+    "312-16.upg".
+12. Click Send and the file transfer should begin. The Ch A and Ch B
+    lights will flash randomly as the data is transferred to the
+    ET-312. DO NOT interrupt this process in any way.
+13. When the transfer is completed, the ET-312 will power up normally
+    and the display should show the new version of the software. If
+    anything goes wrong, try again starting over from Step 1. If you
+    still can't make it work, contact ErosTek or SexTek for further
+    assistance.
+14. Once the transfer is complete, you can turn the ET-312 off, unplug
+    the cable, and close Hyperterminal (you do not need to save the
+    Hyperterminal session).
+*** Serial Protocol
+[[https://github.com/metafetish/erosoutsider/blob/master/doc/et312-protocol.org][Link to Serial Protocol Documentation]]
+*** Strings
