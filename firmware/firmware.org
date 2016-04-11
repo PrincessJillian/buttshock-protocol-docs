@@ -296,6 +296,19 @@ logic analyzer. During firmware upload, there's a signal that happens
 on this pin between packet upload and ACK response in the XMODEM
 protocol. The signal is repeatable between uploads. Further analysis
 required.
+*** Serial Protocol Work
+**** Basic Idea
+The Serial Protocol is already reverse engineered. It provides a
+peek/poke interface on top of a weird virtual memory like system, able
+to access parts of the ROM, RAM, and EEPROM. Maybe it'll be helpful?
+**** Activity
+Interesting facts from playing with memory using the protocol:
+
+- Reading from the EEPROM, there's strings stored in 8 byte chunks,
+  with spaces around them to buffer up to 8 characters if they aren't
+  already, and no null terminators. This may be a common way to
+  storing strings in the system, as for instance the pattern mode
+  names are all <=8 characters.
 *** Chip Uncapping
 **** Basic Idea
 Ship the chip and $800 or so somewhere and have them pop the top off
@@ -357,8 +370,29 @@ Firmware Upgrade Instructions: ET-312 Version 1.6
 *** Serial Protocol
 [[https://github.com/metafetish/erosoutsider/blob/master/doc/et312-protocol.org][Link to Serial Protocol Documentation]]
 *** Strings
-Known UI Strings
+UI Strings:
 - Eros Tek ET312-B
+- SelfTest OK v1.6
 - (c) '04 Eros Tek
 - Press Any Key...
 - Ramp:
+- Battery:
+- Selects Mode
+
+Mode Names (all 8 characters or less):
+
+- Waves
+- Phase 1
+- Phase 2
+- Phase 3
+- Torment
+- Orgasm
+- Random1
+- Random2
+- Split
+- Audio 1
+- Audio 2
+- Audio 3
+- Rhythm
+
+There's many many more of these
