@@ -24,7 +24,7 @@ has an ATMega16 in it.
 We have:
 
 - An ET-312B Box
-- 2 Firmware upgrade files for the box
+- 2 Firmware upgrade files for the box, [[https://github.com/metafetish/erosoutsider/tree/master/firmware][available here]]
 
 These files are somehow obfuscated or encrypted, and the bootloader on
 the ATMega16 undoes that encryption when we upload the firmware to the
@@ -262,6 +262,11 @@ It's doubtful that the actual firmware is 100% valid data, so there's
 a good chance that whatever utility was used to build the upgrade file
 might just be filling it with randomness.
 
+There's also assumptions that could be made about the order of the
+firmware. For instance, usually the AVR IVT is at the top of the flash
+address space, so there's a chance that the matching portions of the
+first sections of the 2 files are the IVTs, which probably don't
+change much. However, this idea hasn't gotten very far in practice.
 *** Brute Force Writing
 **** Basic Idea
 More a mapping technique than an attack, but by changing every Nth
@@ -316,6 +321,17 @@ Ship the chip and $800 or so somewhere and have them pop the top off
 and do magic to it.
 **** Activity/Progress
 What fun is that? :(
+*** RF/Power Sidechannel channel/Glitching
+**** Basic Idea
+The fuuuuuuuuuuuuuuuuuture! While now feasible with projects like
+ChipWhisperer, not sure if it's all that applicable here.
+
+That said, if we could write one XMODEM packet then possibly see
+what's happening in the chip that way? Sure. But it's magic to us at
+the moment.
+**** Activity/Progress
+No real direction with this, require advice of grown up and/or magic
+person.
 ** References
 *** Upgrade Instructions
 This is a copy of the text from the Eroslink ET-312 Upgrade Instructions PDF, available at
