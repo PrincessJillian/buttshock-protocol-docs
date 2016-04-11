@@ -25,7 +25,7 @@ ET-312 via their language or program of choice.
 
 The protocol documentation is in the repo at:
 
-[docs/et312-protocol.org](docs/et312-protocol.org)
+[doc/et312-protocol.org](doc/et312-protocol.org)
 
 ### Firmware
 
@@ -35,6 +35,10 @@ implementation is broken, and there's quite a few bugs and half
 implemented features hidden around the firmware. We'd like to be able
 to go in, fix those, and distribute new, better firmware to ET-312
 owners.
+
+The firmware reverse engineering documentation is in the repo at:
+
+[firmware/firmware.org](firmware/firmware.org)
 
 ### Circuit Mapping
 
