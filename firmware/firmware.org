@@ -316,23 +316,29 @@ Interesting facts from playing with memory using the protocol:
   already, and no null terminators. This may be a common way to
   storing strings in the system, as for instance the pattern mode
   names are all <=8 characters.
-*** Chip Uncapping
-**** Basic Idea
-Ship the chip and $800 or so somewhere and have them pop the top off
-and do magic to it.
-**** Activity/Progress
-What fun is that? :(
 *** RF/Power Sidechannel channel/Glitching
-**** Basic Idea
+***** Basic Idea
 The fuuuuuuuuuuuuuuuuuture! While now feasible with projects like
 ChipWhisperer, not sure if it's all that applicable here.
 
 That said, if we could write one XMODEM packet then possibly see
 what's happening in the chip that way? Sure. But it's magic to us at
 the moment.
-**** Activity/Progress
+***** Activity/Progress
 No real direction with this, require advice of grown up and/or magic
 person.
+
+*** Chip Uncapping
+**** Basic Idea
+Ship the chip and $800 or so somewhere and have them pop the top off
+and do magic to it.
+**** Activity/Progress
+What fun is that? :(
+*** Just Ask The Manufacturer to Open Source The Firmware
+**** Basic Idea
+Put on a nice outfit. Knock politely on the front door.
+**** Activity/Progress
+What fun is that? :(
 ** References
 *** Upgrade Instructions
 This is a copy of the text from the Eroslink ET-312 Upgrade Instructions PDF, available at
