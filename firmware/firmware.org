@@ -370,6 +370,10 @@ Firmware Upgrade Instructions: ET-312 Version 1.6
 *** Serial Protocol
 [[https://github.com/metafetish/erosoutsider/blob/master/doc/et312-protocol.org][Link to Serial Protocol Documentation]]
 *** Strings
+This is a partial list of strings found just playing around with the
+UI. Yes, we realize this makes us the human version of the "strings"
+utility.
+
 UI Strings:
 - Eros Tek ET312-B
 - SelfTest OK v1.6
@@ -379,20 +383,28 @@ UI Strings:
 - Battery:
 - Selects Mode
 
-Mode Names (all 8 characters or less):
+(There's way more of these, will enter more later)
+
+Mode Names, in order of appearance while pressing "up" button:
 
 - Waves
-- Phase 1
-- Phase 2
-- Phase 3
-- Torment
-- Orgasm
-- Random1
-- Random2
-- Split
+- Stroke
+- Climb
+- Combo
+- Intense
+- Rhythm
 - Audio 1
 - Audio 2
 - Audio 3
-- Rhythm
+- Split
+- Random1
+- Random2
+- Toggle
+- Orgasm
+- Torment
+- Phase 1
+- Phase 2
+- Phase 3
 
-There's many many more of these
+
+
