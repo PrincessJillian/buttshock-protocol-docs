@@ -1,7 +1,7 @@
 * ET-312 Firmware Reverse Engineering
 ** Introduction
 This document contains notes about the reverse engineering efforts
-against the firmware of the ET-312B Electrostimulation Device,
+against the firmware of the [[http://shop.erostek.com/products/ET312B-Power-Unit.html][ET-312B Electrostimulation Device]],
 including what is currently known about the firmware, and different
 attack vectors. The goal is to provide an unencrypted version of the
 ET-312B firmware that can be modified and upgraded.
