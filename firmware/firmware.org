@@ -216,6 +216,51 @@ f516 7877 6178
 2d16 482b 6148
 #+END_SRC
 
+There are also blocks of the XOR'd files where things turn to
+randomess:
+
+#+BEGIN_SRC 
+000010a0: 6446 ee64 c6ee 6442 ee64 c2ee 644e ee64  dF.d..dB.d..dN.d
+000010b0: ceee 644e ee64 c2ee 6442 ee64 c2ee 6442  ..dN.d..dB.d..dB
+000010c0: ee64 c2ee 644e ee64 c2ee 6442 ee64 c6ee  .d..dN.d..dB.d..
+000010d0: 6442 ee64 ceee 644e ee64 f2ee 6472 ee64  dB.d..dN.d..dr.d
+000010e0: f2ee 6472 ee64 f2ee 6472 fe15 0f24 7d47  ..dr.d..dr...$}G
+000010f0: cf93 990e 94b2 90b7 5f7b cf4c 60fd 3f0a  ........_{.L`.?.
+00001100: 9708 7021 4b21 535c 0431 2663 7125 53b1  ..p!K!S\.1&cq%S.
+00001110: fc23 e831 4d54 3188 5b1b 2a99 01d9 aa27  .#.1MT1.[.*....'
+00001120: 5dd2 5395 df5b 52fc e545 6462 7a6e a191  ].S..[R..Edbzn..
+00001130: 67ec 6883 c796 9443 d004 35a0 1459 db38  g.h....C..5..Y.8
+00001140: 4e17 3cc9 7139 d387 4533 47d1 ce81 5540  N.<.q9..E3G...U@
+00001150: f0c6 4551 4bea e24b 1647 cf42 8c70 dd8a  ..EQK..K.G.B.p..
+#+END_SRC
+
+Though the patterns start up against a bit later:
+
+#+BEGIN_SRC 
+00001c20: bb19 bf61 04b5 2dc0 e83f e9fe e7da ff6e  ...a..-..?.....n
+00001c30: 78ad 30e6 f7c1 1231 d5ad a7ca 8358 4e38  x.0....1.....XN8
+00001c40: 58c2 8358 4238 58c2 8358 5e38 58de 8358  X..XB8X..X^8X..X
+00001c50: 5e38 58a2 8358 a638 58ba 8358 be38 58b2  ^8X..X.8X..X.8X.
+00001c60: 8358 f3c7 a704 8358 65c7 a796 8358 97c7  .X.....Xe....X..
+00001c70: 5891 7c58 97c7 5899 7c58 9bc7 5899 7c58  X.|X..X.|X..X.|X
+#+END_SRC
+
+And then back to randomness a little later, until the end of the XOR
+file:
+
+#+BEGIN_SRC 
+000021a0: 7f7e 0ef7 7e0e 7f7e 0ef7 7e12 7f7e 1ef7  .~..~..~..~..~..
+000021b0: 7e1e 7f7e 1ef7 7e1e 7f7e 1af7 7e1a 7f7e  ~..~..~..~..~..~
+000021c0: 1af7 7e16 7f7e 2af7 7ad3 6dab 66d7 bb50  ..~..~*.z.m.f..P
+000021d0: 0b0d 2746 c850 2e5c a52b bed2 ee31 fb33  ..'F.P.\.+...1.3
+000021e0: 15e6 f6c8 d8b3 3bc4 54d9 cb38 b2d7 a9f3  ......;.T..8....
+000021f0: a8d4 4496 6ef7 7217 9c25 b590 3a92 1a76  ..D.n.r..%..:..v
+#+END_SRC
+
+It's doubtful that the actual firmware is 100% valid data, so there's
+a good chance that whatever utility was used to build the upgrade file
+might just be filling it with randomness.
+
 *** Brute Force Writing
 **** Basic Idea
 More a mapping technique than an attack, but by changing every Nth
