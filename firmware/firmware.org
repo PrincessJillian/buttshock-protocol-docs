@@ -56,10 +56,11 @@ These files (312-15.upg and 312-16.upg), are also available in the
 **** Analysis and Assumptions
 Some assumptions about the upgrade files:
 
-- Neither file is just a flash image. They've been at least
-  obfuscated, and possibly rearranged. Since we don't have access to
-  the bootloader code, there's no telling what they could be. We just
-  know that somewhere in here is the code to run the ET312.
+- Neither file is a plaintext flash image. They've been at least
+  obfuscated, if not fully encrypted, and possibly rearranged. Since
+  we don't have access to the bootloader code, there's no telling what
+  they could be. We just know that somewhere in here is the code to
+  run the ET312.
 - Both firmware files are 15872 bytes, which is 16384 - 512. Since the
   bootloader takes up 512 bytes of the Flash, there's a good chance
   the upgrade files could just be images of the rest of the flash.
