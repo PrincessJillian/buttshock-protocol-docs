@@ -18,7 +18,8 @@ know!]]
 For those that are just curious what we're up to and what we're
 running into:
 
-We want an unencrypted version of the firmware for the ET-312B.
+We want an unencrypted version of the firmware for the ET-312B, which
+has an ATMega16 in it.
 
 We have:
 
