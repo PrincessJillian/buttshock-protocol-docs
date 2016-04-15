@@ -37,7 +37,7 @@ we aren't sure what order the upgrade file is in, or where those
 things might be in it.
 
 ** What We Know Currently
-*** System Specifics 
+*** System Specifics
 The ET-312B runs on an ATMega16A chip. There is no external
 RAM/EEPROM/etc, everything exists in memory on the chip.
 
@@ -92,15 +92,67 @@ anyways. The best we might be able to do is play with return addresses
 to figure out where things are in flash and try to match that to the
 upgrade file in order to produce plaintext.
 
+*** Serial Protocol Work
+**** Basic Idea
+The basics of the Serial Protocol is already reverse engineered. It
+provides a peek/poke interface on top of a weird virtual memory like
+system, able to access parts of the ROM, RAM, and EEPROM.
+
+More information on the serial protocol is available at
+
+https://github.com/metafetish/erosoutsider/wiki/Serial-Protocol
+
+**** Activity
+This is probably the best vector for retrieving the firmware. The RAM
+address space contains all of the processor registers, IO registers,
+and the stack. All of those areas are writable, giving us a lot of
+freedom in what we can do.
+
+***** Mode String Glitching Method 
+
+For instance, using the [[https://github.com/metafetish/erosoutsider-py][erosoutsider-py]] library, we can run the
+following code (eo refers to an ErosOutsider object):
+
+#+BEGIN_SRC python
+e = ErosOutsiderSerial("/dev/ttyUSB0")
+e.perform_handshake()
+eo.write_sync(0x4014, 0x09)
+eo.write_sync(0x4015, 0x04)
+eo.write_sync(0x4016, 0x03)
+eo.write_sync(0x4017, 0x24)
+#+END_SRC
+
+This block overwrites r14-r17, causing the box to error and display a
+"Shut Down Power!!" message on the LCD screen. If we then hit the "Up"
+button, we are taken to the mode menu, but the string offset is wrong,
+so instead of showing the mode name, we get random parts of other
+strings.
+
+Assuming the "Up" button is pressed enough times, we start getting
+gibberish on the LCD screen, meaning we've jumped over the string
+boundaries and are in program space.
+
+The CPU is most likely talking I2C or SPI to the LCD controller board,
+so assuming we can come up with a script that can glitch this
+correctly and play with the string offset, we could use a logic
+analyzer to dump the firmware via the LCD, and reassemble it on the
+host machine.
+
+***** Other Interesting Stuff
+Interesting facts from playing with memory using the protocol:
+
+- Reading from the EEPROM, there's strings stored in 8 byte chunks,
+  with spaces around them to buffer up to 8 characters if they aren't
+  already, and no null terminators. This may be a common way to
+  storing strings in the system, as for instance the pattern mode
+  names are all <=8 characters.
+
 *** File Comparison/Analysis
 **** Basic Idea
 Armed with a spec sheet, knowledge of AVR assembly and binary tools,
 pick at the upgrade files until either something makes sense or the
 heat death of the universe consumes us all.
 **** Activity/Progress
-Still in progress, seems like one of the more likely ways to figure
-this out.
-
 While entropy tests run against the files using the [[https://www.phy.duke.edu/~rgb/General/dieharder.php][Dieharder Test
 Suite]] show that the files themselves are fairly random, comparing the
 files to each other shows some patterns. For instance, here is the
@@ -108,7 +160,7 @@ first 256 bytes of each file:
 
 312-15.upg
 
-#+BEGIN_SRC 
+#+BEGIN_EXAMPLE
 00000000: ed78 3723 9920 5637 af04 4e2b 4e73 9382  .x7#. V7..N+Ns..
 00000010: 2984 f9ec 0ba5 a382 e9ad 4828 c45f 25e2  ).........H(._%.
 00000020: d0f1 4359 35a3 f574 24e2 4b1c 6d1b b5e6  ..CY5..t$.K.m...
@@ -125,11 +177,11 @@ first 256 bytes of each file:
 000000d0: 791d 2523 3c4c 96cf 2fb4 551f af73 fa7d  y.%#<L../.U..s.}
 000000e0: 5395 0736 7734 1f92 846c cc8b 697e 2c43  S..6w4...l..i~,C
 000000f0: 02ad 65ef aff1 f32b 71a3 2c58 4286 24a1  ..e....+q.,XB.$.
-#+END_SRC
+#+END_EXAMPLE
 
 312-16.upg
 
-#+BEGIN_SRC 
+#+BEGIN_EXAMPLE
 00000000: ed78 5f23 9948 5637 c704 4e43 4e73 9382  .x_#.HV7..NCNs..
 00000010: 2984 11ec 0bfd 2582 31c5 4870 425f ed8a  ).....%.1.HpB_..
 00000020: d0b9 4359 eda3 f52c 24e2 961c 6d44 d4e6  ..CY...,$...mD..
@@ -146,11 +198,11 @@ first 256 bytes of each file:
 000000d0: 1855 0035 746b f787 0aa2 1d38 ce3b df6b  .U.5tk.....8.;.k
 000000e0: 1bbe 667e 5e22 57b5 e524 e59d 2151 4d0b  ..f~^"W..$..!QM.
 000000f0: 2fbb 2dc0 ceb9 de3d 398c 4d10 6f90 6c8a  /.-....=9.M.o.l.
-#+END_SRC
+#+END_EXAMPLE
 
 However, XORing the two files together, interesting patterns emerge:
 
-#+BEGIN_SRC 
+#+BEGIN_EXAMPLE 
 00000000: 0000 6800 0068 0000 6800 0068 0000 0000  ..h..h..h..h....
 00000010: 0000 e800 0058 8600 d868 0058 8600 c868  .....X...h.X...h
 00000020: 0048 0000 d800 0058 0000 dd00 005f 6100  .H.....X....._a.
@@ -167,12 +219,12 @@ However, XORing the two files together, interesting patterns emerge:
 000000d0: 6148 2516 4827 6148 2516 4827 6148 2516  aH%.H'aH%.H'aH%.
 000000e0: 482b 6148 2916 4827 6148 2916 482f 6148  H+aH).H'aH).H/aH
 000000f0: 2d16 482f 6148 2d16 482f 6148 2d16 482b  -.H/aH-.H/aH-.H+
-#+END_SRC
+#+END_EXAMPLE
 
 If we format the XOR output into blocks of 6 bytes each, some
 repetition starts to show up:
 
-#+BEGIN_SRC 
+#+BEGIN_EXAMPLE 
 6800 0068 0000
 0000 6800 0068
 0000 0000 0000
@@ -216,12 +268,12 @@ f516 7877 6178
 2d16 482f 6148
 2d16 482f 6148
 2d16 482b 6148
-#+END_SRC
+#+END_EXAMPLE
 
 There are also blocks of the XOR'd files where things turn to
 randomess:
 
-#+BEGIN_SRC 
+#+BEGIN_EXAMPLE 
 000010a0: 6446 ee64 c6ee 6442 ee64 c2ee 644e ee64  dF.d..dB.d..dN.d
 000010b0: ceee 644e ee64 c2ee 6442 ee64 c2ee 6442  ..dN.d..dB.d..dB
 000010c0: ee64 c2ee 644e ee64 c2ee 6442 ee64 c6ee  .d..dN.d..dB.d..
@@ -234,30 +286,30 @@ randomess:
 00001130: 67ec 6883 c796 9443 d004 35a0 1459 db38  g.h....C..5..Y.8
 00001140: 4e17 3cc9 7139 d387 4533 47d1 ce81 5540  N.<.q9..E3G...U@
 00001150: f0c6 4551 4bea e24b 1647 cf42 8c70 dd8a  ..EQK..K.G.B.p..
-#+END_SRC
+#+END_EXAMPLE
 
 Though the patterns start up against a bit later:
 
-#+BEGIN_SRC 
+#+BEGIN_EXAMPLE 
 00001c20: bb19 bf61 04b5 2dc0 e83f e9fe e7da ff6e  ...a..-..?.....n
 00001c30: 78ad 30e6 f7c1 1231 d5ad a7ca 8358 4e38  x.0....1.....XN8
 00001c40: 58c2 8358 4238 58c2 8358 5e38 58de 8358  X..XB8X..X^8X..X
 00001c50: 5e38 58a2 8358 a638 58ba 8358 be38 58b2  ^8X..X.8X..X.8X.
 00001c60: 8358 f3c7 a704 8358 65c7 a796 8358 97c7  .X.....Xe....X..
 00001c70: 5891 7c58 97c7 5899 7c58 9bc7 5899 7c58  X.|X..X.|X..X.|X
-#+END_SRC
+#+END_EXAMPLE
 
 And then back to randomness a little later, until the end of the XOR
 file:
 
-#+BEGIN_SRC 
+#+BEGIN_EXAMPLE 
 000021a0: 7f7e 0ef7 7e0e 7f7e 0ef7 7e12 7f7e 1ef7  .~..~..~..~..~..
 000021b0: 7e1e 7f7e 1ef7 7e1e 7f7e 1af7 7e1a 7f7e  ~..~..~..~..~..~
 000021c0: 1af7 7e16 7f7e 2af7 7ad3 6dab 66d7 bb50  ..~..~*.z.m.f..P
 000021d0: 0b0d 2746 c850 2e5c a52b bed2 ee31 fb33  ..'F.P.\.+...1.3
 000021e0: 15e6 f6c8 d8b3 3bc4 54d9 cb38 b2d7 a9f3  ......;.T..8....
 000021f0: a8d4 4496 6ef7 7217 9c25 b590 3a92 1a76  ..D.n.r..%..:..v
-#+END_SRC
+#+END_EXAMPLE
 
 It's doubtful that the actual firmware is 100% valid data, so there's
 a good chance that whatever utility was used to build the upgrade file
@@ -309,20 +361,8 @@ Mapped LED A to be controlled by Pin 20 of the ATMega16, attached to a
 logic analyzer. During firmware upload, there's a signal that happens
 on this pin between packet upload and ACK response in the XMODEM
 protocol. The signal is repeatable between uploads. Further analysis
-required.
-*** Serial Protocol Work
-**** Basic Idea
-The Serial Protocol is already reverse engineered. It provides a
-peek/poke interface on top of a weird virtual memory like system, able
-to access parts of the ROM, RAM, and EEPROM. Maybe it'll be helpful?
-**** Activity
-Interesting facts from playing with memory using the protocol:
+required, but doubtful this is going anywhere.
 
-- Reading from the EEPROM, there's strings stored in 8 byte chunks,
-  with spaces around them to buffer up to 8 characters if they aren't
-  already, and no null terminators. This may be a common way to
-  storing strings in the system, as for instance the pattern mode
-  names are all <=8 characters.
 *** RF/Power Sidechannel channel/Glitching
 **** Basic Idea
 The fuuuuuuuuuuuuuuuuuture! While now feasible with projects like

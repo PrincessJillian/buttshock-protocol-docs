@@ -35,7 +35,7 @@ Serial connections are 19200/8/N/1, or:
 
 *** Encryption
 Communication with the box is encrypted, using a simple XOR stream
-cipher.
+cipher based on keys exchanged during handshake.
 
 ** Handshake
 
@@ -47,12 +47,12 @@ back:
 - 0x00 is sent to ET312
 - 0x07 is read from ET312
 
-This needs to happen 3 times in order for the handshake to be valid.
+This exchange only needs to happen once, but can be repeated.
 
 *** XOR Key Synchronization
 
-After the HELLO ends, XOR keys must be set up. This involves sending a
-2 byte sequence to the box, and receiving 3 bytes back:
+After the HELLO ends, XOR keys must be exchanged. This involves
+sending a 3 byte sequence to the box, and receiving 3 bytes back:
 
 - [0x2f, 0xVV, 0xWW] sent to ET312
 - [0x21, 0xXX, 0xYY] is read from ET312
@@ -64,7 +64,7 @@ Where:
 - 0xXX is a random unsigned 8-bit number, chosen by the ET312, used as 
   the second key
 - 0xWW/0xYY is a checksum, the 8-bit unsigned sum of the first two
-  bytes, possibly wrapped if the sum is > 255.
+  bytes, wrapped if the sum is > 255.
 
 For instance:
 
@@ -75,22 +75,23 @@ For instance:
   - 0x8f is the XOR key
   - 0xb0 is the checksum (0x21 + 0x8f)
 
-Note that the key chosen by the host need never change, it can
-simply be hardcoded into the protocol implementation. 
+Note that the key chosen by the host need never change, it can simply
+be hardcoded into the protocol implementation. Most implementations
+simply use 0 for the host key, which simplifies calculation.
 
 *** XOR Key Usage
 
-Once the XOR key is agreed upon, all further communication going from
-host to ET312 is required to be encoded using the following scheme,
-using ^ as an XOR operator:
+Once the XOR keys are agreed upon, all further communication going
+from host to ET312 is required to be encoded using the following
+scheme, using ^ as an XOR operator:
 
 Data Byte ^ (XOR Key 1 ^ XOR Key 2 ^ 0x55)
 
 The part of the expression in parenthesis will be constant, and can be
 pre-calculated and stored.
 
-Only data sent requires encryption, all data received from the ET312
-will be cleartext.
+Only data sent from host to ET312 requires encryption, all data
+received from the ET312 will be cleartext.
 
 ** Commands
 *** Parameters
@@ -190,24 +191,45 @@ out in the "XOR Key Usage" section above.
 
 *** Memory
 **** Commands
-***** Read Byte
+Outside of the initial key setup, talking to the ET312 happens through
+2 functions. These resemble peek and poke, except that both can
+send/receive between 1-8 bytes at a time.
+
+Both functions take 16 bit addresses, which map into a virtual memory
+space set up by the communications handler on the ET312. This memory
+space looks like:
+
+| Address Range | Description   |
+|---------------+---------------|
+| $0000 - $00ff | ROM? (256b)   |
+| $4000 - $4400 | RAM (1k)      |
+| $8000 - $8200 | EEPROM (512b) |
+
+Reading past the end of these ranges will just loop the last valid
+range.
+
+***** Read Bytes
 
 Reading a byte happens via a command with 3 byte length (minus checksum)
 
-0x3c 0xGG 0xHH
+0xGc 0xHH 0xII
 
-- 0xGG - High byte of address
-- 0xHH - Low byte of address
+- 0xGc - High nibble is amount of data to receive from address, low
+  nibble is always 0x0c
+- 0xHH - High byte of address
+- 0xII - Low byte of address
 
-***** Write Byte
+***** Write Bytes
 
 Writing a byte happens via a command with 4 byte length (minus checksum)
 
-0x4d 0xGG 0xHH 0xII
+0xGd 0xHH 0xII 0xJJ
 
-- 0xGG - High byte of address
-- 0xHH - Low byte of address
-- 0xII - Value to set address to
+- 0xGd - High nibble is amount of data to write to address, low nibble
+  is always 0x0d
+- 0xHH - High byte of address
+- 0xII - Low byte of address
+- 0xJJ - Value to set address to
 
 **** Memory Layout Table
 ***** ROM
@@ -458,4 +480,5 @@ Writing a byte happens via a command with 4 byte length (minus checksum)
 |  0x08 | Phase Control 3             |
 |  0x20 | Disable Frontpanel Switches |
 |  0x40 | Mono Mode (off=Stereo)      |
+
 
