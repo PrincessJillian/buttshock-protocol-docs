@@ -243,192 +243,263 @@ Writing a byte happens via a command with 4 byte length (minus checksum)
 
 ***** RAM
 
-| Address       | Description                                                                 |
-|---------------+-----------------------------------------------------------------------------|
-| $4000         | (register file)                                                             |
-| $4001         | (register file)                                                             |
-| $4002         | (register file)                                                             |
-| $4003         | (register file)                                                             |
-| $4004         | (register file)                                                             |
-| $4005         | (register file)                                                             |
-| $4006         | (register file)                                                             |
-| $4007         | (register file)                                                             |
-| $4008         | (register file)                                                             |
-| $4009         | (register file)                                                             |
-| $400A         | (register file)                                                             |
-| $400B         | (register file)                                                             |
-| $400C         | (register file)                                                             |
-| $400D         | (register file)                                                             |
-| $400E         | (register file)                                                             |
-| $400f         | Lockout Flags                                                               |
-| $4010         | (register file)                                                             |
-| $4011         | (register file)                                                             |
-| $4012         | (register file)                                                             |
-| $4013         | (register file)                                                             |
-| $4010         | (register file)                                                             |
-| $4015         | (register file)                                                             |
-| $4016         | (register file)                                                             |
-| $4017         | (register file)                                                             |
-| $4018         | (register file)                                                             |
-| $4019         | (register file)                                                             |
-| $401A         | (register file)                                                             |
-| $401B         | (register file)                                                             |
-| $401C         | (register file)                                                             |
-| $401D         | (register file)                                                             |
-| $401E         | (register file)                                                             |
-| $401f         | (register file)                                                             |
-| $4020 - $405f | (ATMega 16 IO Registers)                                                    |
-| $4060         | ?? (not used) - COMM_MAIN_CBLOCK_BASE                                       |
-| $4061         | Multi Adjust Offset - CBLOCK_MULTI_A_OFFSET                                 |
-| $4062         | Power Supply Voltage                                                        |
-| $4063         | Battery Voltage                                                             |
-| $4064         | CurrentLevel A - CBLOCK_POT_A_OFFSET                                        |
-| $4065         | CurrentLevel B - CBLOCK_POT_B_OFFSET                                        |
-| $4066         | Audio Level A                                                               |
-| $4067         | Audio Level B                                                               |
-| $4068         | 0x00 / 00                                                                   |
-| $4069         | Pressed Button                                                              |
-| $406A         | ? (some counter)                                                            |
-| $406B         | 0x37 / 55                                                                   |
-| $406C         | 0x2b / 43                                                                   |
-| $406D         | Menu State                                                                  |
-| $406E         | NOT USED                                                                    |
-| $406F         | NOT USED                                                                    |
-| $4070         | Trigger Action                                                              |
-| $4071         | ?? does something when written to                                           |
-| $4072         | ?? random number in random modes                                            |
-| $4073         | ?? some timer                                                               |
-| $4074         | ?? writing disables MA                                                      |
-| $4075         | ?? writing does nothing, changes in random modes                            |
-| $4076         | ?? 00                                                                       |
-| $4077         | ?? 00                                                                       |
-| $4078         | ?? (copy of CurrentMode?)                                                   |
-| $4079         | Lowest Selectable Mode                                                      |
-| $407A         | Highest Selectable Mode                                                     |
-| $407b         | CurrentMode                                                                 |
-| $407c         | ?? Oscillator Ch A?                                                         |
-| $407d         | ?? Oscillator Ch a?                                                         |
-| $407e         | ?? Oscillator Ch B?                                                         |
-| $407F         | ?? Oscillator Ch B?                                                         |
-| $4080         | ?? (gets set to 0x00 when routine loaded)                                   |
-| $4083         | Control Flags - COMM_CONTROL_FLAG (CONTROL_FLAG_DISABLE_SWITCHES_MASK = 32) |
-| $4084         | ?? (gets set to 0x00 when routine loaded)                                   |
-| $4085         | ?? (gets set to 0x03 when routine loaded)                                   |
-| $4086         | Multi Adjust Range High End                                                 |
-| $4087         | Multi Adjust Range Low End                                                  |
-| $4088         | Routine timer low                                                           |
-| $4089         | Routine timer high                                                          |
-| $408A         | ?? (gets set to 0x00 when routine loaded)                                   |
-| $408B         | ?? (some timer)                                                             |
-| $408C         | ?? (gets set to 0x00 when routine loaded)                                   |
-| $408D         | ?? (used by torment routine)                                                |
-| $408E         | ?? (used by torment routine)                                                |
-| $408F         | ?? (gets set to 0x00 when routine loaded)                                   |
-| $4090         | ?? (Channel-Specific)                                                       |
-| $4091         | ?? (Channel-Specific)                                                       |
-| $4092         | ?? (routine specific counters)                                              |
-| $4093         | ?? (routine specific counters)                                              |
-| $4094         | ?? (routine specific counters)                                              |
-| $4095         | ?? (routine specific counters)                                              |
-| $4096         | ?? (routine specific counters)                                              |
-| $4097         | ?? (routine specific counters)                                              |
-| $4098         | CurrentGateOnTime                                                           |
-| $4099         | CurrentGateOffTime                                                          |
-| $409A         | CurrentGateSelect                                                           |
-| $409B         | ?? (counter for gate)                                                       |
-| $409C         | Ramp (For Mode Switch)                                                      |
-| $40A0         | ?? (routine specific counters)                                              |
-| $40A1         | ?? (routine specific counters)                                              |
-| $40A2         | ?? (routine specific counters)                                              |
-| $40A3         | ?? (routine specific counters)                                              |
-| $40A4         | ?? (routine specific counters)                                              |
-| $40A5         | CurrentIntModValue                                                          |
-| $40A6         | CurrentIntModMin                                                            |
-| $40A7         | CurrentIntModMax                                                            |
-| $40A8         | CurrentIntModRate                                                           |
-| $40A9         | ?? (routine specific counters)                                              |
-| $40AA         | ?? (routine specific counters)                                              |
-| $40AB         | ?? (routine specific counters)                                              |
-| $40ac         | CurrentIntModSelect                                                         |
-| $40AD         | ?? (routine specific counters)                                              |
-| $40ae         | CurrentFreqValue                                                            |
-| $40af         | CurrentFreqMin                                                              |
-| $40b0         | CurrentFreqRate                                                             |
-| $40B1         | ?? (routine specific counters)                                              |
-| $40b2         | ?? (routine specific counters)                                              |
-| $40b3         | ?? (routine specific counters)                                              |
-| $40b4         | ?? (routine specific counters)                                              |
-| $40b5         | CurrentFreqSelect                                                           |
-| $40b6         | ?? (routine specific counters)                                              |
-| $40b7         | CurrentWidthValue                                                           |
-| $40b8         | CurrentWidthMin                                                             |
-| $40b9         | CurrentWidthMax                                                             |
-| $40ba         | CurrentWidthRate                                                            |
-| $40be         | CurrentWidthSelect                                                          |
-| $40b6 - ??    | (routine specific counters)                                                 |
-| $40c0 - $4177 | Space for User Routine Scratchpad A                                         |
-| $4180 - $41c0 | Repeat Settings for Channel B                                               |
-| $41c0 - $41d0 | ?? (weird stuff)                                                            |
-| $41d0 - $41ef | Space for User Routine Scratchpad B                                         |
-| $41f0         | - ?? (Counter)                                                              |
-| $41f1         | - ?? (Schreibzugriff crasht)                                                |
-| $41f2         | - ?? (Unklar)                                                               |
-| $41f3         | CurrentTopMode (written during routine write)                               |
-| $41f4         | PowerLevel                                                                  |
-| $41f5         | SplitAModeNum                                                               |
-| $41f6         | SplitBModeNum                                                               |
-| $41f7         | Favourite Mode                                                              |
-| $41F8         | Advanced Parameter: RampLevel                                               |
-| $41F9         | Advanced Parameter: RampTime                                                |
-| $41FA         | Advanced Parameter: Depth                                                   |
-| $41FB         | Advanced Parameter: Tempo                                                   |
-| $41FC         | Advanced Parameter: Frequency                                               |
-| $41FD         | Advanced Parameter: Effect                                                  |
-| $41FE         | Advanced Parameter: Width                                                   |
-| $41FF         | Advanced Parameter: Pace                                                    |
-| $4200 - $43FF | Stack and various strange stuff                                             |
-***** EPROM
-| Address | Description                                                              |
-|---------+--------------------------------------------------------------------------|
-| $8000   | ?                                                                        |
-| $8001   | ?                                                                        |
-| $8002   | BoxSerial1                                                               |
-| $8003   | BoxSerial2                                                               |
-| $8004   | ?                                                                        |
-| $8005   | ?                                                                        |
-| $8006   | ELinkSig1 - ELINK_SIG1_ADDR (ELINK_SIGVER1_SIG1 = 1 / LINK_NEW_SIG1 = 0) |
-| $8007   | ELinkSig2 - ELINK_SIG2_ADDR (ELINK_SIGVER1_SIG2 = 1 / LINK_NEW_SIG2 = 0) |
-| $8008   | TopMode NonVolatile (written during routine write)                       |
-| $8009   | PowerLevel                                                               |
-| $800A   | SplitAModeNum                                                            |
-| $800B   | SplitBModeNum                                                            |
-| $800C   | Favourite Mode                                                           |
-| $800D   | Advanced Parameter: RampLevel                                            |
-| $800E   | Advanced Parameter: RampTime                                             |
-| $800F   | Advanced Parameter: Depth                                                |
-| $8010   | Advanced Parameter: Tempo                                                |
-| $8011   | Advanced Parameter: Frequency                                            |
-| $8012   | Advanced Parameter: Effect                                               |
-| $8013   | Advanced Parameter: Width                                                |
-| $8014   | Advanced Parameter: Pace                                                 |
-| $8015   | ?                                                                        |
-| $8016   | ?                                                                        |
-| $8017   | ?                                                                        |
-| $8018   | Start Vector User 1 - COMM_USER_BASE                                     |
-| $8019   | Start Vector User 2                                                      |
-| $801A   | Start Vector User 3                                                      |
-| $801B   | Start Vector User 4                                                      |
-| $801C   | Start Vector User 5                                                      |
-| $801D   | Start Vector User 6                                                      |
-| $801E   | ?                                                                        |
-| $801F   | ?                                                                        |
-| $8020   | Space for User Routines A                                                |
-| $8040   | Space for User Routines B                                                |
-| $8100   | Space for User Routines C                                                |
-| $8120   | Space for User Routines D                                                |
-| $8200   | END                                                                      |
+| Address       | Description                                        |
+|---------------+----------------------------------------------------|
+| $4000 - $401F | ?? (Register File)                                 |
+| $400f         | *Front Panel Pot Lockout Flags - COMM_SYSTEM_FLAG* |
+| $4020 - $405f | ?? (ATMega 16 IO Registers)                        |
+| $4060         | *COMM_MAIN_CBLOCK_BASE*                            |
+| $4061         | *Multi Adjust Offset - CBLOCK_MULTI_A_OFFSET*      |
+| $4062         | *Power Supply Voltage*                             |
+| $4063         | *Battery Voltage*                                  |
+| $4064         | *CurrentLevel A - CBLOCK_POT_A_OFFSET*             |
+| $4065         | *CurrentLevel B - CBLOCK_POT_B_OFFSET*             |
+| $4066         | *Audio Input Level A*                              |
+| $4067         | *Audio Input Level B*                              |
+| $4068         | ??                                                 |
+| $4069         | *Currently Pressed Button*                         |
+| $406A         | ?? (some counter)                                  |
+| $406B         | ??                                                 |
+| $406C         | ??                                                 |
+| $406D         | *Menu State*                                       |
+| $406E         | ??                                                 |
+| $406F         | ??                                                 |
+| $4070         | *Execute Command*                                  |
+| $4071         | ?? (does something when written to)                |
+| $4072         | ?? (random number in random modes)                 |
+| $4073         | ?? (some timer)                                    |
+| $4074         | ?? (writing disables MA)                           |
+| $4075         | ?? (writing does nothing, changes in random modes) |
+| $4076         | ?? (00)                                            |
+| $4077         | ?? (00)                                            |
+| $4078         | ?? (copy of CurrentMode?)                          |
+| $4079         | *Lowest Selectable Mode*                           |
+| $407A         | *Highest Selectable Mode*                          |
+| $407b         | *Current Mode*                                     |
+| $407c         | ?? (Oscillator Ch A? )                             |
+| $407d         | ?? (Oscillator Ch A? )                             |
+| $407e         | ?? (Oscillator Ch B? )                             |
+| $407F         | ?? (Oscillator Ch B? )                             |
+| $4080         | ?? (gets set to 0x00 when routine loaded)          |
+| $4081         | ??                                                 |
+| $4082         | ??                                                 |
+| $4083         | *Output Control Flags - COMM_CONTROL_FLAG*         |
+| $4084         | ?? (gets set to 0x00 when routine loaded)          |
+| $4085         | ?? (gets set to 0x03 when routine loaded)          |
+| $4086         | *Multi Adjust Range High End*                      |
+| $4087         | *Multi Adjust Range Low End*                       |
+| $4088         | *Routine timer low*                                |
+| $4089         | *Routine timer high*                               |
+| $408A         | ?? (gets set to 0x00 when routine loaded)          |
+| $408B         | ?? (some timer)                                    |
+| $408C         | ?? (gets set to 0x00 when routine loaded)          |
+| $408D         | ?? (used by torment routine)                       |
+| $408E         | ?? (used by torment routine)                       |
+| $408F         | ?? (gets set to 0x00 when routine loaded)          |
+| $4090         | ?? (Pulse Flag?)                                   |
+| $4091         | ??                                                 |
+| $4092         | ??                                                 |
+| $4093         | ??                                                 |
+| $4094         | ??                                                 |
+| $4095         | ??                                                 |
+| $4096         | ??                                                 |
+| $4097         | ??                                                 |
+| $4098         | *Channel A: Current Gate OnTime*                   |
+| $4099         | *Channel A: Current Gate OffTime*                  |
+| $409A         | *Channel A: Current Gate Select*                   |
+| $409B         | ??                                                 |
+| $409C         | *Mode Switch Ramp Value Counter*                   |
+| $40A0         | ??                                                 |
+| $40A1         | ??                                                 |
+| $40A2         | ??                                                 |
+| $40A3         | *Mode Switch Ramp Select*                          |
+| $40A4         | ??                                                 |
+| $40A5         | *Channel A: Current Intensity Modulation Value*    |
+| $40A6         | *Channel A: Current Intensity Modulation Min*      |
+| $40A7         | *Channel A: Current Intensity Modulation Max*      |
+| $40A8         | *Channel A: Current Intensity Modulation Rate*     |
+| $40A9         | ??                                                 |
+| $40AA         | ??                                                 |
+| $40AB         | ??                                                 |
+| $40ac         | *Channel A: Current Intensity Modulation Select*   |
+| $40AD         | ??                                                 |
+| $40ae         | *Channel A: Current Frequency Modulation Value*    |
+| $40af         | *Channel A: Current Frequency Modulation Min*      |
+| $40b0         | *Channel A: Current Frequency Modulation Max*      |
+| $40B1         | *Channel A: Current Frequency Modulation Rate*     |
+| $40b2         | ??                                                 |
+| $40b3         | ??                                                 |
+| $40b4         | ??                                                 |
+| $40b5         | *Channel A: Current Frequency Modulation Select*   |
+| $40b6         | ??                                                 |
+| $40b7         | *Channel A: Current Width Modulation Value*        |
+| $40b8         | *Channel A: Current Width Modulation Min*          |
+| $40b9         | *Channel A: Current Width Modulation Max*          |
+| $40ba         | *Channel A: Current Width Modulation Rate*         |
+| $40bb         | ??                                                 |
+| $40bc         | ??                                                 |
+| $40bd         | ??                                                 |
+| $40be         | *Channel A: Current Width Modulation Select*       |
+| $41bf         | ??                                                 |
+| $40c0 - $4177 | *Space for User Routine Scratchpad A*              |
+| $4180         | *Write LCD Parameter*                              |
+| $4181         | *Write LCD Position*                               |
+| $4182         | ??                                                 |
+| $4183         | ??                                                 |
+| $4184         | ??                                                 |
+| $4185         | ??                                                 |
+| $4186         | ??                                                 |
+| $4187         | ??                                                 |
+| $4188         | ??                                                 |
+| $4189         | ??                                                 |
+| $418A         | ??                                                 |
+| $418B         | ??                                                 |
+| $418C         | ??                                                 |
+| $418D         | ??                                                 |
+| $418E         | ??                                                 |
+| $418F         | ??                                                 |
+| $4190         | ?? (Pulse Flag?)                                   |
+| $4191         | ??                                                 |
+| $4192         | ??                                                 |
+| $4193         | ??                                                 |
+| $4194         | ??                                                 |
+| $4195         | ??                                                 |
+| $4196         | ??                                                 |
+| $4197         | ??                                                 |
+| $4198         | *Channel B: Current Gate OnTime*                   |
+| $4199         | *Channel B: Current Gate OffTime*                  |
+| $419A         | *Channel B: Current Gate Select*                   |
+| $419B         | ??                                                 |
+| $419C         | ?? (Ramp Value?)                                   |
+| $41A0         | ??                                                 |
+| $41A1         | ??                                                 |
+| $41A2         | ??                                                 |
+| $41A3         | ?? (Ramp Select?)                                  |
+| $41A4         | ??                                                 |
+| $41A5         | *Channel B: Current Intensity Modulation Value*    |
+| $41A6         | *Channel B: Current Intensity Modulation Min*      |
+| $41A7         | *Channel B: Current Intensity Modulation Max*      |
+| $41A8         | *Channel B: Current Intensity Modulation Rate*     |
+| $41A9         | ??                                                 |
+| $41AA         | ??                                                 |
+| $41AB         | ??                                                 |
+| $41ac         | *Channel B: Current Intensity Modulation Select*   |
+| $41AD         | ??                                                 |
+| $41ae         | *Channel B: Current Frequency Modulation Value*    |
+| $41af         | *Channel B: Current Frequency Modulation Min*      |
+| $41b0         | *Channel B: Current Frequency Modulation Max*      |
+| $41B1         | *Channel B: Current Frequency Modulation Rate*     |
+| $41b2         | ??                                                 |
+| $41b3         | ??                                                 |
+| $41b4         | ??                                                 |
+| $41b5         | *Channel B: Current Frequency Modulation Select*   |
+| $41b6         | ??                                                 |
+| $41b7         | *Channel B: Current Width Modulation Value*        |
+| $41b8         | *Channel B: Current Width Modulation Min*          |
+| $41b9         | *Channel B: Current Width Modulation Max*          |
+| $41ba         | *Channel B: Current Width Modulation Rate*         |
+| $41bb         | ??                                                 |
+| $41bc         | ??                                                 |
+| $41bd         | ??                                                 |
+| $41be         | *Channel B: Current Width Modulation Select*       |
+| $41bf         | ??                                                 |
+| $41c0         | ??                                                 |
+| $41c1         | ??                                                 |
+| $41c2         | ??                                                 |
+| $41c3         | ??                                                 |
+| $41c4         | ??                                                 |
+| $41c5         | ??                                                 |
+| $41c6         | ??                                                 |
+| $41c7         | ??                                                 |
+| $41c8         | ??                                                 |
+| $41c9         | ??                                                 |
+| $41ca         | ??                                                 |
+| $41cb         | ??                                                 |
+| $41cc         | ??                                                 |
+| $41cd         | ??                                                 |
+| $41ce         | ??                                                 |
+| $41cf         | ??                                                 |
+| $41D0 - $41ef | *Space for User Routine Scratchpad B*              |
+| $41f0         | ?? (Counter)                                       |
+| $41f1         | ?? (Crashes on write)                              |
+| $41f2         | ?? (Unknown)                                       |
+| $41f3         | *CurrentTopMode* (written during routine write)    |
+| $41f4         | *PowerLevel - COMM_POWER_LEVEL / COMM_LMODE*       |
+| $41f5         | *Split Mode Number A*                              |
+| $41f6         | *Split Mode Number B*                              |
+| $41f7         | *Favourite Mode*                                   |
+| $41F8         | *Advanced Parameter: RampLevel*                    |
+| $41F9         | *Advanced Parameter: RampTime*                     |
+| $41FA         | *Advanced Parameter: Depth*                        |
+| $41FB         | *Advanced Parameter: Tempo*                        |
+| $41FC         | *Advanced Parameter: Frequency*                    |
+| $41FD         | *Advanced Parameter: Effect*                       |
+| $41FE         | *Advanced Parameter: Width*                        |
+| $41FF         | *Advanced Parameter: Pace*                         |
+| $4200         | ??                                                 |
+| $4201         | ??                                                 |
+| $4202         | ??                                                 |
+| $4203         | ??                                                 |
+| $4204         | ??                                                 |
+| $4205         | ??                                                 |
+| $4206         | ??                                                 |
+| $4207         | ??                                                 |
+| $4208         | ??                                                 |
+| $4209         | ??                                                 |
+| $420a         | ??                                                 |
+| $420b         | ??                                                 |
+| $420c         | ??                                                 |
+| $420d         | *Current Multi Adjust Value / COMM_MULTI_AVG*      |
+| $420e - $43FF | *Strange Stuff and Stack*                          |
+
+***** EEPROM
+| Address       | Description                                          |
+|---------------+------------------------------------------------------|
+| $8000         | ??                                                   |
+| $8001         | ??                                                   |
+| $8002         | *BoxSerial1*                                         |
+| $8003         | *BoxSerial2*                                         |
+| $8004         | ??                                                   |
+| $8005         | ??                                                   |
+| $8006         | *ELinkSig1 - ELINK_SIG1_ADDR*                        |
+| $8007         | *ELinkSig2 - ELINK_SIG2_ADDR *                       |
+| $8008         | *TopMode NonVolatile (written during routine write)* |
+| $8009         | *PowerLevel*                                         |
+| $800A         | *SplitAModeNum*                                      |
+| $800B         | *SplitBModeNum*                                      |
+| $800C         | *Favourite Mode*                                     |
+| $800D         | *Advanced Parameter: RampLevel*                      |
+| $800E         | *Advanced Parameter: RampTime*                       |
+| $800F         | *Advanced Parameter: Depth*                          |
+| $8010         | *Advanced Parameter: Tempo*                          |
+| $8011         | *Advanced Parameter: Frequency*                      |
+| $8012         | *Advanced Parameter: Effect*                         |
+| $8013         | *Advanced Parameter: Width*                          |
+| $8014         | *Advanced Parameter: Pace*                           |
+| $8015         | ??                                                   |
+| $8016         | ??                                                   |
+| $8017         | ??                                                   |
+| $8018         | *Start Vector User 1 - COMM_USER_BASE*               |
+| $8019         | *Start Vector User 2*                                |
+| $801A         | *Start Vector User 3*                                |
+| $801B         | *Start Vector User 4*                                |
+| $801C         | *Start Vector User 5*                                |
+| $801D         | *Start Vector User 6*                                |
+| $801E         | *Start Vector User 7 (not implemented)*              |
+| $801F         | *Start Vector User 8 (not implemented)*              |
+| $8020 - $803f | *Space for User Routines A*                          |
+| $8040 - $80ff | *Space for User Routines B*                          |
+| $8100 - $813f | *Space for User Routines C*                          |
+| $8120 - $81ff | *Space for User Routines D*                          |
 
 **** Tables
+***** Flags for COMM_SYSTEM_FLAG ($400F)
+
+| Value | Description                                                |
+|-------+------------------------------------------------------------|
+|  0x01 | Disable Level Pots (SYSTEM_FLAG_POTS_DISABLE_MASK)         |
+|  0x08 | Disable Multi Adjust (SYSTEM_FLAG_MULTIA_POT_DISABLE_MASK) |
+
 ***** Action Value Table ($4070)
 | Value | Description                                    |
 |-------+------------------------------------------------|
@@ -438,39 +509,88 @@ Writing a byte happens via a command with 4 byte length (minus checksum)
 |  0x04 | Exit Menu                                      |
 |  0x05 | Start "Favourite" Routine                      |
 |  0x06 | (Failure 16)                                   |
-|  0x07 | (Display value of $41A1 / Change with UP/DOWN) |
+|  0x07 | Edit Advanced Parameter                        |
 |  0x08 | display next menu item                         |
 |  0x09 | display previous menu item                     |
 |  0x0a | Show Main Menu                                 |
 |  0x0b | Jump to split mode settings menu               |
 |  0x0c | Activates Split Mode                           |
-|  0x0d | (Displays a numer)                             |
-|  0x0e | (Displays a numer)                             |
+|  0x0d | Advanced Value Up                              |
+|  0x0e | Advanced Value Down                            |
 |  0x0f | Show Advanced Menu                             |
-|  0x10 | next mode                                      |
-|  0x11 | previous mode                                  |
-|  0x12 | (random behaviour)                             |
-|  0x13 | (display broken character)                     |
-|  0x14 | (display 00)                                   |
-|  0x15 | Display "Shut off Power"                       |
+|  0x10 | Switch to Next mode                            |
+|  0x11 | Switch to Previous mode                        |
+|  0x12 | New Mode                                       |
+|  0x13 | Write Character to LCD                         |
+|  0x14 | Write Number to LCD                            |
+|  0x15 | Write String from Stringtable to LCD           |
 |  0x16 | (mutes or glitches current routine)            |
-|  0x17 | hard reset                                     |
+|  0x17 | Cold Reboot                                    |
 |  0x18 | Stop Routine (Mute)                            |
-|  0x19 | swap channels                                  |
-|  0x1a | Copies channel a to channel b                  |
-|  0x1b | Copies channel b to channel a                  |
-|  0x1c | (do this three times and lose serial)          |
-|  0x1d | (no visible effect)                            |
+|  0x19 | Swap Channel A and B                           |
+|  0x1a | Copy Channel A to Channel B                    |
+|  0x1b | Copy Channel B to Channel a                    |
+|  0x1c | Default EE                                     |
+|  0x1d | Copy Wave                                      |
 |  0x1e | (Failure 04)                                   |
 |  0x1f | (Failure 80)                                   |
-|  0x20 | (Glitch channel B in some routines)            |
-|  0x21 | (no visible effect)                            |
+|  0x20 | Advanced Update                                |
+|  0x21 | Start Ramp                                     |
 |  0x22 | (no visible effect)                            |
-|  0x23 | (no visible effect)                            |
-|  0x24 | (display glitch)                               |
+|  0x23 | (LCD Command?)                                 |
+|  0x24 | (LCD Character?)                               |
 |  0x25 | (Failure 00)                                   |
 |  0x26 | (Failure 00)                                   |
 |  0x27 | (Failure 00)                                   |
+
+*Note: Parameters for the LCD write command*
+
+| Command                | $4180                 | $4181                               |
+|------------------------+-----------------------+-------------------------------------|
+| Write Character (0x13) | Character ASCII value | Display Position (+64 = second row) |
+| Write Number (0x14)    | Numerical Value       | Display Position (+64 = second row) |
+| Write String (0x15)    | Stringtable Index     | ???                                 |
+
+***** Mode Table ($407B)
+
+| Value | Description                     |
+|-------+---------------------------------|
+|  0x00 | MODE_NUM_POWER_ON               |
+|  0x01 | MODE_NUM_UNKNOWN                |
+|  0x76 | MODE_NUM_WAVES / MODE_NUM_LOWER |
+|  0x77 | MODE_NUM_STROKE                 |
+|  0x78 | MODE_NUM_CLIMB                  |
+|  0x79 | MODE_NUM_COMBO                  |
+|  0x7a | MODE_NUM_INTENSE                |
+|  0x7b | MODE_NUM_RHYTHM                 |
+|  0x7c | MODE_NUM_AUDIO1                 |
+|  0x7d | MODE_NUM_AUDIO2                 |
+|  0x7e | MODE_NUM_AUDIO3                 |
+|  0x7f | MODE_NUM_SPLIT                  |
+|  0x80 | MODE_NUM_RANDOM1                |
+|  0x81 | MODE_NUM_RANDOM2                |
+|  0x82 | MODE_NUM_TOGGLE                 |
+|  0x83 | MODE_NUM_ORGASM                 |
+|  0x84 | MODE_NUM_TORMENT                |
+|  0x85 | MODE_NUM_PHASE1                 |
+|  0x86 | MODE_NUM_PHASE2                 |
+|  0x87 | MODE_NUM_PHASE3                 |
+|  0x88 | MODE_NUM_USER1                  |
+|  0x89 | MODE_NUM_USER2                  |
+|  0x90 | MODE_NUM_USER3                  |
+|  0x91 | MODE_NUM_USER4                  |
+|  0x92 | MODE_NUM_USER5                  |
+|  0x93 | MODE_NUM_USER6                  |
+|  0x94 | MODE_NUM_USER7 / MODE_NUM_UPPER |
+
+*Note: To set mode*
+
+- Write New Mode Number to $407b
+- Write 0x04 to $4070 (execute "main menu")
+- Wait 18ms (lets box execute previous command)
+- Write 0x10 to $4070 (execute "next mode" to refresh display)
+- Wait 18ms (lets box execute previous command)
+
 ***** Phase Value Table ($4083)
 | Value | Description                 |
 |-------+-----------------------------|
@@ -481,4 +601,25 @@ Writing a byte happens via a command with 4 byte length (minus checksum)
 |  0x20 | Disable Frontpanel Switches |
 |  0x40 | Mono Mode (off=Stereo)      |
 
+*Note: ErosLink uses the following masks:*
 
+- 0x00 - CONTROLFLAG_NORMAL_MASK
+- 0x04 - CONTROLFLAG_ALLOW_OVERLAP_MASK
+- 0x05 - CONTROLFLAG_PHASE_MASK
+- 0x20 - CONTROLFLAG_DISABLE_SWITCHES_MASK
+
+***** Gate Channel Select mask ($409A)
+| Value | Description |
+|-------+-------------|
+|  0x01 | Channel A   |
+|  0x02 | Channel B   |
+|  0x03 | Channel A+B |
+
+***** Power Level Table ($41F4)
+
+| Value | Description |
+|-------+-------------|
+|  0x00 | LOW         |
+|  0x01 | NORMAL      |
+|  0x02 | HIGH        |
+|  0x03 | UNKNOWN     |
