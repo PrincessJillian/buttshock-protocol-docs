@@ -94,106 +94,10 @@ Only data sent from host to ET312 requires encryption, all data
 received from the ET312 will be cleartext.
 
 ** Commands
-*** Parameters
-**** Parameter Read/Write Command Format
-
-Commands sent to the ET-312 are a minimum of 3 bytes (minus checksum):
-
-- Byte 0: Read or Write (Read: 0x3C, Write: 0x4D)
-- Byte 1: Port Specifier (A: 0x40, B: 0x41)
-- Byte 2: Parameter Specifier
-- Byte 3-N: Data to be Written (Optional)
-
-So, for example, to read (0x3C) the time on parameter (0x98) for port
-A (0x40), we would send
-
-0x3C 0x40 0x98
-
-Note that this packet would need to be XOR'd using the algorithm laid
-out in the "XOR Key Usage" section above.
-
-**** Parameter Specifier/Format List
-***** 0x98 - Time On
-
-- 1 byte, Range 0-255, 255 is highest
-
-***** 0x99 - Time Off
-
-- 1 byte, Range 0-255, 255 is highest
-
-***** 0x9a - Time Options
-
-- Bits 0-4 (upper nibble): Off Options
-- Bits 5-8 (lower nibble): On Options
-
-***** 0xa5 - Current Level
-
-- 1 byte, Range 128-255
-
-***** 0xa6 - Minimum Level
-
-- 1 byte, Range 128-255
-
-***** 0xa7 - Maximum Level
-
-- 1 byte, Range 128-255
-
-***** 0xa8 - Level Rate
-
-- 1 byte, Range 0-255, 0 is fastest
-
-***** 0xac - Level Options
-
-- Bits 0-4 (upper nibble): Min Options
-- Bits 5-8 (lower nibble): Rate Options
-
-***** 0xae - Frequency
-
-- 1 byte, Range 8-255 (?!), 8 is fastest
-
-***** 0xaf - Maximum Frequency
-
-- 1 byte, Range 8-255 (?!), 8 is fastest
-
-***** 0xb0 - Minimum Frequency
-
-- 1 byte, Range 8-255 (?!), 8 is fastest
-
-***** 0xb1 - Frequency Rate
-
-- 1 byte, Range 0-255, 0 is fastest
-
-***** 0xb5 - Frequency Options
-
-- Bits 0-4 (upper nibble): Val Options
-- Bits 5-8 (lower nibble): Rate Options
-
-***** 0xb7 - Current Pulse Width
-
-- 1 byte, Range 64-196 (?!)
-
-***** 0xb8 - Minimum Pulse Width
-
-- 1 byte, Range 64-196 (?!)
-
-***** 0xb9 - Maximum Pulse Width
-
-- 1 byte, Range 64-196 (?!)
-
-***** 0xba - Pulse Width Rate
-
-- 1 byte, Range 0-255, 0 is fastest
-
-***** 0xbe - Width Options
-
-- Bits 0-4 (upper nibble): Val Options
-- Bits 5-8 (lower nibble): Rate Options
-
-*** Memory
-**** Commands
+*** Commands
 Outside of the initial key setup, talking to the ET312 happens through
-2 functions. These resemble peek and poke, except that both can
-send/receive between 1-8 bytes at a time.
+2 functions. These resemble peek and poke, except that developers can
+send between 1-8 bytes at a time. Only 1 byte may be read at a time.
 
 Both functions take 16 bit addresses, which map into a virtual memory
 space set up by the communications handler on the ET312. This memory
@@ -201,21 +105,23 @@ space looks like:
 
 | Address Range | Description   |
 |---------------+---------------|
-| $0000 - $00ff | ROM? (256b)   |
+| $0000 - $00ff | Flash (256b)  |
 | $4000 - $4400 | RAM (1k)      |
 | $8000 - $8200 | EEPROM (512b) |
 
 Reading past the end of these ranges will just loop the last valid
 range.
 
+All further documentation will use these ranges as reference, so when
+we mention writing/reading to, say, $4010, this means we're writing to
+byte 16 of the RAM address space.
+
 ***** Read Bytes
 
 Reading a byte happens via a command with 3 byte length (minus checksum)
 
-0xGc 0xHH 0xII
+0x3c 0xGG 0xHH
 
-- 0xGc - High nibble is amount of data to receive from address, low
-  nibble is always 0x0c
 - 0xHH - High byte of address
 - 0xII - Low byte of address
 
@@ -223,236 +129,279 @@ Reading a byte happens via a command with 3 byte length (minus checksum)
 
 Writing a byte happens via a command with 4 byte length (minus checksum)
 
-0xGd 0xHH 0xII 0xJJ
+0xGd 0xHH 0xII [0xJJ 0xKK...]
 
-- 0xGd - High nibble is amount of data to write to address, low nibble
-  is always 0x0d
+- 0xGd - High nibble is amount of data to write to address plus 0x3, low
+  nibble is always 0x0d
 - 0xHH - High byte of address
 - 0xII - Low byte of address
-- 0xJJ - Value to set address to
+- [0xJJ 0xKK]... - Value(s) to set address to
 
-**** Memory Layout Table
-***** ROM
+For instance, if we wanted to write 2 bytes, 0xFE 0xFF, starting
+0x4010, the command would look like
 
-| Address | Description           |
-|---------+-----------------------|
-| $00fc   | Box Model             |
-| $00fd   | Box Major Version     |
-| $00fe   | Box Minor Version     |
-| $00ff   | Box Interval Revision |
+#+BEGIN_EXAMPLE
+0x5d 0x40 0x10 0xfe 0xff
+#+END_EXAMPLE
 
-***** RAM
+- 0x5d is the write command with amount (0x3d + 0x20 since we're
+  writing 2 bytes)
+- 0x40 0x10 is our 16-bit address (0x4010)
+- 0xfe 0xff is the data we want to write to 0x4010 and 0x4011,
+  respectively.
 
-| Address       | Description                                        |
-|---------------+----------------------------------------------------|
-| $4000 - $401F | ?? (Register File)                                 |
-| $400f         | *Front Panel Pot Lockout Flags - COMM_SYSTEM_FLAG* |
-| $4020 - $405f | ?? (ATMega 16 IO Registers)                        |
-| $4060         | *COMM_MAIN_CBLOCK_BASE*                            |
-| $4061         | *Multi Adjust Offset - CBLOCK_MULTI_A_OFFSET*      |
-| $4062         | *Power Supply Voltage*                             |
-| $4063         | *Battery Voltage*                                  |
-| $4064         | *CurrentLevel A - CBLOCK_POT_A_OFFSET*             |
-| $4065         | *CurrentLevel B - CBLOCK_POT_B_OFFSET*             |
-| $4066         | *Audio Input Level A*                              |
-| $4067         | *Audio Input Level B*                              |
-| $4068         | ??                                                 |
-| $4069         | *Currently Pressed Button*                         |
-| $406A         | ?? (some counter)                                  |
-| $406B         | ??                                                 |
-| $406C         | ??                                                 |
-| $406D         | *Menu State*                                       |
-| $406E         | ??                                                 |
-| $406F         | ??                                                 |
-| $4070         | *Execute Command*                                  |
-| $4071         | ?? (does something when written to)                |
-| $4072         | ?? (random number in random modes)                 |
-| $4073         | ?? (some timer)                                    |
-| $4074         | ?? (writing disables MA)                           |
-| $4075         | ?? (writing does nothing, changes in random modes) |
-| $4076         | ?? (00)                                            |
-| $4077         | ?? (00)                                            |
-| $4078         | ?? (copy of CurrentMode?)                          |
-| $4079         | *Lowest Selectable Mode*                           |
-| $407A         | *Highest Selectable Mode*                          |
-| $407b         | *Current Mode*                                     |
-| $407c         | ?? (Oscillator Ch A? )                             |
-| $407d         | ?? (Oscillator Ch A? )                             |
-| $407e         | ?? (Oscillator Ch B? )                             |
-| $407F         | ?? (Oscillator Ch B? )                             |
-| $4080         | ?? (gets set to 0x00 when routine loaded)          |
-| $4081         | ??                                                 |
-| $4082         | ??                                                 |
-| $4083         | *Output Control Flags - COMM_CONTROL_FLAG*         |
-| $4084         | ?? (gets set to 0x00 when routine loaded)          |
-| $4085         | ?? (gets set to 0x03 when routine loaded)          |
-| $4086         | *Multi Adjust Range High End*                      |
-| $4087         | *Multi Adjust Range Low End*                       |
-| $4088         | *Routine timer low*                                |
-| $4089         | *Routine timer high*                               |
-| $408A         | ?? (gets set to 0x00 when routine loaded)          |
-| $408B         | ?? (some timer)                                    |
-| $408C         | ?? (gets set to 0x00 when routine loaded)          |
-| $408D         | ?? (used by torment routine)                       |
-| $408E         | ?? (used by torment routine)                       |
-| $408F         | ?? (gets set to 0x00 when routine loaded)          |
-| $4090         | ?? (Pulse Flag?)                                   |
-| $4091         | ??                                                 |
-| $4092         | ??                                                 |
-| $4093         | ??                                                 |
-| $4094         | ??                                                 |
-| $4095         | ??                                                 |
-| $4096         | ??                                                 |
-| $4097         | ??                                                 |
-| $4098         | *Channel A: Current Gate OnTime*                   |
-| $4099         | *Channel A: Current Gate OffTime*                  |
-| $409A         | *Channel A: Current Gate Select*                   |
-| $409B         | ??                                                 |
-| $409C         | *Mode Switch Ramp Value Counter*                   |
-| $40A0         | ??                                                 |
-| $40A1         | ??                                                 |
-| $40A2         | ??                                                 |
-| $40A3         | *Mode Switch Ramp Select*                          |
-| $40A4         | ??                                                 |
-| $40A5         | *Channel A: Current Intensity Modulation Value*    |
-| $40A6         | *Channel A: Current Intensity Modulation Min*      |
-| $40A7         | *Channel A: Current Intensity Modulation Max*      |
-| $40A8         | *Channel A: Current Intensity Modulation Rate*     |
-| $40A9         | ??                                                 |
-| $40AA         | ??                                                 |
-| $40AB         | ??                                                 |
-| $40ac         | *Channel A: Current Intensity Modulation Select*   |
-| $40AD         | ??                                                 |
-| $40ae         | *Channel A: Current Frequency Modulation Value*    |
-| $40af         | *Channel A: Current Frequency Modulation Min*      |
-| $40b0         | *Channel A: Current Frequency Modulation Max*      |
-| $40B1         | *Channel A: Current Frequency Modulation Rate*     |
-| $40b2         | ??                                                 |
-| $40b3         | ??                                                 |
-| $40b4         | ??                                                 |
-| $40b5         | *Channel A: Current Frequency Modulation Select*   |
-| $40b6         | ??                                                 |
-| $40b7         | *Channel A: Current Width Modulation Value*        |
-| $40b8         | *Channel A: Current Width Modulation Min*          |
-| $40b9         | *Channel A: Current Width Modulation Max*          |
-| $40ba         | *Channel A: Current Width Modulation Rate*         |
-| $40bb         | ??                                                 |
-| $40bc         | ??                                                 |
-| $40bd         | ??                                                 |
-| $40be         | *Channel A: Current Width Modulation Select*       |
-| $41bf         | ??                                                 |
-| $40c0 - $4177 | *Space for User Routine Scratchpad A*              |
-| $4180         | *Write LCD Parameter*                              |
-| $4181         | *Write LCD Position*                               |
-| $4182         | ??                                                 |
-| $4183         | ??                                                 |
-| $4184         | ??                                                 |
-| $4185         | ??                                                 |
-| $4186         | ??                                                 |
-| $4187         | ??                                                 |
-| $4188         | ??                                                 |
-| $4189         | ??                                                 |
-| $418A         | ??                                                 |
-| $418B         | ??                                                 |
-| $418C         | ??                                                 |
-| $418D         | ??                                                 |
-| $418E         | ??                                                 |
-| $418F         | ??                                                 |
-| $4190         | ?? (Pulse Flag?)                                   |
-| $4191         | ??                                                 |
-| $4192         | ??                                                 |
-| $4193         | ??                                                 |
-| $4194         | ??                                                 |
-| $4195         | ??                                                 |
-| $4196         | ??                                                 |
-| $4197         | ??                                                 |
-| $4198         | *Channel B: Current Gate OnTime*                   |
-| $4199         | *Channel B: Current Gate OffTime*                  |
-| $419A         | *Channel B: Current Gate Select*                   |
-| $419B         | ??                                                 |
-| $419C         | ?? (Ramp Value?)                                   |
-| $41A0         | ??                                                 |
-| $41A1         | ??                                                 |
-| $41A2         | ??                                                 |
-| $41A3         | ?? (Ramp Select?)                                  |
-| $41A4         | ??                                                 |
-| $41A5         | *Channel B: Current Intensity Modulation Value*    |
-| $41A6         | *Channel B: Current Intensity Modulation Min*      |
-| $41A7         | *Channel B: Current Intensity Modulation Max*      |
-| $41A8         | *Channel B: Current Intensity Modulation Rate*     |
-| $41A9         | ??                                                 |
-| $41AA         | ??                                                 |
-| $41AB         | ??                                                 |
-| $41ac         | *Channel B: Current Intensity Modulation Select*   |
-| $41AD         | ??                                                 |
-| $41ae         | *Channel B: Current Frequency Modulation Value*    |
-| $41af         | *Channel B: Current Frequency Modulation Min*      |
-| $41b0         | *Channel B: Current Frequency Modulation Max*      |
-| $41B1         | *Channel B: Current Frequency Modulation Rate*     |
-| $41b2         | ??                                                 |
-| $41b3         | ??                                                 |
-| $41b4         | ??                                                 |
-| $41b5         | *Channel B: Current Frequency Modulation Select*   |
-| $41b6         | ??                                                 |
-| $41b7         | *Channel B: Current Width Modulation Value*        |
-| $41b8         | *Channel B: Current Width Modulation Min*          |
-| $41b9         | *Channel B: Current Width Modulation Max*          |
-| $41ba         | *Channel B: Current Width Modulation Rate*         |
-| $41bb         | ??                                                 |
-| $41bc         | ??                                                 |
-| $41bd         | ??                                                 |
-| $41be         | *Channel B: Current Width Modulation Select*       |
-| $41bf         | ??                                                 |
-| $41c0         | ??                                                 |
-| $41c1         | ??                                                 |
-| $41c2         | ??                                                 |
-| $41c3         | ??                                                 |
-| $41c4         | ??                                                 |
-| $41c5         | ??                                                 |
-| $41c6         | ??                                                 |
-| $41c7         | ??                                                 |
-| $41c8         | ??                                                 |
-| $41c9         | ??                                                 |
-| $41ca         | ??                                                 |
-| $41cb         | ??                                                 |
-| $41cc         | ??                                                 |
-| $41cd         | ??                                                 |
-| $41ce         | ??                                                 |
-| $41cf         | ??                                                 |
-| $41D0 - $41ef | *Space for User Routine Scratchpad B*              |
-| $41f0         | ?? (Counter)                                       |
-| $41f1         | ?? (Crashes on write)                              |
-| $41f2         | ?? (Unknown)                                       |
-| $41f3         | *CurrentTopMode* (written during routine write)    |
-| $41f4         | *PowerLevel - COMM_POWER_LEVEL / COMM_LMODE*       |
-| $41f5         | *Split Mode Number A*                              |
-| $41f6         | *Split Mode Number B*                              |
-| $41f7         | *Favourite Mode*                                   |
-| $41F8         | *Advanced Parameter: RampLevel*                    |
-| $41F9         | *Advanced Parameter: RampTime*                     |
-| $41FA         | *Advanced Parameter: Depth*                        |
-| $41FB         | *Advanced Parameter: Tempo*                        |
-| $41FC         | *Advanced Parameter: Frequency*                    |
-| $41FD         | *Advanced Parameter: Effect*                       |
-| $41FE         | *Advanced Parameter: Width*                        |
-| $41FF         | *Advanced Parameter: Pace*                         |
-| $4200         | ??                                                 |
-| $4201         | ??                                                 |
-| $4202         | ??                                                 |
-| $4203         | ??                                                 |
-| $4204         | ??                                                 |
-| $4205         | ??                                                 |
-| $4206         | ??                                                 |
-| $4207         | ??                                                 |
-| $4208         | ??                                                 |
-| $4209         | ??                                                 |
-| $420a         | ??                                                 |
-| $420b         | ??                                                 |
-| $420c         | ??                                                 |
-| $420d         | *Current Multi Adjust Value / COMM_MULTI_AVG*      |
-| $420e - $43FF | *Strange Stuff and Stack*                          |
+*** Memory Layout Tables
+**** Flash
+| Address       | Description                                   |
+|---------------+-----------------------------------------------|
+| [[*$0000:$0098 - Partial String Table][$0000 - $0098]] | Partial String Table                          |
+| [[*$0098:$00fb - ?? (Possibly a continuation of .data segment)][$0098 - $00fb]] | ?? (Possibly a continuation of .data segment) |
+| [[*$00fc - Box Version][$00fc]]         | Box Model                                     |
+| [[*$00fd:$00ff - Firmware version][$00fd - $00ff]] | Firmware Version                              |
 
-***** EEPROM
+**** RAM
+| Address       | Description                                            |
+|---------------+--------------------------------------------------------|
+| $4000         | r0 (CPU Register, Unknown Usage)                       |
+| $4001         | r1 (CPU Register, Unknown Usage)                       |
+| $4002         | r2 (CPU Register, Unknown Usage)                       |
+| $4003         | r3 (CPU Register, Unknown Usage)                       |
+| $4004         | r4 (CPU Register, Unknown Usage)                       |
+| $4005         | r5 (CPU Register, Unknown Usage)                       |
+| $4006         | r6 (CPU Register, Unknown Usage)                       |
+| $4007         | r7 (CPU Register, Unknown Usage)                       |
+| $4008         | r8 (CPU Register, Unknown Usage)                       |
+| $4009         | r9 (CPU Register, Unknown Usage)                       |
+| $400a         | r10 (CPU Register, Unknown Usage)                      |
+| $400b         | r11 (CPU Register, Unknown Usage)                      |
+| $400c         | r12 (CPU Register, Unknown Usage)                      |
+| $400d         | r13 (CPU Register, Unknown Usage)                      |
+| $400e         | r14 (CPU Register, Unknown Usage)                      |
+| [[*$400f - Flags for COMM_SYSTEM_FLAG][$400f]]         | *r15/Front Panel Pot Lockout Flags - COMM_SYSTEM_FLAG* |
+| $4010         | r16 (CPU Register, Unknown Usage)                      |
+| $4011         | r17 (CPU Register, Unknown Usage)                      |
+| $4012         | r18 (CPU Register, Unknown Usage)                      |
+| $4013         | r19 (CPU Register, Unknown Usage)                      |
+| $4014         | r20 (CPU Register, Unknown Usage)                      |
+| $4015         | r21 (CPU Register, Unknown Usage)                      |
+| $4016         | r22 (CPU Register, Unknown Usage)                      |
+| $4017         | r23 (CPU Register, Unknown Usage)                      |
+| $4018         | r24 (CPU Register, Unknown Usage)                      |
+| $4019         | r25 (CPU Register, Unknown Usage)                      |
+| $401a         | r26 (CPU Register, Unknown Usage)                      |
+| $401b         | r27 (CPU Register, Unknown Usage)                      |
+| $401c         | r28 (CPU Register, Unknown Usage)                      |
+| $401d         | r29 (CPU Register, Unknown Usage)                      |
+| $401e         | r30 (CPU Register, Unknown Usage)                      |
+| $401f         | r31 (CPU Register, Unknown Usage)                      |
+| $4020 - $405f | ?? (IO Registers)                                      |
+| $4029         | *UBRRL Register (Baud Rate)*                           |
+| $4030 - $405f | ?? (IO Registers)                                      |
+| $4060         | *COMM_MAIN_CBLOCK_BASE*                                |
+| $4061         | *Multi Adjust Offset - CBLOCK_MULTI_A_OFFSET*          |
+| $4062         | *Power Supply Voltage*                                 |
+| $4063         | *Battery Voltage*                                      |
+| $4064         | *CurrentLevel A - CBLOCK_POT_A_OFFSET*                 |
+| $4065         | *CurrentLevel B - CBLOCK_POT_B_OFFSET*                 |
+| $4066         | *Audio Input Level A*                                  |
+| $4067         | *Audio Input Level B*                                  |
+| $4068         | ??                                                     |
+| $4069         | *Currently Pressed Button*                             |
+| $406A         | ?? (some counter)                                      |
+| $406B         | ??                                                     |
+| $406C         | ??                                                     |
+| $406D         | *Menu State*                                           |
+| $406E         | ??                                                     |
+| $406F         | ??                                                     |
+| $4070         | *Execute Command*                                      |
+| $4071         | ?? (does something when written to)                    |
+| $4072         | ?? (random number in random modes)                     |
+| $4073         | ?? (some timer)                                        |
+| $4074         | ?? (writing disables MA)                               |
+| $4075         | ?? (writing does nothing, changes in random modes)     |
+| $4076         | ?? (00)                                                |
+| $4077         | ?? (00)                                                |
+| $4078         | ?? (copy of CurrentMode?)                              |
+| $4079         | *Lowest Selectable Mode*                               |
+| $407A         | *Highest Selectable Mode*                              |
+| $407b         | *Current Mode*                                         |
+| $407c         | ?? (Oscillator Ch A? )                                 |
+| $407d         | ?? (Oscillator Ch A? )                                 |
+| $407e         | ?? (Oscillator Ch B? )                                 |
+| $407F         | ?? (Oscillator Ch B? )                                 |
+| $4080         | ?? (gets set to 0x00 when routine loaded)              |
+| $4081         | ??                                                     |
+| $4082         | ??                                                     |
+| $4083         | *Output Control Flags - COMM_CONTROL_FLAG*             |
+| $4084         | ?? (gets set to 0x00 when routine loaded)              |
+| $4085         | ?? (gets set to 0x03 when routine loaded)              |
+| $4086         | *Multi Adjust Range High End*                          |
+| $4087         | *Multi Adjust Range Low End*                           |
+| $4088         | *Routine timer low*                                    |
+| $4089         | *Routine timer high*                                   |
+| $408A         | ?? (gets set to 0x00 when routine loaded)              |
+| $408B         | ?? (some timer)                                        |
+| $408C         | ?? (gets set to 0x00 when routine loaded)              |
+| $408D         | ?? (used by torment routine)                           |
+| $408E         | ?? (used by torment routine)                           |
+| $408F         | ?? (gets set to 0x00 when routine loaded)              |
+| $4090         | ?? (Pulse Flag?)                                       |
+| $4091         | ??                                                     |
+| $4092         | ??                                                     |
+| $4093         | ??                                                     |
+| $4094         | ??                                                     |
+| $4095         | ??                                                     |
+| $4096         | ??                                                     |
+| $4097         | ??                                                     |
+| $4098         | *Channel A: Current Gate OnTime*                       |
+| $4099         | *Channel A: Current Gate OffTime*                      |
+| $409A         | *Channel A: Current Gate Select*                       |
+| $409B         | ??                                                     |
+| $409C         | *Mode Switch Ramp Value Counter*                       |
+| $40A0         | ??                                                     |
+| $40A1         | ??                                                     |
+| $40A2         | ??                                                     |
+| $40A3         | *Mode Switch Ramp Select*                              |
+| $40A4         | ??                                                     |
+| $40A5         | *Channel A: Current Intensity Modulation Value*        |
+| $40A6         | *Channel A: Current Intensity Modulation Min*          |
+| $40A7         | *Channel A: Current Intensity Modulation Max*          |
+| $40A8         | *Channel A: Current Intensity Modulation Rate*         |
+| $40A9         | ??                                                     |
+| $40AA         | ??                                                     |
+| $40AB         | ??                                                     |
+| $40ac         | *Channel A: Current Intensity Modulation Select*       |
+| $40AD         | ??                                                     |
+| $40ae         | *Channel A: Current Frequency Modulation Value*        |
+| $40af         | *Channel A: Current Frequency Modulation Min*          |
+| $40b0         | *Channel A: Current Frequency Modulation Max*          |
+| $40B1         | *Channel A: Current Frequency Modulation Rate*         |
+| $40b2         | ??                                                     |
+| $40b3         | ??                                                     |
+| $40b4         | ??                                                     |
+| $40b5         | *Channel A: Current Frequency Modulation Select*       |
+| $40b6         | ??                                                     |
+| $40b7         | *Channel A: Current Width Modulation Value*            |
+| $40b8         | *Channel A: Current Width Modulation Min*              |
+| $40b9         | *Channel A: Current Width Modulation Max*              |
+| $40ba         | *Channel A: Current Width Modulation Rate*             |
+| $40bb         | ??                                                     |
+| $40bc         | ??                                                     |
+| $40bd         | ??                                                     |
+| $40be         | *Channel A: Current Width Modulation Select*           |
+| $41bf         | ??                                                     |
+| $40c0 - $4177 | *Space for User Routine Scratchpad A*                  |
+| $4180         | *Write LCD Parameter*                                  |
+| $4181         | *Write LCD Position*                                   |
+| $4182         | ??                                                     |
+| $4183         | ??                                                     |
+| $4184         | ??                                                     |
+| $4185         | ??                                                     |
+| $4186         | ??                                                     |
+| $4187         | ??                                                     |
+| $4188         | ??                                                     |
+| $4189         | ??                                                     |
+| $418A         | ??                                                     |
+| $418B         | ??                                                     |
+| $418C         | ??                                                     |
+| $418D         | ??                                                     |
+| $418E         | ??                                                     |
+| $418F         | ??                                                     |
+| $4190         | ?? (Pulse Flag?)                                       |
+| $4191         | ??                                                     |
+| $4192         | ??                                                     |
+| $4193         | ??                                                     |
+| $4194         | ??                                                     |
+| $4195         | ??                                                     |
+| $4196         | ??                                                     |
+| $4197         | ??                                                     |
+| $4198         | *Channel B: Current Gate OnTime*                       |
+| $4199         | *Channel B: Current Gate OffTime*                      |
+| $419A         | *Channel B: Current Gate Select*                       |
+| $419B         | ??                                                     |
+| $419C         | ?? (Ramp Value?)                                       |
+| $41A0         | ??                                                     |
+| $41A1         | ??                                                     |
+| $41A2         | ??                                                     |
+| $41A3         | ?? (Ramp Select?)                                      |
+| $41A4         | ??                                                     |
+| $41A5         | *Channel B: Current Intensity Modulation Value*        |
+| $41A6         | *Channel B: Current Intensity Modulation Min*          |
+| $41A7         | *Channel B: Current Intensity Modulation Max*          |
+| $41A8         | *Channel B: Current Intensity Modulation Rate*         |
+| $41A9         | ??                                                     |
+| $41AA         | ??                                                     |
+| $41AB         | ??                                                     |
+| $41ac         | *Channel B: Current Intensity Modulation Select*       |
+| $41AD         | ??                                                     |
+| $41ae         | *Channel B: Current Frequency Modulation Value*        |
+| $41af         | *Channel B: Current Frequency Modulation Min*          |
+| $41b0         | *Channel B: Current Frequency Modulation Max*          |
+| $41B1         | *Channel B: Current Frequency Modulation Rate*         |
+| $41b2         | ??                                                     |
+| $41b3         | ??                                                     |
+| $41b4         | ??                                                     |
+| $41b5         | *Channel B: Current Frequency Modulation Select*       |
+| $41b6         | ??                                                     |
+| $41b7         | *Channel B: Current Width Modulation Value*            |
+| $41b8         | *Channel B: Current Width Modulation Min*              |
+| $41b9         | *Channel B: Current Width Modulation Max*              |
+| $41ba         | *Channel B: Current Width Modulation Rate*             |
+| $41bb         | ??                                                     |
+| $41bc         | ??                                                     |
+| $41bd         | ??                                                     |
+| $41be         | *Channel B: Current Width Modulation Select*           |
+| $41bf         | ??                                                     |
+| $41c0         | ??                                                     |
+| $41c1         | ??                                                     |
+| $41c2         | ??                                                     |
+| $41c3         | ??                                                     |
+| $41c4         | ??                                                     |
+| $41c5         | ??                                                     |
+| $41c6         | ??                                                     |
+| $41c7         | ??                                                     |
+| $41c8         | ??                                                     |
+| $41c9         | ??                                                     |
+| $41ca         | ??                                                     |
+| $41cb         | ??                                                     |
+| $41cc         | ??                                                     |
+| $41cd         | ??                                                     |
+| $41ce         | ??                                                     |
+| $41cf         | ??                                                     |
+| $41D0 - $41ef | *Space for User Routine Scratchpad B*                  |
+| $41f0         | ?? (Counter)                                           |
+| $41f1         | ?? (Crashes on write)                                  |
+| $41f2         | ?? (Unknown)                                           |
+| $41f3         | *CurrentTopMode* (written during routine write)        |
+| $41f4         | *PowerLevel - COMM_POWER_LEVEL / COMM_LMODE*           |
+| $41f5         | *Split Mode Number A*                                  |
+| $41f6         | *Split Mode Number B*                                  |
+| $41f7         | *Favourite Mode*                                       |
+| $41F8         | *Advanced Parameter: RampLevel*                        |
+| $41F9         | *Advanced Parameter: RampTime*                         |
+| $41FA         | *Advanced Parameter: Depth*                            |
+| $41FB         | *Advanced Parameter: Tempo*                            |
+| $41FC         | *Advanced Parameter: Frequency*                        |
+| $41FD         | *Advanced Parameter: Effect*                           |
+| $41FE         | *Advanced Parameter: Width*                            |
+| $41FF         | *Advanced Parameter: Pace*                             |
+| $4200         | ??                                                     |
+| $4201         | ??                                                     |
+| $4202         | ??                                                     |
+| $4203         | ??                                                     |
+| $4204         | ??                                                     |
+| $4205         | ??                                                     |
+| $4206         | ??                                                     |
+| $4207         | ??                                                     |
+| $4208         | ??                                                     |
+| $4209         | ??                                                     |
+| $420a         | ??                                                     |
+| $420b         | ??                                                     |
+| $420c         | ??                                                     |
+| $420d         | *Current Multi Adjust Value / COMM_MULTI_AVG*          |
+| $420e - $43FF | *Strange Stuff and Stack*                              |
+
+**** EEPROM
 | Address       | Description                                          |
 |---------------+------------------------------------------------------|
 | $8000         | ??                                                   |
@@ -491,16 +440,49 @@ Writing a byte happens via a command with 4 byte length (minus checksum)
 | $8040 - $80ff | *Space for User Routines B*                          |
 | $8100 - $813f | *Space for User Routines C*                          |
 | $8120 - $81ff | *Space for User Routines D*                          |
+*** Memory Specifics
+**** $0000:$0098 - Partial String Table
+Contains a portion of the string table used for the UI on the ET312
+LCD. Each string is 8 bytes long, padded by spaces (0x20) if needed,
+with no null termination.
+**** $0098:$00fb - ?? (Possibly a continuation of .data segment)
+Unknown contents. This area may possibly be other constant setup in
+the .data section of the firmware.
+**** $00fc - Box Version
+For the ET312, this will always be 0x0c. (Checked in v1.5 and v1.6
+firmware)
+**** $00fd:$00ff - Firmware version
+The Major, Minor, and Interval revision for the firmware on the ET312.
+Usually something like 
 
-**** Tables
-***** Flags for COMM_SYSTEM_FLAG ($400F)
+#+BEGIN_EXAMPLE
+0x01 0x06 0x00
+#+END_EXAMPLE
+
+For the v1.6 firmware
+**** $400f - Register 15, Front Panel Potentiometer Lockout Flags
+Byte used to enable/disable front panel potentiometers.
 
 | Value | Description                                                |
 |-------+------------------------------------------------------------|
 |  0x01 | Disable Level Pots (SYSTEM_FLAG_POTS_DISABLE_MASK)         |
 |  0x08 | Disable Multi Adjust (SYSTEM_FLAG_MULTIA_POT_DISABLE_MASK) |
+**** $4029 - UBRRL I/O Register
+The low byte of the Serial I/O Register. 
 
-***** Action Value Table ($4070)
+By default, this is set to 0x19, with the U2X bit in $402b (UCSRA) set to
+0, meaning that at the 8mhz clock, the serial port will run at 19200
+baud. If this byte is set to 0x0c, the serial port will run at 38400
+baud with no noticeable effects on the ET312.
+
+Other non-standard, higher baud rates may be possible, but testing has
+not been successful thus far. See http://wormfood.net/avrbaudcalc.php
+for baud rate calculations, using the 8mhz table.
+**** $402b - UCSRA I/O Register
+Contains the U2X bit for doubling serial baud rates. Testing of
+setting the U2X bit has usually ended in ET312 communications no
+longer working properly (checksum errors).
+**** $4070 - Box Command
 | Value | Description                                    |
 |-------+------------------------------------------------|
 |  0x00 | Reset Current Routine                          |
@@ -551,7 +533,7 @@ Writing a byte happens via a command with 4 byte length (minus checksum)
 | Write Number (0x14)    | Numerical Value       | Display Position (+64 = second row) |
 | Write String (0x15)    | Stringtable Index     | ???                                 |
 
-***** Mode Table ($407B)
+**** $407b - Box Modes
 
 | Value | Description                     |
 |-------+---------------------------------|
@@ -591,7 +573,8 @@ Writing a byte happens via a command with 4 byte length (minus checksum)
 - Write 0x10 to $4070 (execute "next mode" to refresh display)
 - Wait 18ms (lets box execute previous command)
 
-***** Phase Value Table ($4083)
+**** $4083 - Phase, Front Panel, Mute/Mono/Stereo Control
+
 | Value | Description                 |
 |-------+-----------------------------|
 |  0x01 | Phase Control               |
@@ -608,14 +591,15 @@ Writing a byte happens via a command with 4 byte length (minus checksum)
 - 0x05 - CONTROLFLAG_PHASE_MASK
 - 0x20 - CONTROLFLAG_DISABLE_SWITCHES_MASK
 
-***** Gate Channel Select mask ($409A)
+**** $409A - Channel Gates
+
 | Value | Description |
 |-------+-------------|
 |  0x01 | Channel A   |
 |  0x02 | Channel B   |
 |  0x03 | Channel A+B |
 
-***** Power Level Table ($41F4)
+**** $41F4 - Power Levels
 
 | Value | Description |
 |-------+-------------|
