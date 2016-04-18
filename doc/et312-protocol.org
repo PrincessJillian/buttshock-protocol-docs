@@ -151,52 +151,116 @@ For instance, if we wanted to write 2 bytes, 0xFE 0xFF, starting
   respectively.
 
 *** Memory Layout Tables
+
+All entries in *bold* have been mapped and are useful.
+
 **** Flash
 | Address       | Description                                   |
 |---------------+-----------------------------------------------|
-| [[*$0000:$0098 - Partial String Table][$0000 - $0098]] | Partial String Table                          |
+| [[*$0000:$0098 - Partial String Table][$0000 - $0098]] | *Partial String Table*                        |
 | [[*$0098:$00fb - ?? (Possibly a continuation of .data segment)][$0098 - $00fb]] | ?? (Possibly a continuation of .data segment) |
-| [[*$00fc - Box Version][$00fc]]         | Box Model                                     |
-| [[*$00fd:$00ff - Firmware version][$00fd - $00ff]] | Firmware Version                              |
+| [[*$00fc - Box Version][$00fc]]         | *Box Model*                                   |
+| [[*$00fd:$00ff - Firmware version][$00fd - $00ff]] | *Firmware Version*                            |
 
 **** RAM
 | Address       | Description                                            |
 |---------------+--------------------------------------------------------|
-| $4000         | r0 (CPU Register, Unknown Usage)                       |
-| $4001         | r1 (CPU Register, Unknown Usage)                       |
-| $4002         | r2 (CPU Register, Unknown Usage)                       |
-| $4003         | r3 (CPU Register, Unknown Usage)                       |
-| $4004         | r4 (CPU Register, Unknown Usage)                       |
-| $4005         | r5 (CPU Register, Unknown Usage)                       |
-| $4006         | r6 (CPU Register, Unknown Usage)                       |
-| $4007         | r7 (CPU Register, Unknown Usage)                       |
-| $4008         | r8 (CPU Register, Unknown Usage)                       |
-| $4009         | r9 (CPU Register, Unknown Usage)                       |
-| $400a         | r10 (CPU Register, Unknown Usage)                      |
-| $400b         | r11 (CPU Register, Unknown Usage)                      |
-| $400c         | r12 (CPU Register, Unknown Usage)                      |
-| $400d         | r13 (CPU Register, Unknown Usage)                      |
-| $400e         | r14 (CPU Register, Unknown Usage)                      |
-| [[*$400f - Flags for COMM_SYSTEM_FLAG][$400f]]         | *r15/Front Panel Pot Lockout Flags - COMM_SYSTEM_FLAG* |
-| $4010         | r16 (CPU Register, Unknown Usage)                      |
-| $4011         | r17 (CPU Register, Unknown Usage)                      |
-| $4012         | r18 (CPU Register, Unknown Usage)                      |
-| $4013         | r19 (CPU Register, Unknown Usage)                      |
-| $4014         | r20 (CPU Register, Unknown Usage)                      |
-| $4015         | r21 (CPU Register, Unknown Usage)                      |
-| $4016         | r22 (CPU Register, Unknown Usage)                      |
-| $4017         | r23 (CPU Register, Unknown Usage)                      |
-| $4018         | r24 (CPU Register, Unknown Usage)                      |
-| $4019         | r25 (CPU Register, Unknown Usage)                      |
-| $401a         | r26 (CPU Register, Unknown Usage)                      |
-| $401b         | r27 (CPU Register, Unknown Usage)                      |
-| $401c         | r28 (CPU Register, Unknown Usage)                      |
-| $401d         | r29 (CPU Register, Unknown Usage)                      |
-| $401e         | r30 (CPU Register, Unknown Usage)                      |
-| $401f         | r31 (CPU Register, Unknown Usage)                      |
-| $4020 - $405f | ?? (IO Registers)                                      |
-| $4029         | *UBRRL Register (Baud Rate)*                           |
-| $4030 - $405f | ?? (IO Registers)                                      |
+| $4000         | r0 (CPU Register)                                      |
+| $4001         | r1 (CPU Register)                                      |
+| $4002         | r2 (CPU Register)                                      |
+| $4003         | r3 (CPU Register)                                      |
+| $4004         | r4 (CPU Register)                                      |
+| $4005         | r5 (CPU Register)                                      |
+| $4006         | r6 (CPU Register)                                      |
+| $4007         | r7 (CPU Register)                                      |
+| $4008         | r8 (CPU Register)                                      |
+| $4009         | r9 (CPU Register)                                      |
+| $400a         | r10 (CPU Register)                                     |
+| $400b         | r11 (CPU Register)                                     |
+| $400c         | r12 (CPU Register)                                     |
+| $400d         | r13 (CPU Register)                                     |
+| $400e         | r14 (CPU Register)                                     |
+| [[$400f - Register 15, Front Panel Potentiometer Lockout Flags][$400f]]         | *r15/Front Panel Pot Lockout Flags - COMM_SYSTEM_FLAG* |
+| $4010         | r16 (CPU Register)                                     |
+| $4011         | r17 (CPU Register)                                     |
+| $4012         | r18 (CPU Register)                                     |
+| $4013         | r19 (CPU Register)                                     |
+| $4014         | r20 (CPU Register)                                     |
+| $4015         | r21 (CPU Register)                                     |
+| $4016         | r22 (CPU Register)                                     |
+| $4017         | r23 (CPU Register)                                     |
+| $4018         | r24 (CPU Register)                                     |
+| $4019         | r25 (CPU Register)                                     |
+| $401a         | r26 (CPU Register)                                     |
+| $401b         | r27 (CPU Register)                                     |
+| $401c         | r28 (CPU Register)                                     |
+| $401d         | r29 (CPU Register)                                     |
+| $401e         | r30 (CPU Register)                                     |
+| $401f         | r31 (CPU Register)                                     |
+| $4020         | TWBR (IO Register)                                     |
+| $4021         | TWSR (IO Register)                                     |
+| $4022         | TWAR (IO Register)                                     |
+| $4023         | TWDR (IO Register)                                     |
+| $4024         | ADCL (IO Register)                                     |
+| $4025         | ADCH (IO Register)                                     |
+| $4026         | ADCSRA (IO Register)                                   |
+| $4027         | ADMUX (IO Register)                                    |
+| $4028         | ACSR (IO Register)                                     |
+| $4029         | *UBRRL (IO Register, Baud Rate)*                       |
+| $402a         | UCSRB (IO Register)                                    |
+| $402b         | UCSRA (IO Register)                                    |
+| $402c         | UDR (IO Register)                                      |
+| $402d         | SPCR (IO Register)                                     |
+| $402e         | SPSR (IO Register)                                     |
+| $402f         | SPDR (IO Register)                                     |
+| $4030         | PIND (IO Register)                                     |
+| $4031         | DDRD (IO Register)                                     |
+| $4032         | PORTD (IO Register)                                    |
+| $4033         | PINC (IO Register)                                     |
+| $4034         | DDRC (IO Register)                                     |
+| $4035         | PORTC (IO Register)                                    |
+| $4036         | PINB (IO Register)                                     |
+| $4037         | DDRB (IO Register)                                     |
+| $4038         | PORTB (IO Register)                                    |
+| $4039         | PINA (IO Register)                                     |
+| $403a         | DDRA (IO Register)                                     |
+| $403b         | PORTA (IO Register)                                    |
+| $403c         | EECR (IO Register)                                     |
+| $403d         | EEDR (IO Register)                                     |
+| $403e         | EEARL (IO Register)                                    |
+| $403f         | EEARH (IO Register)                                    |
+| $4040         | UBRRH/UCSRC (IO Register)                              |
+| $4041         | WDTCR (IO Register)                                    |
+| $4042         | ASSR (IO Register)                                     |
+| $4043         | OCR2 (IO Register)                                     |
+| $4044         | TCNT2 (IO Register)                                    |
+| $4045         | TCCR2 (IO Register)                                    |
+| $4046         | ICR1L (IO Register)                                    |
+| $4047         | ICR1H (IO Register)                                    |
+| $4048         | OCR1BL (IO Register)                                   |
+| $4049         | OCR1BH (IO Register)                                   |
+| $404a         | OCR1AL (IO Register)                                   |
+| $404b         | OCR1AH (IO Register)                                   |
+| $404c         | TCNT1L (IO Register)                                   |
+| $404d         | TCNT1H (IO Register)                                   |
+| $404e         | TCCR1B (IO Register)                                   |
+| $404f         | TCCR1A (IO Register)                                   |
+| $4050         | SFIOR (IO Register)                                    |
+| $4051         | OSCCAL/OCDR (IO Register)                              |
+| $4052         | TCNT0 (IO Register)                                    |
+| $4053         | TCCR0 (IO Register)                                    |
+| $4054         | MCUCSR (IO Register)                                   |
+| $4055         | MCUCR (IO Register)                                    |
+| $4056         | TWCR (IO Register)                                     |
+| $4057         | SPMCSR (IO Register)                                   |
+| $4058         | TIFR (IO Register)                                     |
+| $4059         | TIMSK (IO Register)                                    |
+| $405a         | GIFR (IO Register)                                     |
+| $405b         | GICR (IO Register)                                     |
+| $405c         | OCR0 (IO Register)                                     |
+| $405d         | SPL (IO Register)                                      |
+| $405e         | SPH (IO Register)                                      |
+| $405f         | SREG (IO Register)                                     |
 | $4060         | *COMM_MAIN_CBLOCK_BASE*                                |
 | $4061         | *Multi Adjust Offset - CBLOCK_MULTI_A_OFFSET*          |
 | $4062         | *Power Supply Voltage*                                 |
@@ -221,7 +285,7 @@ For instance, if we wanted to write 2 bytes, 0xFE 0xFF, starting
 | $4075         | ?? (writing does nothing, changes in random modes)     |
 | $4076         | ?? (00)                                                |
 | $4077         | ?? (00)                                                |
-| $4078         | ?? (copy of CurrentMode?)                              |
+| $4078         | *Current Menu Selection*                               |
 | $4079         | *Lowest Selectable Mode*                               |
 | $407A         | *Highest Selectable Mode*                              |
 | $407b         | *Current Mode*                                         |
