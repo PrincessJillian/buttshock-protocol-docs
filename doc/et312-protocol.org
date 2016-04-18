@@ -591,14 +591,66 @@ longer working properly (checksum errors).
 - 0x05 - CONTROLFLAG_PHASE_MASK
 - 0x20 - CONTROLFLAG_DISABLE_SWITCHES_MASK
 
-**** $409A - Channel Gates
+**** $4098 - Current Channel Gate Time On
+Sets the time on for the current gate ($409A).
+**** $4099 - Current Channel Gate Time Off
+Sets the time on for the current gate ($409A).
+**** $409A - Current Channel Gate
+Sets which channel gating commands will control.
 
 | Value | Description |
 |-------+-------------|
 |  0x01 | Channel A   |
 |  0x02 | Channel B   |
 |  0x03 | Channel A+B |
-
+**** $40a5 - Current Level
+1 byte, Range 128-255
+(Range taken from erosoutsider perl script)
+**** $40a6 - Minimum Level
+1 byte, Range 128-255
+(Range taken from erosoutsider perl script)
+**** $40a7 - Maximum Level
+1 byte, Range 128-255
+(Range taken from erosoutsider perl script)
+**** $40a8 - Level Rate
+1 byte, Range 0-255, 0 is fastest
+(Range taken from erosoutsider perl script)
+**** $40ac - Level Options
+Bits 0-4 (upper nibble): Min Options
+Bits 5-8 (lower nibble): Rate Options
+(Range taken from erosoutsider perl script)
+**** $40ae - Frequency
+1 byte, Range 8-255 (?!), 8 is fastest
+(Range taken from erosoutsider perl script)
+**** $40af - Maximum Frequency
+1 byte, Range 8-255 (?!), 8 is fastest
+(Range taken from erosoutsider perl script)
+**** $40b0 - Minimum Frequency
+1 byte, Range 8-255 (?!), 8 is fastest
+(Range taken from erosoutsider perl script)
+**** $40b1 - Frequency Rate
+1 byte, Range 0-255, 0 is fastest
+(Range taken from erosoutsider perl script)
+**** $40b5 - Frequency Options
+Bits 0-4 (upper nibble): Val Options
+Bits 5-8 (lower nibble): Rate Options
+(Range taken from erosoutsider perl script)
+**** $40b7 - Current Pulse Width
+1 byte, Range 64-196 (?!)
+(Range taken from erosoutsider perl script)
+**** $40b8 - Minimum Pulse Width
+1 byte, Range 64-196 (?!)
+(Range taken from erosoutsider perl script)
+**** $40b9 - Maximum Pulse Width
+1 byte, Range 64-196 (?!)
+(Range taken from erosoutsider perl script)
+**** $40ba - Pulse Width Rate
+1 byte, Range 0-255, 0 is fastest
+(Range taken from erosoutsider perl script)
+**** $40be - Width Options
+Bits 0-4 (upper nibble): Val Options
+Bits 5-8 (lower nibble): Rate Options
+(Range taken from erosoutsider perl script)
 **** $41F4 - Power Levels
 
 | Value | Description |
