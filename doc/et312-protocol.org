@@ -98,7 +98,6 @@ received from the ET312 will be cleartext.
 Outside of the initial key setup, talking to the ET312 happens through
 2 functions. These resemble peek and poke, except that developers can
 send between 1-8 bytes at a time. Only 1 byte may be read at a time.
-
 Both functions take 16 bit addresses, which map into a virtual memory
 space set up by the communications handler on the ET312. This memory
 space looks like:
@@ -541,6 +540,15 @@ Byte used to enable/disable front panel potentiometers.
 |-------+------------------------------------------------------------|
 |  0x01 | Disable Level Pots (SYSTEM_FLAG_POTS_DISABLE_MASK)         |
 |  0x08 | Disable Multi Adjust (SYSTEM_FLAG_MULTIA_POT_DISABLE_MASK) |
+
+Once the front panel potentiometers have been disabled you can then
+send commands to change the A, B, and MA levels directly.  Enabling
+again sets the unit back to the actual potentiometer values.  
+
+To set the A level write to $4064 (CurrentLevelA 0-255), to set the B level
+write to $4065 (CurrentLevel B 0-255), to set the MA write to $420D 
+(Current Multi Adjust Value, range from min at $4086 to max at $4087).
+
 **** $4029 - UBRRL I/O Register
 The low byte of the Serial I/O Register. 
 
