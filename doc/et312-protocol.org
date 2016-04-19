@@ -94,7 +94,7 @@ Only data sent from host to ET312 requires encryption, all data
 received from the ET312 will be cleartext.
 
 ** Commands
-*** Commands
+*** Commands and Accessible Memory
 Outside of the initial key setup, talking to the ET312 happens through
 2 functions. These resemble peek and poke, except that developers can
 send between 1-8 bytes at a time. Only 1 byte may be read at a time.
@@ -103,18 +103,25 @@ Both functions take 16 bit addresses, which map into a virtual memory
 space set up by the communications handler on the ET312. This memory
 space looks like:
 
-| Address Range | Description   |
-|---------------+---------------|
-| $0000 - $00ff | Flash (256b)  |
-| $4000 - $4400 | RAM (1k)      |
-| $8000 - $8200 | EEPROM (512b) |
+| Address Range | Description                    |
+|---------------+--------------------------------|
+| $0000 - $00ff | Flash (256b)                   |
+| $4000 - $43ff | Registers and Partial RAM (1k) |
+| $8000 - $81ff | EEPROM (512b)                  |
 
 Reading past the end of these ranges will just loop the last valid
 range.
 
 All further documentation will use these ranges as reference, so when
 we mention writing/reading to, say, $4010, this means we're writing to
-byte 16 of the RAM address space.
+byte 16 of the Register/RAM address space.
+
+Also note that we do not have access to all of the RAM via this
+protocol. The CPU and IO registers take up the first 96 bytes of the
+address space we can access, and do not count as SRAM space. Since the
+virtual memory addressing cuts us off at $43ff, we cannot access the
+last 96 bytes of RAM. That said, the stack pointer never seems to move
+from 0x045f, which is gcc's RAM end.
 
 ***** Read Bytes
 
@@ -463,7 +470,7 @@ All entries in *bold* have been mapped and are useful.
 | $420b         | ??                                                     |
 | $420c         | ??                                                     |
 | $420d         | *Current Multi Adjust Value / COMM_MULTI_AVG*          |
-| $420e - $43FF | *Strange Stuff and Stack*                              |
+| $420e - $43FF | *Strange Stuff*                                        |
 
 **** EEPROM
 | Address       | Description                                          |
