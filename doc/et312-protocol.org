@@ -315,7 +315,7 @@ All entries in *bold* have been mapped and are useful.
 | $408D         | ?? (used by torment routine)                           |
 | $408E         | ?? (used by torment routine)                           |
 | $408F         | ?? (gets set to 0x00 when routine loaded)              |
-| $4090         | ?? (Pulse Flag?)                                       |
+| $4090         | *Channel A: Current Gate Value* (0 when no output)     |
 | $4091         | ??                                                     |
 | $4092         | ??                                                     |
 | $4093         | ??                                                     |
@@ -377,7 +377,7 @@ All entries in *bold* have been mapped and are useful.
 | $418D         | ??                                                     |
 | $418E         | ??                                                     |
 | $418F         | ??                                                     |
-| $4190         | ?? (Pulse Flag?)                                       |
+| $4190         | *Channel A: Current Gate Value* (0 when no output)     |
 | $4191         | ??                                                     |
 | $4192         | ??                                                     |
 | $4193         | ??                                                     |
