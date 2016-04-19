@@ -470,7 +470,10 @@ All entries in *bold* have been mapped and are useful.
 | $420b         | ??                                                     |
 | $420c         | ??                                                     |
 | $420d         | *Current Multi Adjust Value / COMM_MULTI_AVG*          |
-| $420e - $43FF | *Strange Stuff*                                        |
+| $420e - $4212 | ??                                                     |
+| $4213         | ?? (Writing 0 kills serial communication)              |
+| $4214 - $422c | ??                                                     |
+| $422d - $43FF | Possibly Unused (can zero out, never see changes)      |
 
 **** EEPROM
 | Address       | Description                                          |
