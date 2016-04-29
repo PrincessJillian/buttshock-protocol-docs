@@ -1,7 +1,10 @@
-# Erosoutsider
+# Erosoutsider Serial Protocol Docs
 
-Documentation for serial based control and firmware implementation of
-the Erostek ET-312 Electrostimulation Device.
+Documentation for serial based control of the following devices:
+
+- Erostek ET-312 Electrostimulation Device
+- Erostek ET-232 Electrostimulation Device
+- Estim Systems 2B Electrostimulation Device
 
 ## Project Goals
 
@@ -27,38 +30,17 @@ The protocol documentation is in the repo at:
 
 [doc/et312-protocol.org](doc/et312-protocol.org)
 
-### Firmware
-
-The last firmware upgrade to the ET-312 happened in 2004, yet the box
-is still sold to this day, for the same price. The serial port
-implementation is broken, and there's quite a few bugs and half
-implemented features hidden around the firmware. We'd like to be able
-to go in, fix those, and distribute new, better firmware to ET-312
-owners.
-
-The firmware reverse engineering documentation is in the repo at:
-
-[firmware/firmware.org](firmware/firmware.org)
-
-### Circuit Mapping
-
-The circuit board is most likely a pretty simple 2 layer board,
-meaning it should be easily mappable. There's probably nothing
-groundbreaking happening here, but it's an interesting exercise
-nonetheless.
-
 ## Repo Contents
 
 This repo contains the following:
 
-- Protocol, Firmware, and Hardware Documentation (doc directory)
+- Serial Protocol Documentation (doc directory)
 - The original erosoutsider (erosoutsider directory)
-- Copies of available firmware
 
 ## erosoutsider Implementations
 
 If you are looking for a language specific version of the erosoutsider
-work, each language has a repo assigned to it:
+serial protocol work, each language has a repo assigned to it:
 
 - Python Library - http://github.com/metafetish/erosoutsider-py
 - Rust Library - http://github.com/metafetish/erosoutsider-rs
