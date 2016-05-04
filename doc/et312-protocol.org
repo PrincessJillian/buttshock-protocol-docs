@@ -281,16 +281,16 @@ All entries in *bold* have been mapped and are useful.
 | $406B         | ??                                                     |
 | $406C         | ??                                                     |
 | $406D         | *Menu State*                                           |
-| $406E         | ??                                                     |
-| $406F         | ??                                                     |
+| $406E         | not used                                               |
+| $406F         | not used                                               |
 | $4070         | *Execute Command*                                      |
-| $4071         | ?? (does something when written to)                    |
-| $4072         | ?? (random number in random modes)                     |
+| $4071         | *Execute Command (2)*                                  |
+| $4072         | Last random number picked                              |
 | $4073         | ?? (some timer)                                        |
 | $4074         | ?? (writing disables MA)                               |
 | $4075         | ?? (writing does nothing, changes in random modes)     |
-| $4076         | ?? (00)                                                |
-| $4077         | ?? (00)                                                |
+| $4076         | not used                                               |
+| $4077         | not used                                               |
 | $4078         | *Current Menu Selection*                               |
 | $4079         | *Lowest Selectable Mode*                               |
 | $407A         | *Highest Selectable Mode*                              |
@@ -606,6 +606,8 @@ longer working properly (checksum errors).
 |  0x25 | (Failure 00)                                   |
 |  0x26 | (Failure 00)                                   |
 |  0x27 | (Failure 00)                                   |
+
+*Note: if you want a second command to execute immediately after the first, write the second to $4071*
 
 *Note: Parameters for the LCD write command*
 
