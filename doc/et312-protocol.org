@@ -268,13 +268,13 @@ All entries in *bold* have been mapped and are useful.
 | $405e         | SPH (IO Register)                                      |
 | $405f         | SREG (IO Register)                                     |
 | $4060         | *COMM_MAIN_CBLOCK_BASE*                                |
-| $4061         | *Multi Adjust Offset - CBLOCK_MULTI_A_OFFSET*          |
-| $4062         | *Power Supply Voltage*                                 |
-| $4063         | *Battery Voltage*                                      |
-| $4064         | *CurrentLevel A - CBLOCK_POT_A_OFFSET*                 |
-| $4065         | *CurrentLevel B - CBLOCK_POT_B_OFFSET*                 |
-| $4066         | *Audio Input Level A*                                  |
-| $4067         | *Audio Input Level B*                                  |
+| $4061         | *Multi Adjust Offset - CBLOCK_MULTI_A_OFFSET (ADC1)*   |
+| $4062         | *Power Supply Voltage (ADC2)*                          |
+| $4063         | *Battery Voltage (ADC3)*                               |
+| $4064         | *CurrentLevel A - CBLOCK_POT_A_OFFSET (ADC4)*          |
+| $4065         | *CurrentLevel B - CBLOCK_POT_B_OFFSET (ADC5)*          |
+| $4066         | *Audio Input Level A (ADC6)*                           |
+| $4067         | *Audio Input Level B (ADC7)*                           |
 | $4068         | ??                                                     |
 | $4069         | *Currently Pressed Button*                             |
 | $406A         | ?? (some counter)                                      |
