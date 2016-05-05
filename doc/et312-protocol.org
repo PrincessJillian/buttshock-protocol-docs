@@ -657,6 +657,13 @@ to $4070 and the second to $4071*
 
 - Write New Mode Number to $407b
 - Write 0x04 to $4070 (execute "main menu")
+- Write 0x10 to $4071 (execute "next mode" to refresh display)
+- Wait 18ms (lets box execute previous commands)
+
+*Note: To set mode (old way)*
+
+- Write New Mode Number to $407b
+- Write 0x04 to $4070 (execute "main menu")
 - Wait 18ms (lets box execute previous command)
 - Write 0x10 to $4070 (execute "next mode" to refresh display)
 - Wait 18ms (lets box execute previous command)
