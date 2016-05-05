@@ -267,14 +267,14 @@ All entries in *bold* have been mapped and are useful.
 | $405d         | SPL (IO Register)                                      |
 | $405e         | SPH (IO Register)                                      |
 | $405f         | SREG (IO Register)                                     |
-| $4060         | *COMM_MAIN_CBLOCK_BASE*                                |
+| $4060         | *Output Current Sense COMM_MAIN_CBLOCK_BASE (ADC0)*    |
 | $4061         | *Multi Adjust Offset - CBLOCK_MULTI_A_OFFSET (ADC1)*   |
 | $4062         | *Power Supply Voltage (ADC2)*                          |
 | $4063         | *Battery Voltage (ADC3)*                               |
-| $4064         | *CurrentLevel A - CBLOCK_POT_A_OFFSET (ADC4)*          |
-| $4065         | *CurrentLevel B - CBLOCK_POT_B_OFFSET (ADC5)*          |
-| $4066         | *Audio Input Level A (ADC6)*                           |
-| $4067         | *Audio Input Level B (ADC7)*                           |
+| $4064         | *Level Pot A - CBLOCK_POT_A_OFFSET (ADC4)*             |
+| $4065         | *Level Pot B - CBLOCK_POT_B_OFFSET (ADC5)*             |
+| $4066         | *Audio Input Level A (Half wave) (ADC6)*               |
+| $4067         | *Audio Input Level B (Half wave) (ADC7)*               |
 | $4068         | ??                                                     |
 | $4069         | *Currently Pressed Button*                             |
 | $406A         | ?? (some counter)                                      |
@@ -539,6 +539,8 @@ Byte used to enable/disable front panel potentiometers.
 | Value | Description                                                |
 |-------+------------------------------------------------------------|
 |  0x01 | Disable Level Pots (SYSTEM_FLAG_POTS_DISABLE_MASK)         |
+|  0x02 | ?? if set something happens then it's unset                |
+|  0x04 | ??                                                         |
 |  0x08 | Disable Multi Adjust (SYSTEM_FLAG_MULTIA_POT_DISABLE_MASK) |
 
 Once the front panel potentiometers have been disabled you can then
@@ -607,7 +609,9 @@ longer working properly (checksum errors).
 |  0x26 | (Failure 00)                                   |
 |  0x27 | (Failure 00)                                   |
 
-*Note: if you want a second command to execute immediately after the first, write the second to $4071*
+*Note: you can also write a command to $4071, both are checked one after
+the other, so if you want to execute two commands, you can write the first
+to $4070 and the second to $4071*
 
 *Note: Parameters for the LCD write command*
 
