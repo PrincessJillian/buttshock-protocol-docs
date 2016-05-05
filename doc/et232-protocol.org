@@ -72,13 +72,90 @@ following string will be returned:
 
 Commands work on a peek and poke basis, similar to the ET-312.
 
-**** Read Byte
+**** Read Byte ("H")
+
+Reading a byte from the ET-232 is done using the "H" command.
+This command consists of:
+
+- "H" (0x48)
+- A 8-bit address, written as 2 ASCII characters representing the hex
+  value.
+- The checksum
+- "\r"
+
+For instance, to read the byte at 0x80 (which gives you a checksum of 0xB0), you would send
 
 #+BEGIN_EXAMPLE
-
+H80B0\r
 #+END_EXAMPLE
-**** Write Byte
 
-**** Unknown?
+The command will return a two digit hex value at the requested
+location, in ASCII format.
+
+**** Write Byte ("I")
+
+Writing a byte from the ET-232 is done using the "I" command.
+This command consists of:
+
+- "I" (0x49)
+- A 8-bit address, written as 2 ASCII characters representing the hex
+  value.
+- An 8-bit value, written as 2 ASCII characters representing the hex
+  value.
+- The checksum
+- "\r"
+
+For instance, to write the value 0x10 to the byte at 0x80 (which gives
+you a checksum of 0x12), you would send
+
+#+BEGIN_EXAMPLE
+I801012\r
+#+END_EXAMPLE
+
+The command, if successful, will return the string "$\n"
+
+**** Unknown ("J")
+
+The usage of the "J" command is unknown. Sending "J" appears to ignore
+arguments and returns "FF\n"
 
 ** Address Table
+
+| Address | Description                          |
+|---------+--------------------------------------|
+| $08     | Channel A Pulse Width                |
+| $09     | Channel A Pulse Frequency Reciprocal |
+| $0A     | Channel A Pulse Amplitude            |
+| $0B     | Channel A Power Compensation         |
+| $0C     | Channel A Pulse Enable Polarity      |
+| $0D     | ??                                   |
+| $0E     | Channel B Pulse Width                |
+| $0F     | Channel B Pulse Frequency Reciprocal |
+| $10     | Channel B Pulse Amplitude            |
+| $11     | Channel B Power Compensation         |
+| $12     | Channel B Pulse Enable Polarity      |
+| $13-1F  | ??                                   |
+| $20-4F  | RAM/Program Parameters?              |
+| $4F-87  | ??                                   |
+| $88     | Position of Pot B                    |
+| $89     | Position of MA Pot                   |
+| $8A     | Battery Voltage                      |
+| $8B     | Audio Input Level                    |
+| $8C     | Position of Pot A                    |
+| $8D-97  | ??                                   |
+| $98     | Position of MA Pot (?)               |
+| $99-A1  | ??                                   |
+| $A2     | Mode Switch Position                 |
+| $A3     | Mode Switch Override                 |
+| $A4     | Analog Input Override                |
+| $A5-CF  | ??                                   |
+| $D0     | Unknown Timer                        |
+| $D1     | Unknown Timer                        |
+| $D2     | ??                                   |
+| $D3     | Auto Power Off Timer                 |
+| $D8     | Program Fade In Timer                |
+| $D9-FB  | ??                                   |
+| $FC     | Unknown Timer                        |
+| $FD     | Unknown Timer                        |
+| $FE-FF  | ??                                   |
+
