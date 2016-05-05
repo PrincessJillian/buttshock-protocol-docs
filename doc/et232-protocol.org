@@ -120,7 +120,6 @@ The usage of the "J" command is unknown. Sending "J" appears to ignore
 arguments and returns "FF\n"
 
 ** Address Table
-
 | Address | Description                          |
 |---------+--------------------------------------|
 | $08     | Channel A Pulse Width                |
@@ -158,4 +157,67 @@ arguments and returns "FF\n"
 | $FC     | Unknown Timer                        |
 | $FD     | Unknown Timer                        |
 | $FE-FF  | ??                                   |
+*** Address Specific Notes
+**** $08/$0E - Channel Pulse Width
+Range is 00 (very low) to FF (full effect).
+**** $09/$0F - Channel Pulse Frequency Reciprocal
+Maximum range is FF (~15Hz) to 08 (~475Hz).
+**** $0A/$10 - Channel Pulse Amplitude
+Range is 00 (no output) to FF (full effect).
 
+Whereas the pulse width is perceptually linear, this parameter
+has a quadratic effect on overall power, so changes are more
+discernible at the upper end.
+**** $0B/$11 - Channel Power Compentation
+Most programs use 20 as the standard value. Stroke uses 2B (to
+compensate for the monophasic pulses?). Small numeric increases
+produce relative large increases in perceived intensity.
+**** $0C/$12 - Channel Pulse Enable/Polarity
+Most programs use 07 as the standard value. Some switch between
+07 and 06 to provide an intermittent effect. Stroke switches
+between 05 and 03 to produce the two different stroke
+"directions".
+**** $88/$89/$8C/$98 - Pot Positions
+Values range from 00 (far left) to FF (far right)
+**** $8A - Battery Voltage
+FF (maximum) to 90 (auto shutdown threshold)
+**** $A2 - Mode Switch Position
+| Value | Position   |
+|-------+------------|
+|    0B | waves      |
+|    0A | intense    |
+|    0E | random     |
+|    06 | audioSoft  |
+|    02 | audioLoud  |
+|    03 | audioWaves |
+|    07 | user       |
+|    05 | hiFreq     |
+|    01 | climb      |
+|    00 | throb      |
+|    04 | combo      |
+|    0C | thrust     |
+|    08 | thump      |
+|    09 | ramp       |
+|    0D | stroke     |
+|    0F | off        |
+
+**** $A3 - Mode Switch Override
+
+- 8X - force modeX 
+- 8F - force reset
+
+When top bit set, the requested mode is selected regardless of the
+position of the physical switch. Even if the switch is moved to off!
+If serial connection is lost for any reason in this state, then it may
+be necessary to remove power from the device in order to reset it.
+**** $A4 - Analog Input Override
+| Value | Description           |
+|-------+-----------------------|
+|    01 | disable input B       |
+|    02 | disable input MA      |
+|    04 | disable input Battery |
+|    08 | disable input Audio   |
+|    10 | disable input A       |
+
+When set, the corresponding inputs are ignored, and levels can be
+set in software by writing to addresses 88..8C above.
