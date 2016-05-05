@@ -574,7 +574,7 @@ longer working properly (checksum errors).
 |  0x03 | Select current Menu Item                       |
 |  0x04 | Exit Menu                                      |
 |  0x05 | Start "Favourite" Routine                      |
-|  0x06 | (Failure 16)                                   |
+|  0x06 | Set Power Level                                |
 |  0x07 | Edit Advanced Parameter                        |
 |  0x08 | display next menu item                         |
 |  0x09 | display previous menu item                     |
@@ -612,6 +612,10 @@ longer working properly (checksum errors).
 *Note: you can also write a command to $4071, both are checked one after
 the other, so if you want to execute two commands, you can write the first
 to $4070 and the second to $4071*
+
+*Note: Parameters for set power level*
+
+Write power level to 0x4078.  0x6b low, 0x6c normal, 06d is high
 
 *Note: Parameters for the LCD write command*
 
