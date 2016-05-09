@@ -566,6 +566,11 @@ for baud rate calculations, using the 8mhz table.
 Contains the U2X bit for doubling serial baud rates. Testing of
 setting the U2X bit has usually ended in ET312 communications no
 longer working properly (checksum errors).
+**** $406D - Menu State
+| Value | Description                                    |
+|-------+------------------------------------------------|
+|  0x01 | In startup screen or in a menu                 |
+|  0x02 | No menu, program is running and displaying     |
 **** $4070 - Box Command
 | Value | Description                                    |
 |-------+------------------------------------------------|
