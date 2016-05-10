@@ -657,11 +657,11 @@ Write power level to 0x4078.  0x6b low, 0x6c normal, 06d is high
 |  0x87 | MODE_NUM_PHASE3                 |
 |  0x88 | MODE_NUM_USER1                  |
 |  0x89 | MODE_NUM_USER2                  |
-|  0x90 | MODE_NUM_USER3                  |
-|  0x91 | MODE_NUM_USER4                  |
-|  0x92 | MODE_NUM_USER5                  |
-|  0x93 | MODE_NUM_USER6                  |
-|  0x94 | MODE_NUM_USER7 / MODE_NUM_UPPER |
+|  0x8a | MODE_NUM_USER3                  |
+|  0x8b | MODE_NUM_USER4                  |
+|  0x8c | MODE_NUM_USER5                  |
+|  0x8d | MODE_NUM_USER6                  |
+|  0x8e | MODE_NUM_USER7 / MODE_NUM_UPPER |
 
 *Note: To set mode*
 
