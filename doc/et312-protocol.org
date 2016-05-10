@@ -291,9 +291,9 @@ All entries in *bold* have been mapped and are useful.
 | $4075         | ?? (writing does nothing, changes in random modes)     |
 | $4076         | not used                                               |
 | $4077         | not used                                               |
-| $4078         | *Current Menu Selection*                               |
-| $4079         | *Lowest Selectable Mode*                               |
-| $407A         | *Highest Selectable Mode*                              |
+| $4078         | *Current displayed Menu Item/Mode (not yet selected)*  |
+| $4079         | *Lowest Selectable Menu Item/Mode*                     |
+| $407A         | *Highest Selectable Menu Item/Mode*                    |
 | $407b         | *Current Mode*                                         |
 | $407c         | ?? (Oscillator Ch A? )                                 |
 | $407d         | ?? (Oscillator Ch A? )                                 |
@@ -574,11 +574,12 @@ longer working properly (checksum errors).
 **** $4070 - Box Command
 | Value | Description                                    |
 |-------+------------------------------------------------|
-|  0x00 | Reset Current Routine                          |
+|  0x00 | Start "Favourite" Routine                      |
+|  0x01 | do nothing                                     |
 |  0x02 | Display Status Screen                          |
 |  0x03 | Select current Menu Item                       |
 |  0x04 | Exit Menu                                      |
-|  0x05 | Start "Favourite" Routine                      |
+|  0x05 | Same as 0x00                                   |
 |  0x06 | Set Power Level                                |
 |  0x07 | Edit Advanced Parameter                        |
 |  0x08 | display next menu item                         |
