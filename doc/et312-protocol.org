@@ -282,13 +282,13 @@ All entries in *bold* have been mapped and are useful.
 | $406C         | ??                                                     |
 | $406D         | *Menu State*                                           |
 | $406E         | not used                                               |
-| $406F         | not used                                               |
+| $406F         | ??                                                     |
 | $4070         | *Execute Command*                                      |
 | $4071         | *Execute Command (2)*                                  |
 | $4072         | Last random number picked                              |
 | $4073         | ?? (some timer)                                        |
-| $4074         | ?? (writing disables MA)                               |
-| $4075         | ?? (writing does nothing, changes in random modes)     |
+| $4074         | Random1: 1 (start) or current random mode number       |
+| $4075         | Random1: stores counter time when to change mode       |
 | $4076         | not used                                               |
 | $4077         | not used                                               |
 | $4078         | *Current displayed Menu Item/Mode (not yet selected)*  |
