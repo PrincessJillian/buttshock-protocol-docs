@@ -781,7 +781,7 @@ control the output levels for the Slave A and B.
 Master-Slave communications are known to be a bit troublesome
 and can easily fail.
 
-** Handshake
+*** Handshake
 
 Note: There is no encryption (xor bytes) used.
 
