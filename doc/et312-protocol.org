@@ -764,3 +764,42 @@ Bits 5-8 (lower nibble): Rate Options
 |  0x01 | NORMAL      |
 |  0x02 | HIGH        |
 |  0x03 | UNKNOWN     |
+
+** Master and Slave unit linking
+
+Two ET312 boxes can be linked together using a cross-over cable.
+
+- Box 1 3.5mm Tip <-> Box 2 3.5mm Ring
+- Box 1 3.5mm Ring <-> Box 2 3.5mm Tip
+- Box 1 3.5mm Sleeve <-> Box 2 3.5mmSleeve
+
+A box becomes Master when you navigate in the menu options
+to the Link option.  Once linked, a Slave unit A and B channels
+will follow those from the Master unit. The A and B pots still
+control the output levels for the Slave A and B.
+
+Master-Slave communications are known to be a bit troublesome
+and can easily fail.
+
+** Handshake
+
+Note: There is no encryption (xor bytes) used.
+
+On selecting the menu item, the Master box will send a single
+byte on the serial port 0x0e.  It expects to see a single byte
+back from the Slave 0x05.
+
+After handshake is complete the master box will use the standard
+protocol as above to send memory locations to the slave.
+
+The master will first send a 9d 40 04 followed by 6 bytes and
+a checksum.
+
+When the slave sends an acknowledgement back (a single 0x06), the
+master will send a 9d 40 0a followed by 6 bytes.
+
+When the master gets the next 0x06 back it will send the first
+6 bytes again, forever, as fast as the slave processes them.
+
+Locations 0x4004-0x400f contain the processor registers r4-r15
+
