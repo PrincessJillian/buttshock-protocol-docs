@@ -275,18 +275,18 @@ All entries in *bold* have been mapped and are useful.
 | $4065         | *Level Pot B - CBLOCK_POT_B_OFFSET (ADC5)*             |
 | $4066         | *Audio Input Level A (Half wave) (ADC6)*               |
 | $4067         | *Audio Input Level B (Half wave) (ADC7)*               |
-| $4068         | ??                                                     |
+| $4068         | ??related to buttons                                   |
 | $4069         | *Currently Pressed Button*                             |
-| $406A         | ?? (some counter)                                      |
-| $406B         | ??                                                     |
+| $406A         | Master timer (MSB) see 0x4073 for LSB                  |
+| $406B         | ??related to width mod                                 |
 | $406C         | ??                                                     |
 | $406D         | *Menu State*                                           |
 | $406E         | not used                                               |
-| $406F         | ??                                                     |
+| $406F         | not used                                               |
 | $4070         | *Execute Command*                                      |
 | $4071         | *Execute Command (2)*                                  |
 | $4072         | Last random number picked                              |
-| $4073         | ?? (some timer)                                        |
+| $4073         | Master timer (LSB)                                     |
 | $4074         | Random1: 1 (start) or current random mode number       |
 | $4075         | Random1: stores counter time when to change mode       |
 | $4076         | not used                                               |
