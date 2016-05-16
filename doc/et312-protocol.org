@@ -277,7 +277,7 @@ All entries in *bold* have been mapped and are useful.
 | $4067         | *Audio Input Level B (Half wave) (ADC7)*               |
 | $4068         | ??related to buttons                                   |
 | $4069         | *Currently Pressed Button*                             |
-| $406A         | Master timer (MSB) see 0x4073 for LSB                  |
+| $406A         | Master timer (MSB) (0x4073 LSB) runs 1.91Hz            |
 | $406B         | ??related to width mod                                 |
 | $406C         | ??                                                     |
 | $406D         | *Menu State*                                           |
@@ -286,7 +286,7 @@ All entries in *bold* have been mapped and are useful.
 | $4070         | *Execute Command*                                      |
 | $4071         | *Execute Command (2)*                                  |
 | $4072         | Last random number picked                              |
-| $4073         | Master timer (LSB)                                     |
+| $4073         | Master timer (LSB) runs at 488Hz (8MHz/64(scaler)/256) |
 | $4074         | Random1: 1 (start) or current random mode number       |
 | $4075         | Random1: stores counter time when to change mode       |
 | $4076         | not used                                               |
@@ -307,10 +307,10 @@ All entries in *bold* have been mapped and are useful.
 | $4085         | ?? (gets set to 0x03 when routine loaded)              |
 | $4086         | *Multi Adjust Range High End*                          |
 | $4087         | *Multi Adjust Range Low End*                           |
-| $4088         | *Routine timer (3 bytes) low*                          |
-| $4089         | *Routine timer (3 bytes) mid*                          |
-| $408A         | *Routine timer (3 bytes) high*                         |
-| $408B         | *Routine timer (slower, one byte)*                     |
+| $4088         | *Routine timer (3 bytes) low - 244Hz (409mS)*          |
+| $4089         | *Routine timer (3 bytes) mid - 0.953Hz (1.048S)*       |
+| $408A         | *Routine timer (3 bytes) high - (268.43S)*             |
+| $408B         | *Routine timer (slower) - 30.5Hz*                      |
 | $408C         | ?? (gets set to 0x00 when routine loaded)              |
 | $408D         | used for picking random number (min)                   |
 | $408E         | used for picking random number (max)                   |
