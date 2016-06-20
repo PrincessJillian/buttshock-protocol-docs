@@ -104,7 +104,7 @@ space looks like:
 
 | Address Range | Description                    |
 |---------------+--------------------------------|
-| $0000 - $00ff | Flash (256b)                   |
+| $0000 - $00ff | Flash (256b from 0x1f00-0x1fff)|
 | $4000 - $43ff | Registers and Partial RAM (1k) |
 | $8000 - $81ff | EEPROM (512b)                  |
 
@@ -164,7 +164,7 @@ All entries in *bold* have been mapped and are useful.
 | Address       | Description                                   |
 |---------------+-----------------------------------------------|
 | [[*$0000:$0098 - Partial String Table][$0000 - $0098]] | *Partial String Table*                        |
-| [[*$0098:$00fb - ?? (Possibly a continuation of .data segment)][$0098 - $00fb]] | ?? (Possibly a continuation of .data segment) |
+| [[*$0098:$00fb - (continuation of .data segment)][$0098 - $00fb]] | (continuation of .data segment) |
 | [[*$00fc - Box Version][$00fc]]         | *Box Model*                                   |
 | [[*$00fd:$00ff - Firmware version][$00fd - $00ff]] | *Firmware Version*                            |
 
