@@ -300,13 +300,13 @@ All entries in *bold* have been mapped and are useful.
 | $407e         | ?? (Oscillator Ch B? )                                 |
 | $407F         | ?? (Oscillator Ch B? )                                 |
 | $4080         | ?? (0x00 new routine)                                  |
-| $4081         | ?? (0x00 new routine)                                  |
-| $4082         | ?? (0x02 new routine)                                  |
-| $4083         | *Output Control Flags - COMM_CONTROL_FLAG* (0x00 nr)   |
-| $4084         | ?? (0x00 new routine)                                  |
-| $4085         | ?? (0x03 new routine)                                  |
-| $4086         | *Multi Adjust Range Min* (0x0f new routine)            |
-| $4087         | *Multi Adjust Range Max* (0xff new routine)           |
+| $4081         | ?? (0x00)                                              |
+| $4082         | ?? (0x02)                                              |
+| $4083         | *Output Control Flags - COMM_CONTROL_FLAG* (0x00)      |
+| $4084         | ?? (0x00)                                              |
+| $4085         | ?? (0x03)                                              |
+| $4086         | *Multi Adjust Range Min* (0x0f)                        |
+| $4087         | *Multi Adjust Range Max* (0xff)                        |
 | $4088         | *Routine timer (3 bytes) low - 244Hz (409mS)*          |
 | $4089         | *Routine timer (3 bytes) mid - 0.953Hz (1.048S)*       |
 | $408a         | *Routine timer (3 bytes) high - (268.43S)*             |
@@ -314,55 +314,55 @@ All entries in *bold* have been mapped and are useful.
 | $408c         | *temporary byte store*                                 |
 | $408d         | *random number min*                                    |
 | $408e         | *random number max*                                    |
-| $408f         | ?? (0x00 new routine)                                  |
-| $4090         | *Channel A: Current Gate Value* (0x06 new routine)     |
-| $4091         | ?? (0x00 new routine)                                  |
-| $4092         | ?? (0x00 new routine)                                  |
-| $4093         | ?? (0x00 new routine)                                  |
+| $408f         | ?? (0x00)                                              |
+| $4090         | *Channel A: Current Gate Value* (0x06)                 |
+| $4091         | ?? (0x00)                                              |
+| $4092         | ?? (0x00)                                              |
+| $4093         | ?? (0x00)                                              |
 | $4094         | next program segment timer (0x00)                      |
 | $4095         | next program segment timer max (0xff)                  |
 | $4096         | next program segment flag (0x00)                       |
 | $4097         | next program segment number (0x00)                     |
-| $4098         | *Channel A: Current Gate OnTime* (0x3e new routine)    |
-| $4099         | *Channel A: Current Gate OffTime* (0x3e new routine)   |
-| $409a         | *Channel A: Current Gate Select* (0x00 new routine)    |
-| $409b         | ?? (0x00 new routine)                                  |
-| $409c         | *Mode Switch Ramp Value Counter* (0x9c new routine)    |
-| $409d         | ?? (0x9c new routine)                                  |
-| $409e         | ?? (0xff new routine)                                  |
-| $409f         | ?? (0x07 new routine)                                  |
-| $40a0         | ?? (0x01 new routine)                                  |
-| $40a1         | ?? (0xfc new routine)                                  |
-| $40a2         | ?? (0xfc new routine)                                  |
-| $40a3         | *Mode Switch Ramp Select* (0x01 new routine)           |
-| $40a4         | ?? (0x00 new routine)                                  |
+| $4098         | *Channel A: Current Gate OnTime* (0x3e)                |
+| $4099         | *Channel A: Current Gate OffTime* (0x3e)               |
+| $409a         | *Channel A: Current Gate Select* (0x00)                |
+| $409b         | ?? (0x00)                                              |
+| $409c         | *Mode Switch Ramp Value Counter* (0x9c)                |
+| $409d         | ?? (0x9c)                                              |
+| $409e         | ?? (0xff)                                              |
+| $409f         | ?? (0x07)                                              |
+| $40a0         | ?? (0x01)                                              |
+| $40a1         | ?? (0xfc)                                              |
+| $40a2         | ?? (0xfc)                                              |
+| $40a3         | *Mode Switch Ramp Select* (0x01)                       |
+| $40a4         | ?? (0x00)                                              |
 | $40a5         | *Channel A: Current Intensity Modulation Value* (0xff) |
 | $40a6         | *Channel A: Current Intensity Modulation Min* (0xcd)   |
 | $40a7         | *Channel A: Current Intensity Modulation Max* (0xff)   |
 | $40a8         | *Channel A: Current Intensity Modulation Rate* (0x01)  |
-| $40a9         | ?? (0x01 new routine)                                  |
-| $40aa         | ?? (0xff new routine)                                  |
-| $40ab         | ?? (0xff new routine)                                  |
-| $40ac         | *Channel A: Current Intensity Modulation Select* (0x000) |
-| $40ad         | ?? (0x00 new routine)                                  |
+| $40a9         | ?? (0x01)                                              |
+| $40aa         | ?? (0xff)                                              |
+| $40ab         | ?? (0xff)                                              |
+| $40ac         | *Channel A: Current Intensity Modulation Select* (0x00) |
+| $40ad         | ?? (0x00)                                              |
 | $40ae         | *Channel A: Current Frequency Modulation Value* (0x16) |
 | $40af         | *Channel A: Current Frequency Modulation Min* (0x09)   |
 | $40b0         | *Channel A: Current Frequency Modulation Max* (0x64)   |
 | $40b1         | *Channel A: Current Frequency Modulation Rate* (0x01)  |
-| $40b2         | ?? (0x01 new routine)                                  |
-| $40b3         | ?? (0xff new routine)                                  |
-| $40b4         | ?? (0xff new routine)                                  |
+| $40b2         | ?? (0x01)                                              |
+| $40b3         | ?? (0xff)                                              |
+| $40b4         | ?? (0xff)                                              |
 | $40b5         | *Channel A: Current Frequency Modulation Select* (0x08) |
-| $40b6         | ?? (0x00 new routine)                                  |
+| $40b6         | ?? (0x00)                                              |
 | $40b7         | *Channel A: Current Width Modulation Value* (0x82)     |
 | $40b8         | *Channel A: Current Width Modulation Min* (0x32)       |
 | $40b9         | *Channel A: Current Width Modulation Max* (0xc8)       |
 | $40ba         | *Channel A: Current Width Modulation Rate* (0x01)      |
-| $40bb         | ?? (0x01 new routine)                                  |
-| $40bc         | ?? (0xff new routine)                                  |
-| $40bd         | ?? (0xff new routine)                                  |
+| $40bb         | ?? (0x01)                                              |
+| $40bc         | ?? (0xff)                                              |
+| $40bd         | ?? (0xff)                                              |
 | $40be         | *Channel A: Current Width Modulation Select* (0x04)    |
-| $41bf         | ?? (0x00 new routine)                                  |
+| $41bf         | ?? (0x00)                                              |
 | $40c0 - $4177 | *Space for User Routine Scratchpad A*                  |
 | $4180         | *Write LCD Parameter*                                  |
 | $4181         | *Write LCD Position*                                   |
@@ -442,9 +442,9 @@ All entries in *bold* have been mapped and are useful.
 | $41ce         | ??                                                     |
 | $41cf         | ??                                                     |
 | $41D0 - $41ef | *Space for User Routine Scratchpad B*                  |
-| $41f0         | ?? (Counter) (default 0xc0)                            |
-| $41f1         | ?? (Crashes on write) (default 0x2c)                   |
-| $41f2         | ?? (Unknown) (default 0x20)                            |
+| $41f0         | ?? (Counter) (0xc0)                                    |
+| $41f1         | ?? (Crashes on write) (0x2c)                           |
+| $41f2         | ?? (Unknown) (0x20)                                    |
 | $41f3         | *CurrentTopMode* (written during routine write) (0x87) |
 | $41f4         | *PowerLevel - COMM_POWER_LEVEL / COMM_LMODE* (0x02)    |
 | $41f5         | *Split Mode Number A* (0x77)                           |
