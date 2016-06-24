@@ -331,38 +331,38 @@ All entries in *bold* have been mapped and are useful.
 | $409d         | *Mode Switch Ramp Value Min* (0x9c)                    |
 | $409e         | *Mode Switch Ramp Value Max* (0xff)                    |
 | $409f         | *Mode Switch Ramp Value Rate* (0x07)                   |
-| $40a0         | ?? (0x01)                                              |
+| $40a0         | *Mode Switch Ramp Value Increment* (0x01)              |
 | $40a1         | *Mode Switch Ramp Action at Min* (0xfc)                |
 | $40a2         | *Mode Switch Ramp Action at Max* (0xfc)                |
 | $40a3         | *Mode Switch Ramp Select* (0x01)                       |
-| $40a4         | ?? (0x00)                                              |
+| $40a4         | *Mode Switch Ramp Current Timer* (0x00)                |
 | $40a5         | *Channel A: Current Intensity Modulation Value* (0xff) |
 | $40a6         | *Channel A: Current Intensity Modulation Min* (0xcd)   |
 | $40a7         | *Channel A: Current Intensity Modulation Max* (0xff)   |
 | $40a8         | *Channel A: Current Intensity Modulation Rate* (0x01)  |
-| $40a9         | ?? (0x01)                                              |
-| $40aa         | *Channel A: Current Intensity Action at Min (0xff)     |
-| $40ab         | *Channel A: Current Intensity Action at Max (0xff)     |
+| $40a9         | *Channel A: Current Intensity Modulation Increment* (0x01) |
+| $40aa         | *Channel A: Current Intensity Action at Min* (0xff)    |
+| $40ab         | *Channel A: Current Intensity Action at Max* (0xff)    |
 | $40ac         | *Channel A: Current Intensity Modulation Select* (0x00) |
-| $40ad         | ?? (0x00)                                              |
+| $40ad         | *Channel A: Current Intensity Modulation Timer (0x00)  |
 | $40ae         | *Channel A: Current Frequency Modulation Value* (0x16) |
 | $40af         | *Channel A: Current Frequency Modulation Min* (0x09)   |
 | $40b0         | *Channel A: Current Frequency Modulation Max* (0x64)   |
 | $40b1         | *Channel A: Current Frequency Modulation Rate* (0x01)  |
-| $40b2         | ?? (0x01)                                              |
-| $40b3         | *Channel A: Current Frequency Modulation Action Min* (0xff)  |
-| $40b4         | *Channel A: Current Frequency Modulation Action Max* (0xff)  |
+| $40b2         | *Channel A: Current Frequency Modulation Increment* (0x01) |
+| $40b3         | *Channel A: Current Frequency Modulation Action Min* (0xff) |
+| $40b4         | *Channel A: Current Frequency Modulation Action Max* (0xff) |
 | $40b5         | *Channel A: Current Frequency Modulation Select* (0x08) |
-| $40b6         | ?? (0x00)                                              |
+| $40b6         | *Channel A: Current Frequency Modulation Timer* (0x00) |
 | $40b7         | *Channel A: Current Width Modulation Value* (0x82)     |
 | $40b8         | *Channel A: Current Width Modulation Min* (0x32)       |
 | $40b9         | *Channel A: Current Width Modulation Max* (0xc8)       |
 | $40ba         | *Channel A: Current Width Modulation Rate* (0x01)      |
-| $40bb         | ?? (0x01)                                              |
-| $40bc         | *Channel A: Current Width Modulation Action Min (0xff) |
-| $40bd         | *Channel A: Current Width Modulation Action Max (0xff) |
+| $40bb         | *Channel A: Current Width Modulation Increment* (0x01) |
+| $40bc         | *Channel A: Current Width Modulation Action Min* (0xff) |
+| $40bd         | *Channel A: Current Width Modulation Action Max* (0xff) |
 | $40be         | *Channel A: Current Width Modulation Select* (0x04)    |
-| $40bf         | ?? (0x00)                                              |
+| $40bf         | *Channel A: Current Width Modulation Timer* (0x00)     |
 | $40c0 - $4177 | *Space for User Routine Scratchpad A*                  |
 | $4180         | *Write LCD Parameter*                                  |
 | $4181         | *Write LCD Position*                                   |
@@ -374,12 +374,12 @@ All entries in *bold* have been mapped and are useful.
 | $4187         | ??                                                     |
 | $4188         | ??                                                     |
 | $4189         | ??                                                     |
-| $418A         | ??                                                     |
-| $418B         | ??                                                     |
-| $418C         | ??                                                     |
-| $418D         | ??                                                     |
-| $418E         | ??                                                     |
-| $418F         | ??                                                     |
+| $418a         | ??                                                     |
+| $418b         | ??                                                     |
+| $418c         | ??                                                     |
+| $418d         | ??                                                     |
+| $418e         | ??                                                     |
+| $418f         | ??                                                     |
 | $4190         | *Channel B: Current Gate Value* (0 when no output)     |
 | $4191         | ??                                                     |
 | $4192         | ??                                                     |
@@ -390,92 +390,88 @@ All entries in *bold* have been mapped and are useful.
 | $4197         | ??                                                     |
 | $4198         | *Channel B: Current Gate OnTime*                       |
 | $4199         | *Channel B: Current Gate OffTime*                      |
-| $419A         | *Channel B: Current Gate Select*                       |
-| $419B         | ??                                                     |
-| $419C         | ?? (Ramp Value?)                                       |
-| $41A0         | ??                                                     |
-| $41A1         | ??                                                     |
-| $41A2         | ??                                                     |
-| $41A3         | ?? (Ramp Select?)                                      |
-| $41A4         | ??                                                     |
-| $41A5         | *Channel B: Current Intensity Modulation Value*        |
-| $41A6         | *Channel B: Current Intensity Modulation Min*          |
-| $41A7         | *Channel B: Current Intensity Modulation Max*          |
-| $41A8         | *Channel B: Current Intensity Modulation Rate*         |
-| $41A9         | ??                                                     |
-| $41AA         | ??                                                     |
-| $41AB         | ??                                                     |
-| $41ac         | *Channel B: Current Intensity Modulation Select*       |
-| $41AD         | ??                                                     |
-| $41ae         | *Channel B: Current Frequency Modulation Value*        |
-| $41af         | *Channel B: Current Frequency Modulation Min*          |
-| $41b0         | *Channel B: Current Frequency Modulation Max*          |
-| $41B1         | *Channel B: Current Frequency Modulation Rate*         |
-| $41b2         | ??                                                     |
-| $41b3         | ??                                                     |
-| $41b4         | ??                                                     |
-| $41b5         | *Channel B: Current Frequency Modulation Select*       |
-| $41b6         | ??                                                     |
-| $41b7         | *Channel B: Current Width Modulation Value*            |
-| $41b8         | *Channel B: Current Width Modulation Min*              |
-| $41b9         | *Channel B: Current Width Modulation Max*              |
-| $41ba         | *Channel B: Current Width Modulation Rate*             |
-| $41bb         | ??                                                     |
-| $41bc         | ??                                                     |
-| $41bd         | ??                                                     |
-| $41be         | *Channel B: Current Width Modulation Select*           |
-| $41bf         | ??                                                     |
-| $41c0         | ??                                                     |
-| $41c1         | ??                                                     |
-| $41c2         | ??                                                     |
-| $41c3         | ??                                                     |
-| $41c4         | ??                                                     |
-| $41c5         | ??                                                     |
-| $41c6         | ??                                                     |
-| $41c7         | ??                                                     |
-| $41c8         | ??                                                     |
-| $41c9         | ??                                                     |
-| $41ca         | ??                                                     |
-| $41cb         | ??                                                     |
-| $41cc         | ??                                                     |
-| $41cd         | ??                                                     |
-| $41ce         | ??                                                     |
-| $41cf         | ??                                                     |
-| $41D0 - $41ef | *Space for User Routine Scratchpad B*                  |
+| $419a         | *Channel B: Current Gate Select*                       |
+| $419b         | ??                                                     |
+| $419c         | *Mode Switch Ramp Value Counter* (0x9c)                |
+| $419d         | *Mode Switch Ramp Value Min* (0x9c)                    |
+| $419e         | *Mode Switch Ramp Value Max* (0xff)                    |
+| $419f         | *Mode Switch Ramp Value Rate* (0x07)                   |
+| $41a0         | *Mode Switch Ramp Value Increment* (0x01)              |
+| $41a1         | *Mode Switch Ramp Action at Min* (0xfc)                |
+| $41a2         | *Mode Switch Ramp Action at Max* (0xfc)                |
+| $41a3         | *Mode Switch Ramp Select* (0x01)                       |
+| $41a4         | *Mode Switch Ramp Current Timer* (0x00)                |
+| $41a5         | *Channel B: Current Intensity Modulation Value* (0xff) |
+| $41a6         | *Channel B: Current Intensity Modulation Min* (0xcd)   |
+| $41a7         | *Channel B: Current Intensity Modulation Max* (0xff)   |
+| $41a8         | *Channel B: Current Intensity Modulation Rate* (0x01)  |
+| $41a9         | *Channel B: Current Intensity Modulation Increment* (0x01) |
+| $41aa         | *Channel B: Current Intensity Action at Min* (0xff)    |
+| $41ab         | *Channel B: Current Intensity Action at Max* (0xff)    |
+| $41ac         | *Channel B: Current Intensity Modulation Select* (0x00) |
+| $41ad         | *Channel B: Current Intensity Modulation Timer (0x00)  |
+| $41ae         | *Channel B: Current Frequency Modulation Value* (0x16) |
+| $41af         | *Channel B: Current Frequency Modulation Min* (0x09)   |
+| $41b0         | *Channel B: Current Frequency Modulation Max* (0x64)   |
+| $41b1         | *Channel B: Current Frequency Modulation Rate* (0x01)  |
+| $41b2         | *Channel B: Current Frequency Modulation Increment* (0x01) |
+| $41b3         | *Channel B: Current Frequency Modulation Action Min* (0xff) |
+| $41b4         | *Channel B: Current Frequency Modulation Action Max* (0xff) |
+| $41b5         | *Channel B: Current Frequency Modulation Select* (0x08) |
+| $41b6         | *Channel B: Current Frequency Modulation Timer* (0x00) |
+| $41b7         | *Channel B: Current Width Modulation Value* (0x82)     |
+| $41b8         | *Channel B: Current Width Modulation Min* (0x32)       |
+| $41b9         | *Channel B: Current Width Modulation Max* (0xc8)       |
+| $41ba         | *Channel B: Current Width Modulation Rate* (0x01)      |
+| $41bb         | *Channel B: Current Width Modulation Increment* (0x01) |
+| $41bc         | *Channel B: Current Width Modulation Action Min* (0xff) |
+| $41bd         | *Channel B: Current Width Modulation Action Max* (0xff) |
+| $41be         | *Channel B: Current Width Modulation Select* (0x04)    |
+| $41bf         | *Channel B: Current Width Modulation Timer* (0x00)     |
+| $41c0 - $41cf | ??                                                     |
+| $41d0 - $41ef | *Space for User Routine Scratchpad B*                  |
 | $41f0         | ?? (Counter) (0xc0)                                    |
-| $41f1         | ?? (Crashes on write) (0x2c)                           |
-| $41f2         | ?? (Unknown) (0x20)                                    |
+| $41f1         | counter for serial output buffer (0x2c)                |
+| $41f2         | counter for serial input buffer (0x20)                 |
 | $41f3         | *CurrentTopMode* (written during routine write) (0x87) |
 | $41f4         | *PowerLevel - COMM_POWER_LEVEL / COMM_LMODE* (0x02)    |
 | $41f5         | *Split Mode Number A* (0x77)                           |
 | $41f6         | *Split Mode Number B* (0x76)                           |
 | $41f7         | *Favourite Mode* (0x76)                                |
-| $41F8         | *Advanced Parameter: RampLevel* (0xe1)                 |
-| $41F9         | *Advanced Parameter: RampTime* (0x14)                  |
-| $41FA         | *Advanced Parameter: Depth* (0xd7)                     |
-| $41FB         | *Advanced Parameter: Tempo* (0x01)                     |
-| $41FC         | *Advanced Parameter: Frequency* (0x19)                 |
-| $41FD         | *Advanced Parameter: Effect* (0x05)                    |
-| $41FE         | *Advanced Parameter: Width* (0x82)                     |
-| $41FF         | *Advanced Parameter: Pace* (0x05)                      |
+| $41f8         | *Advanced Parameter: RampLevel* (0xe1)                 |
+| $41f9         | *Advanced Parameter: RampTime* (0x14)                  |
+| $41fa         | *Advanced Parameter: Depth* (0xd7)                     |
+| $41fb         | *Advanced Parameter: Tempo* (0x01)                     |
+| $41fc         | *Advanced Parameter: Frequency* (0x19)                 |
+| $41fd         | *Advanced Parameter: Effect* (0x05)                    |
+| $41fe         | *Advanced Parameter: Width* (0x82)                     |
+| $41ff         | *Advanced Parameter: Pace* (0x05)                      |
 | $4200         | ??                                                     |
 | $4201         | ??                                                     |
 | $4202         | ??                                                     |
-| $4203         | ??                                                     |
+| $4203         | battery level percentage                               |
 | $4204         | ??                                                     |
-| $4205         | ??                                                     |
-| $4206         | ??                                                     |
-| $4207         | ??                                                     |
+| $4205         | channel a dac level                                    |
+| $4206         | channel b dac level                                    |
+| $4207         | set to show program block calltable debug mode         |
 | $4208         | ??                                                     |
-| $4209         | ??                                                     |
-| $420a         | ??                                                     |
-| $420b         | ??                                                     |
-| $420c         | ??                                                     |
+| $4209         | channel a pwm mark                                     |
+| $420a         | channel a pwm mark                                     |
+| $420b         | channel a pwm space                                    |
+| $420c         | channel a pwm space                                    |
 | $420d         | *Current Multi Adjust Value / COMM_MULTI_AVG*          |
-| $420e - $4212 | ??                                                     |
-| $4213         | ?? (Writing 0 kills serial communication)              |
-| $4214 - $422c | ??                                                     |
-| $422d - $43FF | Possibly Unused (can zero out, never see changes)      |
+| $420e         | channel b pwm mark                                     |
+| $420f         | channel b pwm mark                                     |
+| $4210         | channel b pwm space                                    |
+| $4211         | channel b pwm space                                    |
+| $4212         | ??                                                     |
+| $4213         | cipher key                                             |
+| $4214         | com buffer incrementer                                 |
+| $4215         | power status bits                                      |
+| $4216 - $421f | ??                                                     |
+| $4220 - $422b | serial comms input buffer                              |
+| $422c - $42.. | serial comms output buffer                             |
+| $42.. - $43FF | unused                                                 |
 
 **** EEPROM
 | Address       | Description                                          |
