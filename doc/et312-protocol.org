@@ -328,12 +328,12 @@ All entries in *bold* have been mapped and are useful.
 | $409a         | *Channel A: Current Gate Select* (0x00)                |
 | $409b         | ?? (0x00)                                              |
 | $409c         | *Mode Switch Ramp Value Counter* (0x9c)                |
-| $409d         | ?? (0x9c)                                              |
-| $409e         | ?? (0xff)                                              |
-| $409f         | ?? (0x07)                                              |
+| $409d         | *Mode Switch Ramp Value Min* (0x9c)                    |
+| $409e         | *Mode Switch Ramp Value Max* (0xff)                    |
+| $409f         | *Mode Switch Ramp Value Rate* (0x07)                   |
 | $40a0         | ?? (0x01)                                              |
-| $40a1         | ?? (0xfc)                                              |
-| $40a2         | ?? (0xfc)                                              |
+| $40a1         | *Mode Switch Ramp Action at Min* (0xfc)                |
+| $40a2         | *Mode Switch Ramp Action at Max* (0xfc)                |
 | $40a3         | *Mode Switch Ramp Select* (0x01)                       |
 | $40a4         | ?? (0x00)                                              |
 | $40a5         | *Channel A: Current Intensity Modulation Value* (0xff) |
@@ -341,8 +341,8 @@ All entries in *bold* have been mapped and are useful.
 | $40a7         | *Channel A: Current Intensity Modulation Max* (0xff)   |
 | $40a8         | *Channel A: Current Intensity Modulation Rate* (0x01)  |
 | $40a9         | ?? (0x01)                                              |
-| $40aa         | ?? (0xff)                                              |
-| $40ab         | ?? (0xff)                                              |
+| $40aa         | *Channel A: Current Intensity Action at Min (0xff)     |
+| $40ab         | *Channel A: Current Intensity Action at Max (0xff)     |
 | $40ac         | *Channel A: Current Intensity Modulation Select* (0x00) |
 | $40ad         | ?? (0x00)                                              |
 | $40ae         | *Channel A: Current Frequency Modulation Value* (0x16) |
@@ -350,8 +350,8 @@ All entries in *bold* have been mapped and are useful.
 | $40b0         | *Channel A: Current Frequency Modulation Max* (0x64)   |
 | $40b1         | *Channel A: Current Frequency Modulation Rate* (0x01)  |
 | $40b2         | ?? (0x01)                                              |
-| $40b3         | ?? (0xff)                                              |
-| $40b4         | ?? (0xff)                                              |
+| $40b3         | *Channel A: Current Frequency Modulation Action Min* (0xff)  |
+| $40b4         | *Channel A: Current Frequency Modulation Action Max* (0xff)  |
 | $40b5         | *Channel A: Current Frequency Modulation Select* (0x08) |
 | $40b6         | ?? (0x00)                                              |
 | $40b7         | *Channel A: Current Width Modulation Value* (0x82)     |
@@ -359,10 +359,10 @@ All entries in *bold* have been mapped and are useful.
 | $40b9         | *Channel A: Current Width Modulation Max* (0xc8)       |
 | $40ba         | *Channel A: Current Width Modulation Rate* (0x01)      |
 | $40bb         | ?? (0x01)                                              |
-| $40bc         | ?? (0xff)                                              |
-| $40bd         | ?? (0xff)                                              |
+| $40bc         | *Channel A: Current Width Modulation Action Min (0xff) |
+| $40bd         | *Channel A: Current Width Modulation Action Max (0xff) |
 | $40be         | *Channel A: Current Width Modulation Select* (0x04)    |
-| $41bf         | ?? (0x00)                                              |
+| $40bf         | ?? (0x00)                                              |
 | $40c0 - $4177 | *Space for User Routine Scratchpad A*                  |
 | $4180         | *Write LCD Parameter*                                  |
 | $4181         | *Write LCD Position*                                   |
