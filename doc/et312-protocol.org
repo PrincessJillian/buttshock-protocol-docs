@@ -307,14 +307,14 @@ All entries in *bold* have been mapped and are useful.
 | $4085         | ?? (0x03)                                              |
 | $4086         | *Multi Adjust Range Min* (0x0f)                        |
 | $4087         | *Multi Adjust Range Max* (0xff)                        |
-| $4088         | *Routine timer (3 bytes) low - 244Hz (409mS)*          |
+| $4088         | *Routine timer (3 bytes) low - 244Hz (409uS)*          |
 | $4089         | *Routine timer (3 bytes) mid - 0.953Hz (1.048S)*       |
 | $408a         | *Routine timer (3 bytes) high - (268.43S)*             |
 | $408b         | *Routine timer (slower) - 30.5Hz*                      |
-| $408c         | *temporary byte store*                                 |
-| $408d         | *random number min*                                    |
-| $408e         | *random number max*                                    |
-| $408f         | ?? (0x00)                                              |
+| $408c         | *Routine program temporary byte store*                 |
+| $408d         | *Random Number Min*                                    |
+| $408e         | *Random Number Max*                                    |
+| $408f         | program segment if audio triggered                     |
 | $4090         | *Channel A: Current Gate Value* (0x06)                 |
 | $4091         | ?? (0x00)                                              |
 | $4092         | ?? (0x00)                                              |
@@ -384,10 +384,10 @@ All entries in *bold* have been mapped and are useful.
 | $4191         | ??                                                     |
 | $4192         | ??                                                     |
 | $4193         | ??                                                     |
-| $4194         | ??                                                     |
-| $4195         | ??                                                     |
-| $4196         | ??                                                     |
-| $4197         | ??                                                     |
+| $4194         | next program segment timer (0x00)                      |
+| $4195         | next program segment timer max (0xff)                  |
+| $4196         | next program segment flag (0x00)                       |
+| $4197         | next program segment number (0x00)                     |
 | $4198         | *Channel B: Current Gate OnTime*                       |
 | $4199         | *Channel B: Current Gate OffTime*                      |
 | $419a         | *Channel B: Current Gate Select*                       |
