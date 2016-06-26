@@ -344,7 +344,7 @@ All entries in *bold* have been mapped and are useful.
 | $40aa         | *Channel A: Current Intensity Action at Min* (0xff)    |
 | $40ab         | *Channel A: Current Intensity Action at Max* (0xff)    |
 | $40ac         | *Channel A: Current Intensity Modulation Select* (0x00) |
-| $40ad         | *Channel A: Current Intensity Modulation Timer (0x00)  |
+| $40ad         | *Channel A: Current Intensity Modulation Timer* (0x00)  |
 | $40ae         | *Channel A: Current Frequency Modulation Value* (0x16) |
 | $40af         | *Channel A: Current Frequency Modulation Min* (0x09)   |
 | $40b0         | *Channel A: Current Frequency Modulation Max* (0x64)   |
@@ -409,7 +409,7 @@ All entries in *bold* have been mapped and are useful.
 | $41aa         | *Channel B: Current Intensity Action at Min* (0xff)    |
 | $41ab         | *Channel B: Current Intensity Action at Max* (0xff)    |
 | $41ac         | *Channel B: Current Intensity Modulation Select* (0x00) |
-| $41ad         | *Channel B: Current Intensity Modulation Timer (0x00)  |
+| $41ad         | *Channel B: Current Intensity Modulation Timer* (0x00)  |
 | $41ae         | *Channel B: Current Frequency Modulation Value* (0x16) |
 | $41af         | *Channel B: Current Frequency Modulation Min* (0x09)   |
 | $41b0         | *Channel B: Current Frequency Modulation Max* (0x64)   |
@@ -508,18 +508,15 @@ All entries in *bold* have been mapped and are useful.
 | $801D         | *Start Vector User 6*                                |
 | $801E         | *Start Vector User 7 (not implemented)*              |
 | $801F         | *Start Vector User 8 (not implemented)*              |
-| $8020 - $803f | *Space for User Routines A*                          |
-| $8040 - $80ff | *Space for User Routines B*                          |
-| $8100 - $813f | *Space for User Routines C*                          |
-| $8120 - $81ff | *Space for User Routines D*                          |
+| $8020 - $803f | *User routine program table 0x80-0x9f                |
+| $8040 - $80ff | *Space for User Routines*                            |
+| $8100 - $811f | *User routine program table 0xa0-0xbf                |
+| $8120 - $81ff | *Space for User Routines*                            |
 *** Memory Specifics
-**** $0000:$0098 - Partial String Table
+**** $0000:$00fb - Partial String Table and data segment
 Contains a portion of the string table used for the UI on the ET312
 LCD. Each string is 8 bytes long, padded by spaces (0x20) if needed,
-with no null termination.
-**** $0098:$00fb - ?? (Possibly a continuation of .data segment)
-Unknown contents. This area may possibly be other constant setup in
-the .data section of the firmware.
+with no null termination.  Not useful.
 **** $00fc - Box Version
 For the ET312, this will always be 0x0c. (Checked in v1.5 and v1.6
 firmware)
