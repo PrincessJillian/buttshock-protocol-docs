@@ -508,9 +508,9 @@ All entries in *bold* have been mapped and are useful.
 | $801D         | *Start Vector User 6*                                |
 | $801E         | *Start Vector User 7 (not implemented)*              |
 | $801F         | *Start Vector User 8 (not implemented)*              |
-| $8020 - $803f | *User routine program table 0x80-0x9f                |
+| $8020 - $803f | *User routine program table 0x80-0x9f*               |
 | $8040 - $80ff | *Space for User Routines*                            |
-| $8100 - $811f | *User routine program table 0xa0-0xbf                |
+| $8100 - $811f | *User routine program table 0xa0-0xbf*               |
 | $8120 - $81ff | *Space for User Routines*                            |
 *** Memory Specifics
 **** $0000:$00fb - Partial String Table and data segment
@@ -592,24 +592,24 @@ longer working properly (checksum errors).
 |  0x13 | Write Character to LCD                         |
 |  0x14 | Write Number to LCD                            |
 |  0x15 | Write String from Stringtable to LCD           |
-|  0x16 | (mutes or glitches current routine)            |
-|  0x17 | Cold Reboot                                    |
-|  0x18 | Stop Routine (Mute)                            |
+|  0x16 | Load routine                                   |
+|  0x17 | Not used (error)                               |
+|  0x18 | Clear Routine (Mute)                           |
 |  0x19 | Swap Channel A and B                           |
 |  0x1a | Copy Channel A to Channel B                    |
-|  0x1b | Copy Channel B to Channel a                    |
-|  0x1c | Default EE                                     |
-|  0x1d | Copy Wave                                      |
-|  0x1e | (Failure 04)                                   |
-|  0x1f | (Failure 80)                                   |
-|  0x20 | Advanced Update                                |
+|  0x1b | Copy Channel B to Channel A                    |
+|  0x1c | Copy defaults from EEPROM                      |
+|  0x1d | Sets up running program registers              |
+|  0x1e | Handles single instruction from a routine      |
+|  0x1f | General way to call these functions            |
+|  0x20 | Advanced Setting Update                        |
 |  0x21 | Start Ramp                                     |
-|  0x22 | (no visible effect)                            |
-|  0x23 | (LCD Command?)                                 |
-|  0x24 | (LCD Character?)                               |
-|  0x25 | (Failure 00)                                   |
-|  0x26 | (Failure 00)                                   |
-|  0x27 | (Failure 00)                                   |
+|  0x22 | Does an ADC conversion                         |
+|  0x23 | Set LCD position                               |
+|  0x24 | (redundant)                                    |
+|  0x25 | Not used (error)                               |
+|  0x26 | Not used (error)                               |
+|  0x27 | Not used (error)                               |
 
 *Note: you can also write a command to $4071, both are checked one after
 the other, so if you want to execute two commands, you can write the first
