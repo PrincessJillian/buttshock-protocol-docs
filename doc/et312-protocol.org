@@ -366,8 +366,8 @@ All entries in *bold* have been mapped and are useful.
 | $40c0 - $4177 | *Space for User Routine Scratchpad A*                  |
 | $4180         | *Write LCD Parameter*                                  |
 | $4181         | *Write LCD Position*                                   |
-| $4182         | ??                                                     |
-| $4183         | ??                                                     |
+| $4182         | *Parameter r26 for run call table*                     |
+| $4183         | *Parameter r27 for run call table*                     |
 | $4184         | ??                                                     |
 | $4185         | ??                                                     |
 | $4186         | ??                                                     |
