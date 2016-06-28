@@ -299,7 +299,7 @@ All entries in *bold* have been mapped and are useful.
 | $407d         | ?? (Oscillator Ch A? )                                 |
 | $407e         | ?? (Oscillator Ch B? )                                 |
 | $407F         | ?? (Oscillator Ch B? )                                 |
-| $4080         | ?? (0x00 new routine)                                  |
+| $4080         | ?? (0x00)                                              |
 | $4081         | ?? (0x00)                                              |
 | $4082         | ?? (0x02)                                              |
 | $4083         | *Output Control Flags - COMM_CONTROL_FLAG* (0x00)      |
@@ -307,22 +307,22 @@ All entries in *bold* have been mapped and are useful.
 | $4085         | ?? (0x03)                                              |
 | $4086         | *Multi Adjust Range Min* (0x0f)                        |
 | $4087         | *Multi Adjust Range Max* (0xff)                        |
-| $4088         | *Routine timer (3 bytes) low - 244Hz (409uS)*          |
-| $4089         | *Routine timer (3 bytes) mid - 0.953Hz (1.048S)*       |
-| $408a         | *Routine timer (3 bytes) high - (268.43S)*             |
-| $408b         | *Routine timer (slower) - 30.5Hz*                      |
-| $408c         | *Routine program temporary byte store*                 |
+| $4088         | *Module timer (3 bytes) low - 244Hz (409uS)*           |
+| $4089         | *Module timer (3 bytes) mid - 0.953Hz (1.048S)*        |
+| $408a         | *Module timer (3 bytes) high - (268.43S)*              |
+| $408b         | *Module timer (slower) - 30.5Hz*                       |
+| $408c         | *Module temporary byte store*                          |
 | $408d         | *Random Number Min*                                    |
 | $408e         | *Random Number Max*                                    |
-| $408f         | program segment if audio triggered                     |
+| $408f         | *Module to go to if audio triggered*                   |
 | $4090         | *Channel A: Current Gate Value* (0x06)                 |
 | $4091         | ?? (0x00)                                              |
 | $4092         | ?? (0x00)                                              |
 | $4093         | ?? (0x00)                                              |
-| $4094         | next program segment timer (0x00)                      |
-| $4095         | next program segment timer max (0xff)                  |
-| $4096         | next program segment flag (0x00)                       |
-| $4097         | next program segment number (0x00)                     |
+| $4094         | next module timer current (0x00)                       |
+| $4095         | next module timer max (0xff)                           |
+| $4096         | next module flag (0x00)                                |
+| $4097         | next module number (0x00)                              |
 | $4098         | *Channel A: Current Gate OnTime* (0x3e)                |
 | $4099         | *Channel A: Current Gate OffTime* (0x3e)               |
 | $409a         | *Channel A: Current Gate Select* (0x00)                |
@@ -363,7 +363,7 @@ All entries in *bold* have been mapped and are useful.
 | $40bd         | *Channel A: Current Width Modulation Action Max* (0xff) |
 | $40be         | *Channel A: Current Width Modulation Select* (0x04)    |
 | $40bf         | *Channel A: Current Width Modulation Timer* (0x00)     |
-| $40c0 - $4177 | *Space for User Routine Scratchpad A*                  |
+| $40c0 - $4177 | *Space for User Module Scratchpad A*                   |
 | $4180         | *Write LCD Parameter*                                  |
 | $4181         | *Write LCD Position*                                   |
 | $4182         | *Parameter r26 for run call table*                     |
@@ -384,10 +384,10 @@ All entries in *bold* have been mapped and are useful.
 | $4191         | ??                                                     |
 | $4192         | ??                                                     |
 | $4193         | ??                                                     |
-| $4194         | next program segment timer (0x00)                      |
-| $4195         | next program segment timer max (0xff)                  |
-| $4196         | next program segment flag (0x00)                       |
-| $4197         | next program segment number (0x00)                     |
+| $4194         | next module timer current (0x00)                       |
+| $4195         | next module timer max (0xff)                           |
+| $4196         | next module flag (0x00)                                |
+| $4197         | next module number (0x00)                              |
 | $4198         | *Channel B: Current Gate OnTime*                       |
 | $4199         | *Channel B: Current Gate OffTime*                      |
 | $419a         | *Channel B: Current Gate Select*                       |
@@ -429,7 +429,7 @@ All entries in *bold* have been mapped and are useful.
 | $41be         | *Channel B: Current Width Modulation Select* (0x04)    |
 | $41bf         | *Channel B: Current Width Modulation Timer* (0x00)     |
 | $41c0 - $41cf | ??                                                     |
-| $41d0 - $41ef | *Space for User Routine Scratchpad B*                  |
+| $41d0 - $41ef | *Space for User Module Scratchpad B*                   |
 | $41f0         | ?? (Counter) (0xc0)                                    |
 | $41f1         | counter for serial output buffer (0x2c)                |
 | $41f2         | counter for serial input buffer (0x20)                 |
@@ -453,7 +453,7 @@ All entries in *bold* have been mapped and are useful.
 | $4204         | ??                                                     |
 | $4205         | channel a dac level                                    |
 | $4206         | channel b dac level                                    |
-| $4207         | set to show program block calltable debug mode         |
+| $4207         | set to show module (debug mode)                        |
 | $4208         | ??                                                     |
 | $4209         | channel a pwm mark                                     |
 | $420a         | channel a pwm mark                                     |
@@ -508,10 +508,10 @@ All entries in *bold* have been mapped and are useful.
 | $801D         | *Start Vector User 6*                                |
 | $801E         | *Start Vector User 7 (not implemented)*              |
 | $801F         | *Start Vector User 8 (not implemented)*              |
-| $8020 - $803f | *User routine program table 0x80-0x9f*               |
-| $8040 - $80ff | *Space for User Routines*                            |
-| $8100 - $811f | *User routine program table 0xa0-0xbf*               |
-| $8120 - $81ff | *Space for User Routines*                            |
+| $8020 - $803f | *User routine module table 0x80-0x9f*                |
+| $8040 - $80ff | *Space for User Modules*                             |
+| $8100 - $811f | *User routine module table 0xa0-0xbf*                |
+| $8120 - $81ff | *Space for User Modules*                             |
 *** Memory Specifics
 **** $0000:$00fb - Partial String Table and data segment
 Contains a portion of the string table used for the UI on the ET312
@@ -592,15 +592,15 @@ longer working properly (checksum errors).
 |  0x13 | Write Character to LCD                         |
 |  0x14 | Write Number to LCD                            |
 |  0x15 | Write String from Stringtable to LCD           |
-|  0x16 | Load routine                                   |
+|  0x16 | Load module                                    |
 |  0x17 | Not used (error)                               |
-|  0x18 | Clear Routine (Mute)                           |
+|  0x18 | Clear module (Mute)                            |
 |  0x19 | Swap Channel A and B                           |
 |  0x1a | Copy Channel A to Channel B                    |
 |  0x1b | Copy Channel B to Channel A                    |
 |  0x1c | Copy defaults from EEPROM                      |
-|  0x1d | Sets up running program registers              |
-|  0x1e | Handles single instruction from a routine      |
+|  0x1d | Sets up running module registers               |
+|  0x1e | Handles single instruction from a module       |
 |  0x1f | General way to call these functions            |
 |  0x20 | Advanced Setting Update                        |
 |  0x21 | Start Ramp                                     |
