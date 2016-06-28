@@ -662,17 +662,12 @@ Write power level to 0x4078.  0x6b low, 0x6c normal, 06d is high
 *Note: To set mode*
 
 - Write New Mode Number to $407b
-- Write 0x04 to $4070 (execute "main menu")
-- Write 0x10 to $4071 (execute "next mode" to refresh display)
-- Wait 18ms (lets box execute previous commands)
+- Write 0x04 to $4070 (execute "exit menu")
+- Write 0x12 to $4071 (execute "select new mode")
+- Wait 18ms (lets box execute previous commands before you change mode again)
 
-*Note: To set mode (old way)*
-
-- Write New Mode Number to $407b
-- Write 0x04 to $4070 (execute "main menu")
-- Wait 18ms (lets box execute previous command)
-- Write 0x10 to $4070 (execute "next mode" to refresh display)
-- Wait 18ms (lets box execute previous command)
+(Note you can write to two adjacent memory locations in one command so you
+can do a write of 0x4 0x12 to 0x4070 with the same effect)
 
 **** $4083 - Phase, Front Panel, Mute/Mono/Stereo Control
 
