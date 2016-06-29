@@ -464,8 +464,8 @@ All entries in *bold* have been mapped and are useful.
 | $420f         | channel b pwm mark                                     |
 | $4210         | channel b pwm space                                    |
 | $4211         | channel b pwm space                                    |
-| $4212         | ??                                                     |
-| $4213         | cipher key                                             |
+| $4212         | com insruction expected instruction length             |
+| $4213         | com cipher key                                         |
 | $4214         | com buffer incrementer                                 |
 | $4215         | power status bits                                      |
 | $4216 - $421f | ??                                                     |
