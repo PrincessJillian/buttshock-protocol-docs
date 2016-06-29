@@ -93,6 +93,17 @@ pre-calculated and stored.
 Only data sent from host to ET312 requires encryption, all data
 received from the ET312 will be cleartext.
 
+*** Goodbye (ending connection)
+
+If you just close the connection to the box then the box won't be able
+to handshake again unless you remember the key you got given last time.
+
+However if just before closing the connection to the box you clear out
+the current XOR key, future serial connections to the box will appear
+as new connections without needing the box to be power cycled.
+
+Do this by sending command below to Write Bytes, setting location 0x4213 to 0x0.
+
 ** Commands
 *** Commands and Accessible Memory
 Outside of the initial key setup, talking to the ET312 happens through
