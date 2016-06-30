@@ -560,6 +560,34 @@ To set the A level write to $4064 (CurrentLevelA 0-255), to set the B level
 write to $4065 (CurrentLevel B 0-255), to set the MA write to $420D 
 (Current Multi Adjust Value, range from min at $4086 to max at $4087).
 
+**** $4010 - Register 16, flags
+Byte used for various functions
+
+| Bit| Description                                                |
+|----+------------------------------------------------------------|
+|  0 | ??                                                         |
+|  1 | ??                                                         |
+|  2 | set if we are a linked slave                               |
+|  3 | ??                                                         |
+|  4 | ??                                                         |
+|  5 | ??                                                         |
+|  6 | in slave mode determines which registers to send (toggles) |
+|  7 | ??                                                         |
+
+**** $4011 - Register 17, flags
+Byte used for various functions
+
+| Bit| Description                                                |
+|----+------------------------------------------------------------|
+|  0 | ??                                                         |
+|  1 | ??                                                         |
+|  2 | used to tell main code that the timer has triggered        |
+|  3 | set while ADC conversion is running                        |
+|  4 | ??                                                         |
+|  5 | set if received a full serial command to parse             |
+|  6 | set if serial comms error                                  |
+|  7 | set if we are a linked master                              |
+
 **** $4029 - UBRRL I/O Register
 The low byte of the Serial I/O Register. 
 
