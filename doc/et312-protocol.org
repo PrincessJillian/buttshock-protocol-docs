@@ -187,24 +187,24 @@ All entries in *bold* have been mapped and are useful.
 | $4002         | r2 (CPU Register)                                      |
 | $4003         | r3 (CPU Register)                                      |
 | $4004         | r4 (CPU Register)                                      |
-| $4005         | r5 (CPU Register)                                      |
-| $4006         | r6 (CPU Register)                                      |
-| $4007         | r7 (CPU Register)                                      |
-| $4008         | r8 (CPU Register)                                      |
-| $4009         | r9 (CPU Register)                                      |
-| $400a         | r10 (CPU Register)                                     |
-| $400b         | r11 (CPU Register)                                     |
-| $400c         | r12 (CPU Register)                                     |
-| $400d         | r13 (CPU Register)                                     |
-| $400e         | r14 (CPU Register)                                     |
+| $4005         | r5 (CPU Register) copied from $4090                    |
+| $4006         | r6 (CPU Register) copied from $409c                    |
+| $4007         | r7 (CPU Register) copied from $40a5                    |
+| $4008         | r8 (CPU Register) copied from min(9, $40ae)            |
+| $4009         | r9 (CPU Register) copied from min(50,$40b7)            |
+| $400a         | r10 (CPU Register) copied from $4190                   |
+| $400b         | r11 (CPU Register) copied from $419c                   |
+| $400c         | r12 (CPU Register) copied from $41a5                   |
+| $400d         | r13 (CPU Register) copied from min(9, $41ae)           |
+| $400e         | r14 (CPU Register) copied from min(50, $41b7)          |
 | [[$400f - Register 15, Front Panel Potentiometer Lockout Flags][$400f]]         | *r15/ADC disable and other flags - COMM_SYSTEM_FLAG* |
-| $4010         | r16 (CPU Register)                                     |
-| $4011         | r17 (CPU Register)                                     |
+| $4010         | r16 (CPU Register) various flags                       |
+| $4011         | r17 (CPU Register) various flags                       |
 | $4012         | r18 (CPU Register)                                     |
-| $4013         | r19 (CPU Register)                                     |
-| $4014         | r20 (CPU Register)                                     |
-| $4015         | r21 (CPU Register)                                     |
-| $4016         | r22 (CPU Register)                                     |
+| $4013         | r19 (CPU Register) action when down key pushed         |
+| $4014         | r20 (CPU Register) action when up key pushed           |
+| $4015         | r21 (CPU Register) action when menu key pushed         |
+| $4016         | r22 (CPU Register) action when ok key pushed           |
 | $4017         | r23 (CPU Register)                                     |
 | $4018         | r24 (CPU Register)                                     |
 | $4019         | r25 (CPU Register)                                     |
@@ -278,14 +278,14 @@ All entries in *bold* have been mapped and are useful.
 | $405d         | SPL (IO Register)                                      |
 | $405e         | SPH (IO Register)                                      |
 | $405f         | SREG (IO Register)                                     |
-| $4060         | *Output Current Sense COMM_MAIN_CBLOCK_BASE (ADC0)*    |
-| $4061         | *Multi Adjust Offset - CBLOCK_MULTI_A_OFFSET (ADC1)*   |
-| $4062         | *Power Supply Voltage (ADC2)*                          |
-| $4063         | *Battery Voltage (ADC3)*                               |
-| $4064         | *Level Pot A - CBLOCK_POT_A_OFFSET (ADC4)*             |
-| $4065         | *Level Pot B - CBLOCK_POT_B_OFFSET (ADC5)*             |
-| $4066         | *Audio Input Level A (Half wave) (ADC6)*               |
-| $4067         | *Audio Input Level B (Half wave) (ADC7)*               |
+| $4060         | *ADC0: Output Current Sense COMM_MAIN_CBLOCK_BASE*     |
+| $4061         | *ADC1: Multi Adjust Offset - CBLOCK_MULTI_A_OFFSET*    |
+| $4062         | *ADC2: Power Supply Voltage*                           |
+| $4063         | *ADC3: Battery Voltage*                                |
+| $4064         | *ADC4: Level Pot A - CBLOCK_POT_A_OFFSET*              |
+| $4065         | *ADC5: Level Pot B - CBLOCK_POT_B_OFFSET*              |
+| $4066         | *ADC6: Audio Input Level A (Half wave)*                |
+| $4067         | *ADC7: Audio Input Level B (Half wave)*                |
 | $4068         | ??related to buttons                                   |
 | $4069         | *Currently Pressed Button*                             |
 | $406A         | *Master timer (MSB) (0x4073 LSB) runs 1.91Hz*          |
@@ -294,7 +294,7 @@ All entries in *bold* have been mapped and are useful.
 | $406D         | *Menu State*                                           |
 | $406E         | not used                                               |
 | $406F         | not used                                               |
-| $4070         | *Execute Command*                                      |
+| $4070         | *Execute Command (1)*                                  |
 | $4071         | *Execute Command (2)*                                  |
 | $4072         | *Last random number picked*                            |
 | $4073         | Master timer (LSB) runs at 488Hz (8MHz/64(scaler)/256) |
@@ -314,7 +314,7 @@ All entries in *bold* have been mapped and are useful.
 | $4081         | ?? (0x00)                                              |
 | $4082         | ?? (0x02)                                              |
 | $4083         | *Output Control Flags - COMM_CONTROL_FLAG* (0x00)      |
-| $4084         | module to go to on condition                           |
+| $4084         | *module to load if condition met*                      |
 | $4085         | ?? (0x03)                                              |
 | $4086         | *Multi Adjust Range Min* (0x0f)                        |
 | $4087         | *Multi Adjust Range Max* (0xff)                        |
@@ -325,15 +325,15 @@ All entries in *bold* have been mapped and are useful.
 | $408c         | *Module temporary byte store*                          |
 | $408d         | *Random Number Min*                                    |
 | $408e         | *Random Number Max*                                    |
-| $408f         | *Module to go to if audio triggered*                   |
+| $408f         | *Module to load if audio triggered*                    |
 | $4090         | *Channel A: Current Gate Value* (0x06)                 |
 | $4091         | ?? (0x00)                                              |
 | $4092         | ?? (0x00)                                              |
 | $4093         | ?? (0x00)                                              |
-| $4094         | next module timer current (0x00)                       |
-| $4095         | next module timer max (0xff)                           |
-| $4096         | next module flag (0x00)                                |
-| $4097         | next module number (0x00)                              |
+| $4094         | *Next module timer current* (0x00                      |
+| $4095         | *Next module timer max* (0xff)                         |
+| $4096         | *Next module flag* (0x00)                              |
+| $4097         | *Next module number* (0x00)                            |
 | $4098         | *Channel A: Current Gate OnTime* (0x3e)                |
 | $4099         | *Channel A: Current Gate OffTime* (0x3e)               |
 | $409a         | *Channel A: Current Gate Select* (0x00)                |
@@ -395,10 +395,10 @@ All entries in *bold* have been mapped and are useful.
 | $4191         | ??                                                     |
 | $4192         | ??                                                     |
 | $4193         | ??                                                     |
-| $4194         | next module timer current (0x00)                       |
-| $4195         | next module timer max (0xff)                           |
-| $4196         | next module flag (0x00)                                |
-| $4197         | next module number (0x00)                              |
+| $4194         | *Next module timer current* (0x00)                     |
+| $4195         | *Next module timer max* (0xff)                         |
+| $4196         | *Next module flag* (0x00)                              |
+| $4197         | *Next module number* (0x00)                            |
 | $4198         | *Channel B: Current Gate OnTime*                       |
 | $4199         | *Channel B: Current Gate OffTime*                      |
 | $419a         | *Channel B: Current Gate Select*                       |
@@ -442,8 +442,8 @@ All entries in *bold* have been mapped and are useful.
 | $41c0 - $41cf | ??                                                     |
 | $41d0 - $41ef | *Space for User Module Scratchpad B*                   |
 | $41f0         | ?? (Counter) (0xc0)                                    |
-| $41f1         | counter for serial output buffer (0x2c)                |
-| $41f2         | counter for serial input buffer (0x20)                 |
+| $41f1         | pointer (counter) for serial output buffer (0x2c)      |
+| $41f2         | pointer (counter) for serial input buffer (0x20)       |
 | $41f3         | *CurrentTopMode* (written during routine write) (0x87) |
 | $41f4         | *PowerLevel - COMM_POWER_LEVEL / COMM_LMODE* (0x02)    |
 | $41f5         | *Split Mode Number A* (0x77)                           |
@@ -460,11 +460,11 @@ All entries in *bold* have been mapped and are useful.
 | $4200         | ??                                                     |
 | $4201         | ??                                                     |
 | $4202         | ??                                                     |
-| $4203         | battery level percentage                               |
+| $4203         | battery level as a percentage (0-99)                   |
 | $4204         | ??                                                     |
 | $4205         | channel a dac level                                    |
 | $4206         | channel b dac level                                    |
-| $4207         | set to show module (debug mode)                        |
+| $4207         | debug mode: if not 0 then we show current module number on display |
 | $4208         | ??                                                     |
 | $4209         | channel a pwm mark                                     |
 | $420a         | channel a pwm mark                                     |
@@ -475,7 +475,7 @@ All entries in *bold* have been mapped and are useful.
 | $420f         | channel b pwm mark                                     |
 | $4210         | channel b pwm space                                    |
 | $4211         | channel b pwm space                                    |
-| $4212         | com insruction expected instruction length             |
+| $4212         | com instruction expected instruction length            |
 | $4213         | com cipher key                                         |
 | $4214         | com buffer incrementer                                 |
 | $4215         | power status bits                                      |
@@ -796,6 +796,14 @@ Bits 5-8 (lower nibble): Rate Options
 |  0x01 | NORMAL      |
 |  0x02 | HIGH        |
 |  0x03 | UNKNOWN     |
+
+**** $4215 - Power status bits
+
+| Bit| Description                                                |
+|----+------------------------------------------------------------|
+|  0 | Set if we have a battery                                   |
+|  1 | Set if we have a PSU connected                             |
+|  2-7 | unused                                                   |
 
 ** Master and Slave unit linking
 
