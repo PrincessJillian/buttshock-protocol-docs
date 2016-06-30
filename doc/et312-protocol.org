@@ -197,7 +197,7 @@ All entries in *bold* have been mapped and are useful.
 | $400c         | r12 (CPU Register)                                     |
 | $400d         | r13 (CPU Register)                                     |
 | $400e         | r14 (CPU Register)                                     |
-| [[$400f - Register 15, Front Panel Potentiometer Lockout Flags][$400f]]         | *r15/Front Panel Pot Lockout Flags - COMM_SYSTEM_FLAG* |
+| [[$400f - Register 15, Front Panel Potentiometer Lockout Flags][$400f]]         | *r15/ADC disable and other flags - COMM_SYSTEM_FLAG* |
 | $4010         | r16 (CPU Register)                                     |
 | $4011         | r17 (CPU Register)                                     |
 | $4012         | r18 (CPU Register)                                     |
@@ -314,7 +314,7 @@ All entries in *bold* have been mapped and are useful.
 | $4081         | ?? (0x00)                                              |
 | $4082         | ?? (0x02)                                              |
 | $4083         | *Output Control Flags - COMM_CONTROL_FLAG* (0x00)      |
-| $4084         | ?? (0x00)                                              |
+| $4084         | module to go to on condition                           |
 | $4085         | ?? (0x03)                                              |
 | $4086         | *Multi Adjust Range Min* (0x0f)                        |
 | $4087         | *Multi Adjust Range Max* (0xff)                        |
@@ -540,19 +540,21 @@ Usually something like
 #+END_EXAMPLE
 
 For the v1.6 firmware
-**** $400f - Register 15, Front Panel Potentiometer Lockout Flags
-Byte used to enable/disable front panel potentiometers.
+**** $400f - Register 15, ADC disable and other flags
+Byte used for various functions
 
-| Value | Description                                                |
-|-------+------------------------------------------------------------|
-|  0x01 | Disable Level Pots (SYSTEM_FLAG_POTS_DISABLE_MASK)         |
-|  0x02 | ?? if set something happens then it's unset                |
-|  0x04 | ??                                                         |
-|  0x08 | Disable Multi Adjust (SYSTEM_FLAG_MULTIA_POT_DISABLE_MASK) |
+| Bit| Description                                                |
+|----+------------------------------------------------------------|
+|  0 | Disable ADC (pots etc) (SYSTEM_FLAG_POTS_DISABLE_MASK)     |
+|  1 | If set then we jump to a new module number given in $4084  |
+|  2 | Can this program be shared with a slave unit               |
+|  3 | Disable Multi Adjust (SYSTEM_FLAG_MULTIA_POT_DISABLE_MASK) |
+|  4-7 | unused                                                     |
 
-Once the front panel potentiometers have been disabled you can then
-send commands to change the A, B, and MA levels directly.  Enabling
-again sets the unit back to the actual potentiometer values.  
+If bit 0 is set the ADC data is ignored, so effectively disabling the
+the front panel potentiometers.  You can then send commands to change
+the A, B, and MA levels directly.  Enabling again sets the unit back
+to the actual potentiometer values.
 
 To set the A level write to $4064 (CurrentLevelA 0-255), to set the B level
 write to $4065 (CurrentLevel B 0-255), to set the MA write to $420D 
