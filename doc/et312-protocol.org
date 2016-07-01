@@ -439,9 +439,9 @@ All entries in *bold* have been mapped and are useful.
 | $41bd         | *Channel B: Current Width Modulation Action Max* (0xff) |
 | $41be         | *Channel B: Current Width Modulation Select* (0x04)    |
 | $41bf         | *Channel B: Current Width Modulation Timer* (0x00)     |
-| $41c0 - $41cf | ??                                                     |
+| $41c0 - $41cf | last 16 MA knob readings used for averaging            |
 | $41d0 - $41ef | *Space for User Module Scratchpad B*                   |
-| $41f0         | ?? (Counter) (0xc0)                                    |
+| $41f0         | pointer (counter) for MA knob averaging (0xc0)         |
 | $41f1         | pointer (counter) for serial output buffer (0x2c)      |
 | $41f2         | pointer (counter) for serial input buffer (0x20)       |
 | $41f3         | *CurrentTopMode* (written during routine write) (0x87) |
