@@ -479,10 +479,12 @@ All entries in *bold* have been mapped and are useful.
 | $4213         | *com cipher key*                                       |
 | $4214         | com buffer incrementer                                 |
 | $4215         | *power status bits*                                    |
-| $4216 - $421f | ??                                                     |
+| $4216         | unused                                                 |
+| $4217         | unused                                                 |
+| $4218 - $421f | decoded module instruction to parse                    |
 | $4220 - $422b | serial comms input buffer                              |
-| $422c - $42.. | serial comms output buffer                             |
-| $42.. - $43FF | unused                                                 |
+| $422c - $4237 | serial comms output buffer                             |
+| $4238 - $43FF | unused                                                 |
 
 **** EEPROM
 | Address       | Description                                          |
