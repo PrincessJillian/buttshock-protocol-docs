@@ -457,15 +457,15 @@ All entries in *bold* have been mapped and are useful.
 | $41fd         | *Advanced Parameter: Effect* (0x05)                    |
 | $41fe         | *Advanced Parameter: Width* (0x82)                     |
 | $41ff         | *Advanced Parameter: Pace* (0x05)                      |
-| $4200         | ??                                                     |
-| $4201         | ??                                                     |
-| $4202         | ??                                                     |
+| $4200         | value of advanced paramter being edited                |
+| $4201         | min value of advanced paramter being edited            |
+| $4202         | max value of advanced paramter being edited            |
 | $4203         | battery level as a percentage (0-99)                   |
-| $4204         | ??                                                     |
+| $4204         | calculated pwm frequency                               |
 | $4205         | channel a dac level                                    |
 | $4206         | channel b dac level                                    |
 | $4207         | debug mode: if not 0 then we show current module number on display |
-| $4208         | ??                                                     |
+| $4208         | used for DAC SPI transfer                              |
 | $4209         | channel a pwm mark                                     |
 | $420a         | channel a pwm mark                                     |
 | $420b         | channel a pwm space                                    |
