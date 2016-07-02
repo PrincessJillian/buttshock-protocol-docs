@@ -306,16 +306,16 @@ All entries in *bold* have been mapped and are useful.
 | $4079         | *Lowest Selectable Menu Item/Mode*                     |
 | $407A         | *Highest Selectable Menu Item/Mode*                    |
 | $407b         | *Current Mode*                                         |
-| $407c         | ?? (Oscillator Ch A? )                                 |
-| $407d         | ?? (Oscillator Ch A? )                                 |
-| $407e         | ?? (Oscillator Ch B? )                                 |
-| $407F         | ?? (Oscillator Ch B? )                                 |
+| $407c         | Oscillator Ch A (updated but unused)                   |
+| $407d         | Oscillator Ch A (updated but unused)                   |
+| $407e         | Oscillator Ch B (updated but unused)                   |
+| $407F         | Oscillator Ch B (updated but unused)                   |
 | $4080         | ?? (0x00)                                              |
 | $4081         | ?? (0x00)                                              |
 | $4082         | ?? (0x02)                                              |
 | $4083         | *Output Control Flags - COMM_CONTROL_FLAG* (0x00)      |
 | $4084         | *module to load if condition met*                      |
-| $4085         | ?? (0x03)                                              |
+| $4085         | when module loading determines which channels to set (0x03) |
 | $4086         | *Multi Adjust Range Min* (0x0f)                        |
 | $4087         | *Multi Adjust Range Max* (0xff)                        |
 | $4088         | *Module timer (3 bytes) low - 244Hz (409uS)*           |
@@ -327,17 +327,17 @@ All entries in *bold* have been mapped and are useful.
 | $408e         | *Random Number Max*                                    |
 | $408f         | *Module to load if audio triggered*                    |
 | $4090         | *Channel A: Current Gate Value* (0x06)                 |
-| $4091         | ?? (0x00)                                              |
-| $4092         | ?? (0x00)                                              |
-| $4093         | ?? (0x00)                                              |
-| $4094         | *Next module timer current* (0x00                      |
+| $4091         | module wants to change channel A gates                 |
+| $4092         | module wants to change channel B gates                 |
+| $4093         | unused                                                 |
+| $4094         | *Next module timer current* (0x00)                     |
 | $4095         | *Next module timer max* (0xff)                         |
 | $4096         | *Next module flag* (0x00)                              |
 | $4097         | *Next module number* (0x00)                            |
 | $4098         | *Channel A: Current Gate OnTime* (0x3e)                |
 | $4099         | *Channel A: Current Gate OffTime* (0x3e)               |
 | $409a         | *Channel A: Current Gate Select* (0x00)                |
-| $409b         | ?? (0x00)                                              |
+| $409b         | *Channel A: number of Gate transitions done (0x00)     |
 | $409c         | *Mode Switch Ramp Value Counter* (0x9c)                |
 | $409d         | *Mode Switch Ramp Value Min* (0x9c)                    |
 | $409e         | *Mode Switch Ramp Value Max* (0xff)                    |
@@ -379,30 +379,17 @@ All entries in *bold* have been mapped and are useful.
 | $4181         | *Write LCD Position*                                   |
 | $4182         | *Parameter r26 for run call table*                     |
 | $4183         | *Parameter r27 for run call table*                     |
-| $4184         | ??                                                     |
-| $4185         | ??                                                     |
-| $4186         | ??                                                     |
-| $4187         | ??                                                     |
-| $4188         | ??                                                     |
-| $4189         | ??                                                     |
-| $418a         | ??                                                     |
-| $418b         | ??                                                     |
-| $418c         | ??                                                     |
-| $418d         | ??                                                     |
-| $418e         | ??                                                     |
-| $418f         | ??                                                     |
+| $4184 - $418f | unused                                                 |
 | $4190         | *Channel B: Current Gate Value* (0 when no output)     |
-| $4191         | ??                                                     |
-| $4192         | ??                                                     |
-| $4193         | ??                                                     |
+| $4191 - $4193 | unused                                                 |
 | $4194         | *Next module timer current* (0x00)                     |
 | $4195         | *Next module timer max* (0xff)                         |
 | $4196         | *Next module flag* (0x00)                              |
 | $4197         | *Next module number* (0x00)                            |
-| $4198         | *Channel B: Current Gate OnTime*                       |
-| $4199         | *Channel B: Current Gate OffTime*                      |
-| $419a         | *Channel B: Current Gate Select*                       |
-| $419b         | ??                                                     |
+| $4198         | *Channel B: Current Gate OnTime* (0x3e)                |
+| $4199         | *Channel B: Current Gate OffTime* (0x3e)               |
+| $419a         | *Channel B: Current Gate Select* (0x00)                |
+| $419b         | *Channel B: number of Gate transitions done (0x00)     |
 | $419c         | *Mode Switch Ramp Value Counter* (0x9c)                |
 | $419d         | *Mode Switch Ramp Value Min* (0x9c)                    |
 | $419e         | *Mode Switch Ramp Value Max* (0xff)                    |
@@ -581,8 +568,8 @@ Byte used for various functions
 
 | Bit| Description                                                |
 |----+------------------------------------------------------------|
-|  0 | ??                                                         |
-|  1 | ??                                                         |
+|  0 | when module loading to apply module to channel A           |
+|  1 | when module loading to apply module to channel B           |
 |  2 | used to tell main code that the timer has triggered        |
 |  3 | set while ADC conversion is running                        |
 |  4 | ??                                                         |
