@@ -297,9 +297,9 @@ All entries in *bold* have been mapped and are useful.
 | $4070         | *Execute Command (1)*                                  |
 | $4071         | *Execute Command (2)*                                  |
 | $4072         | *Last random number picked*                            |
-| $4073         | Master timer (LSB) runs at 488Hz (8MHz/64(scaler)/256) |
-| $4074         | Random1: 1 (start) or current random mode number       |
-| $4075         | Random1: stores counter time when to change mode       |
+| $4073         | *Master timer (LSB) runs at 488Hz (8MHz/64(scaler)/256)* |
+| $4074         | Random 1 mode, 1 (start) or current random mode number |
+| $4075         | Random 1 mode, stores counter time when to change mode |
 | $4076         | not used                                               |
 | $4077         | not used                                               |
 | $4078         | *Current displayed Menu Item/Mode (not yet selected)*  |
@@ -322,9 +322,9 @@ All entries in *bold* have been mapped and are useful.
 | $4089         | *Module timer (3 bytes) mid - 0.953Hz (1.048S)*        |
 | $408a         | *Module timer (3 bytes) high - (268.43S)*              |
 | $408b         | *Module timer (slower) - 30.5Hz*                       |
-| $408c         | *Module temporary byte store*                          |
-| $408d         | *Random Number Min*                                    |
-| $408e         | *Random Number Max*                                    |
+| $408c         | Module temporary byte store                            |
+| $408d         | Random Number Min                                      |
+| $408e         | Random Number Max                                      |
 | $408f         | *Module to load if audio triggered*                    |
 | $4090         | *Channel A: Current Gate Value* (0x06)                 |
 | $4091         | module wants to change channel A gates                 |
