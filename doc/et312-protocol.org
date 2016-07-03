@@ -155,7 +155,7 @@ Writing a byte happens via a command with 4 byte length (minus checksum)
 - [0xJJ 0xKK]... - Value(s) to set address to
 
 For instance, if we wanted to write 2 bytes, 0xFE 0xFF, starting
-0x4010, the command would look like
+$4010, the command would look like
 
 #+BEGIN_EXAMPLE
 0x5d 0x40 0x10 0xfe 0xff
@@ -163,8 +163,8 @@ For instance, if we wanted to write 2 bytes, 0xFE 0xFF, starting
 
 - 0x5d is the write command with amount (0x3d + 0x20 since we're
   writing 2 bytes)
-- 0x40 0x10 is our 16-bit address (0x4010)
-- 0xfe 0xff is the data we want to write to 0x4010 and 0x4011,
+- 0x40 0x10 is our 16-bit address ($4010)
+- 0xfe 0xff is the data we want to write to $4010 and $4011,
   respectively.
 
 *** Memory Layout Tables
@@ -198,13 +198,13 @@ All entries in *bold* have been mapped and are useful.
 | $400d         | r13 (CPU Register) copied from min(9, $41ae)           |
 | $400e         | r14 (CPU Register) copied from min(50, $41b7)          |
 | [[$400f - Register 15, Front Panel Potentiometer Lockout Flags][$400f]]         | *r15/ADC disable and other flags - COMM_SYSTEM_FLAG* |
-| $4010         | r16 (CPU Register) various flags                       |
-| $4011         | r17 (CPU Register) various flags                       |
+| $4010         | *r16 (CPU Register) various flags*                     |
+| $4011         | *r17 (CPU Register) various flags*                     |
 | $4012         | r18 (CPU Register)                                     |
-| $4013         | r19 (CPU Register) action when down key pushed         |
-| $4014         | r20 (CPU Register) action when up key pushed           |
-| $4015         | r21 (CPU Register) action when menu key pushed         |
-| $4016         | r22 (CPU Register) action when ok key pushed           |
+| $4013         | *r19 (CPU Register) action when down key pushed*       |
+| $4014         | *r20 (CPU Register) action when up key pushed*         |
+| $4015         | *r21 (CPU Register) action when menu key pushed*       |
+| $4016         | *r22 (CPU Register) action when ok key pushed*         |
 | $4017         | r23 (CPU Register)                                     |
 | $4018         | r24 (CPU Register)                                     |
 | $4019         | r25 (CPU Register)                                     |
@@ -286,22 +286,22 @@ All entries in *bold* have been mapped and are useful.
 | $4065         | *ADC5: Level Pot B - CBLOCK_POT_B_OFFSET*              |
 | $4066         | *ADC6: Audio Input Level A (Half wave)*                |
 | $4067         | *ADC7: Audio Input Level B (Half wave)*                |
-| $4068         | ??related to buttons                                   |
-| $4069         | *Currently Pressed Button*                             |
+| $4068         | Current pushed buttons                                 |
+| $4069         | Last pushed buttons                                    |
 | $406A         | *Master timer (MSB) (0x4073 LSB) runs 1.91Hz*          |
 | $406B         | *Channel A calibration (DAC power offset)*             |
 | $406C         | *Channel B calibration (DAC power offset)*             |
 | $406D         | *Menu State*                                           |
-| $406E         | not used                                               |
-| $406F         | not used                                               |
+| $406E         | unused                                                 |
+| $406F         | unused                                                 |
 | $4070         | *Execute Command (1)*                                  |
 | $4071         | *Execute Command (2)*                                  |
-| $4072         | *Last random number picked*                            |
+| $4072         | Last random number picked                              |
 | $4073         | *Master timer (LSB) runs at 488Hz (8MHz/64(scaler)/256)* |
 | $4074         | Random 1 mode, 1 (start) or current random mode number |
 | $4075         | Random 1 mode, stores counter time when to change mode |
-| $4076         | not used                                               |
-| $4077         | not used                                               |
+| $4076         | unused                                                 |
+| $4077         | unused                                                 |
 | $4078         | *Current displayed Menu Item/Mode (not yet selected)*  |
 | $4079         | *Lowest Selectable Menu Item/Mode*                     |
 | $407A         | *Highest Selectable Menu Item/Mode*                    |
@@ -310,11 +310,11 @@ All entries in *bold* have been mapped and are useful.
 | $407d         | Oscillator Ch A (updated but unused)                   |
 | $407e         | Oscillator Ch B (updated but unused)                   |
 | $407F         | Oscillator Ch B (updated but unused)                   |
-| $4080         | ?? (0x00)                                              |
-| $4081         | ?? (0x00)                                              |
-| $4082         | ?? (0x02)                                              |
+| $4080         | unused (0x00)                                          |
+| $4081         | unused (0x00)                                          |
+| $4082         | retry counter when communicating with slave (0x02)     |
 | $4083         | *Output Control Flags - COMM_CONTROL_FLAG* (0x00)      |
-| $4084         | *module to load if condition met*                      |
+| $4084         | module to load if condition met                        |
 | $4085         | when module loading determines which channels to set (0x03) |
 | $4086         | *Multi Adjust Range Min* (0x0f)                        |
 | $4087         | *Multi Adjust Range Max* (0xff)                        |
@@ -325,7 +325,7 @@ All entries in *bold* have been mapped and are useful.
 | $408c         | Module temporary byte store                            |
 | $408d         | Random Number Min                                      |
 | $408e         | Random Number Max                                      |
-| $408f         | *Module to load if audio triggered*                    |
+| $408f         | Module to load if audio triggered                      |
 | $4090         | *Channel A: Current Gate Value* (0x06)                 |
 | $4091         | module wants to change channel A gates                 |
 | $4092         | module wants to change channel B gates                 |
@@ -337,7 +337,7 @@ All entries in *bold* have been mapped and are useful.
 | $4098         | *Channel A: Current Gate OnTime* (0x3e)                |
 | $4099         | *Channel A: Current Gate OffTime* (0x3e)               |
 | $409a         | *Channel A: Current Gate Select* (0x00)                |
-| $409b         | *Channel A: number of Gate transitions done (0x00)     |
+| $409b         | *Channel A: number of Gate transitions done* (0x00)    |
 | $409c         | *Mode Switch Ramp Value Counter* (0x9c)                |
 | $409d         | *Mode Switch Ramp Value Min* (0x9c)                    |
 | $409e         | *Mode Switch Ramp Value Max* (0xff)                    |
@@ -377,8 +377,8 @@ All entries in *bold* have been mapped and are useful.
 | $40c0 - $4177 | *Space for User Module Scratchpad A*                   |
 | $4180         | *Write LCD Parameter*                                  |
 | $4181         | *Write LCD Position*                                   |
-| $4182         | *Parameter r26 for run call table*                     |
-| $4183         | *Parameter r27 for run call table*                     |
+| $4182         | *Parameter r26 for box command*                        |
+| $4183         | *Parameter r27 for box command*                        |
 | $4184 - $418f | unused                                                 |
 | $4190         | *Channel B: Current Gate Value* (0 when no output)     |
 | $4191 - $4193 | unused                                                 |
@@ -389,7 +389,7 @@ All entries in *bold* have been mapped and are useful.
 | $4198         | *Channel B: Current Gate OnTime* (0x3e)                |
 | $4199         | *Channel B: Current Gate OffTime* (0x3e)               |
 | $419a         | *Channel B: Current Gate Select* (0x00)                |
-| $419b         | *Channel B: number of Gate transitions done (0x00)     |
+| $419b         | *Channel B: number of Gate transitions done* (0x00)    |
 | $419c         | *Mode Switch Ramp Value Counter* (0x9c)                |
 | $419d         | *Mode Switch Ramp Value Min* (0x9c)                    |
 | $419e         | *Mode Switch Ramp Value Max* (0xff)                    |
@@ -427,7 +427,7 @@ All entries in *bold* have been mapped and are useful.
 | $41be         | *Channel B: Current Width Modulation Select* (0x04)    |
 | $41bf         | *Channel B: Current Width Modulation Timer* (0x00)     |
 | $41c0 - $41cf | last 16 MA knob readings used for averaging            |
-| $41d0 - $41ef | *Space for User Module Scratchpad B*                   |
+| $41d0 - $41ef | *User Module Scratchpad Pointers*                      |
 | $41f0         | pointer (counter) for MA knob averaging (0xc0)         |
 | $41f1         | pointer (counter) for serial output buffer (0x2c)      |
 | $41f2         | pointer (counter) for serial input buffer (0x20)       |
@@ -451,7 +451,7 @@ All entries in *bold* have been mapped and are useful.
 | $4204         | calculated pwm frequency                               |
 | $4205         | channel a dac level                                    |
 | $4206         | channel b dac level                                    |
-| $4207         | *debug mode: if not 0 then we show current module number on display* |
+| $4207         | *debug mode: displays current module number if not 0*                |
 | $4208         | used for DAC SPI transfer                              |
 | $4209         | channel a pwm mark                                     |
 | $420a         | channel a pwm mark                                     |
@@ -597,7 +597,7 @@ longer working properly (checksum errors).
 |-------+------------------------------------------------|
 |  0x01 | In startup screen or in a menu                 |
 |  0x02 | No menu, program is running and displaying     |
-**** $4070 - Box Command
+**** $4070 and $4071 - Box Command
 | Value | Description                                    |
 |-------+------------------------------------------------|
 |  0x00 | Start "Favourite" Routine                      |
@@ -640,14 +640,28 @@ longer working properly (checksum errors).
 |  0x25 | Not used (error)                               |
 |  0x26 | Not used (error)                               |
 |  0x27 | Not used (error)                               |
+|  0xff | No command                                     |
 
-*Note: you can also write a command to $4071, both are checked one after
-the other, so if you want to execute two commands, you can write the first
-to $4070 and the second to $4071*
+Set $4070 to the value above for the command you want to execute.  This
+location is checked in the main loop many times a second.  If you want to
+give more than one command you need to have a short delay after writing
+to $4070 (>~18mS) to ensure the first command is actioned.  If you want to
+execute two commands you can write a second command to $4071 and this location
+is checked immediately after $4070 is actioned.
+
+*Note: if a command needs parameters, r26 is read from $4182 and r27 is read from $4183*
+
+*Note: Parameters for load module*
+
+Module number is read from $4182
 
 *Note: Parameters for set power level*
 
-Write power level to 0x4078.  0x6b low, 0x6c normal, 06d is high
+| Level  | $4078 |
+|--------+-------|
+| low    | 0x6b  |
+| normal | 0x6c  |
+| high   | 0x6d  |
 
 *Note: Parameters for the LCD write command*
 
@@ -697,7 +711,7 @@ Write power level to 0x4078.  0x6b low, 0x6c normal, 06d is high
 - Wait 18ms (lets box execute previous commands before you change mode again)
 
 (Note you can write to two adjacent memory locations in one command so you
-can do a write of 0x4 0x12 to 0x4070 with the same effect)
+can do a write of 0x4 0x12 to $4070 with the same effect)
 
 **** $4083 - Phase, Front Panel, Mute/Mono/Stereo Control
 
@@ -821,14 +835,14 @@ back from the Slave 0x05.
 After handshake is complete the master box will use the standard
 protocol as above to send memory locations to the slave.
 
-The master will first send a 9d 40 04 followed by 6 bytes and
+The master will first send a 0x9d 0x40 0x04 followed by 6 bytes and
 a checksum.
 
 When the slave sends an acknowledgement back (a single 0x06), the
-master will send a 9d 40 0a followed by 6 bytes.
+master will send a 0x9d 0x40 0x0a followed by 6 bytes.
 
 When the master gets the next 0x06 back it will send the first
 6 bytes again, forever, as fast as the slave processes them.
 
-Locations 0x4004-0x400f contain the processor registers r4-r15
+Locations $4004-$400f contain the processor registers r4-r15
 
