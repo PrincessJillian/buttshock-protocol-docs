@@ -102,7 +102,7 @@ However if just before closing the connection to the box you clear out
 the current XOR key, future serial connections to the box will appear
 as new connections without needing the box to be power cycled.
 
-Do this by sending command below to Write Bytes, setting location 0x4213 to 0x0.
+Do this by sending command below to Write Bytes, setting location $4213 to 0x00.
 
 ** Commands
 *** Commands and Accessible Memory
@@ -476,18 +476,18 @@ All entries in *bold* have been mapped and are useful.
 **** EEPROM
 | Address       | Description                                          |
 |---------------+------------------------------------------------------|
-| $8000         | ??                                                   |
+| $8000         | not used, not set                                    |
 | $8001         | *Magic* (0x55 means we're provisioned)               |
-| $8002         | *BoxSerial1*                                         |
-| $8003         | *BoxSerial2*                                         |
-| $8004         | ??                                                   |
-| $8005         | ??                                                   |
+| $8002         | *Box Serial 1*                                       |
+| $8003         | *Box Serial 2*                                       |
+| $8004         | not used, set to 0x00                                |
+| $8005         | not used, set to 0x00                                |
 | $8006         | *ELinkSig1 - ELINK_SIG1_ADDR* (default 0x01)         |
 | $8007         | *ELinkSig2 - ELINK_SIG2_ADDR * (default 0x01)        |
 | $8008         | *TopMode NonVolatile (written during routine write)* |
-| $8009         | *PowerLevel*                                         |
-| $800A         | *SplitAModeNum*                                      |
-| $800B         | *SplitBModeNum*                                      |
+| $8009         | *Power Level*                                        |
+| $800A         | *Split A Mode Num*                                   |
+| $800B         | *Split B Mode Num*                                   |
 | $800C         | *Favourite Mode*                                     |
 | $800D         | *Advanced Parameter: RampLevel*                      |
 | $800E         | *Advanced Parameter: RampTime*                       |
@@ -497,9 +497,9 @@ All entries in *bold* have been mapped and are useful.
 | $8012         | *Advanced Parameter: Effect*                         |
 | $8013         | *Advanced Parameter: Width*                          |
 | $8014         | *Advanced Parameter: Pace*                           |
-| $8015         | ??                                                   |
-| $8016         | ??                                                   |
-| $8017         | ??                                                   |
+| $8015         | not used, set to 0x00                                |
+| $8016         | not used, set to 0x00                                |
+| $8017         | not used, set to 0x00                                |
 | $8018         | *Start Vector User 1 - COMM_USER_BASE*               |
 | $8019         | *Start Vector User 2*                                |
 | $801A         | *Start Vector User 3*                                |
@@ -508,9 +508,9 @@ All entries in *bold* have been mapped and are useful.
 | $801D         | *Start Vector User 6*                                |
 | $801E         | *Start Vector User 7 (not implemented)*              |
 | $801F         | *Start Vector User 8 (not implemented)*              |
-| $8020 - $803f | *User routine module table 0x80-0x9f*                |
+| $8020 - $803f | *User routine module pointers 0x80-0x9f*             |
 | $8040 - $80ff | *Space for User Modules*                             |
-| $8100 - $811f | *User routine module table 0xa0-0xbf*                |
+| $8100 - $811f | *User routine module pointers 0xa0-0xbf*             |
 | $8120 - $81ff | *Space for User Modules*                             |
 *** Memory Specifics
 **** $0000:$00fb - Partial String Table and data segment
