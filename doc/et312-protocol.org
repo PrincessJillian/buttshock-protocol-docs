@@ -743,6 +743,19 @@ Sets which channel gating commands will control.
 |  0x01 | Channel A   |
 |  0x02 | Channel B   |
 |  0x03 | Channel A+B |
+**** $40a1, $40a2, $40aa, $40ab, $40b3, $40b4, $40bc, $40bd
+For each of the variables such as Intensity, Frequency, Ramp and so
+on, this byte specifies what to do when the current value reaches
+the end of the range (either the maximum or minimum depending on what
+variable is being used).
+
+| Value   | Description   |
+|---------+---------------|
+| 0x00-0xfb | Change to new module (value gives module number) |
+| 0xfc    | Stop, no longer update this variable |
+| 0xfd    | Loop back round (if below min, set to max; if above max, set to min) |
+| 0xfe    | Reverse direction, toggle gate, and continue |
+| 0xff    | Reverse direction and continue |
 **** $40a5 - Current Level
 1 byte, Range 128-255
 (Range taken from erosoutsider perl script)
