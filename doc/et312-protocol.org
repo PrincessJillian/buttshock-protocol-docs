@@ -104,7 +104,7 @@ exchange, and can be pre-calculated and stored.
 Only data sent from host to ET312 requires encryption, all data
 received from the ET312 will be cleartext.
 
-** Master and Slave Link (ET-232 to ET-232)
+** Master and Slave Link (ET-312 to ET-312)
 
 Two ET312 boxes can be linked together using a cross-over cable.
 
