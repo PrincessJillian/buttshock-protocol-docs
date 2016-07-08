@@ -151,11 +151,11 @@ Both functions take 16 bit addresses, which map into a virtual memory
 space set up by the communications handler on the ET312. This memory
 space looks like:
 
-| Address Range | Description                    |
-|---------------+--------------------------------|
-| $0000 - $00ff | Flash (256b from 0x1f00-0x1fff)|
-| $4000 - $43ff | Registers and Partial RAM (1k) |
-| $8000 - $81ff | EEPROM (512b)                  |
+| Address Range | Description                     |
+|---------------+---------------------------------|
+| $0000 - $00ff | Flash (256b from 0x1f00-0x1fff) |
+| $4000 - $43ff | Registers and Partial RAM (1k)  |
+| $8000 - $81ff | EEPROM (512b)                   |
 
 Reading past the end of these ranges will just loop the last valid
 range.
@@ -383,7 +383,7 @@ All entries in *bold* have been mapped and are useful.
 | $409d         | *Mode Switch Ramp Value Min* (0x9c)                         |
 | $409e         | *Mode Switch Ramp Value Max* (0xff)                         |
 | $409f         | *Mode Switch Ramp Value Rate* (0x07)                        |
-| $40a0         | *Mode Switch Ramp Value Increment* (0x01)                   |
+| $40a0         | *Mode Switch Ramp Value Step* (0x01)                   |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$40a1]]         | *Mode Switch Ramp Action at Min* (0xfc)                     |
 | [[( 1/7 ) Link: id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$40a2]]         | *Mode Switch Ramp Action at Max* (0xfc)                     |
 | $40a3         | *Mode Switch Ramp Select* (0x01)                            |
@@ -392,7 +392,7 @@ All entries in *bold* have been mapped and are useful.
 | $40a6         | *Channel A: Current Intensity Modulation Min* (0xcd)        |
 | $40a7         | *Channel A: Current Intensity Modulation Max* (0xff)        |
 | $40a8         | *Channel A: Current Intensity Modulation Rate* (0x01)       |
-| $40a9         | *Channel A: Current Intensity Modulation Increment* (0x01)  |
+| $40a9         | *Channel A: Current Intensity Modulation Step* (0x01)  |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$40aa]]         | *Channel A: Current Intensity Action at Min* (0xff)         |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$40ab]]         | *Channel A: Current Intensity Action at Max* (0xff)         |
 | $40ac         | *Channel A: Current Intensity Modulation Select* (0x00)     |
@@ -401,7 +401,7 @@ All entries in *bold* have been mapped and are useful.
 | $40af         | *Channel A: Current Frequency Modulation Min* (0x09)        |
 | $40b0         | *Channel A: Current Frequency Modulation Max* (0x64)        |
 | $40b1         | *Channel A: Current Frequency Modulation Rate* (0x01)       |
-| $40b2         | *Channel A: Current Frequency Modulation Increment* (0x01)  |
+| $40b2         | *Channel A: Current Frequency Modulation Step* (0x01)  |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$40b3]]         | *Channel A: Current Frequency Modulation Action Min* (0xff) |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$40b4]]         | *Channel A: Current Frequency Modulation Action Max* (0xff) |
 | $40b5         | *Channel A: Current Frequency Modulation Select* (0x08)     |
@@ -410,7 +410,7 @@ All entries in *bold* have been mapped and are useful.
 | $40b8         | *Channel A: Current Width Modulation Min* (0x32)            |
 | $40b9         | *Channel A: Current Width Modulation Max* (0xc8)            |
 | $40ba         | *Channel A: Current Width Modulation Rate* (0x01)           |
-| $40bb         | *Channel A: Current Width Modulation Increment* (0x01)      |
+| $40bb         | *Channel A: Current Width Modulation Step* (0x01)      |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$40bc]]         | *Channel A: Current Width Modulation Action Min* (0xff)     |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$40bd]]         | *Channel A: Current Width Modulation Action Max* (0xff)     |
 | $40be         | *Channel A: Current Width Modulation Select* (0x04)         |
@@ -435,7 +435,7 @@ All entries in *bold* have been mapped and are useful.
 | $419d         | *Mode Switch Ramp Value Min* (0x9c)                         |
 | $419e         | *Mode Switch Ramp Value Max* (0xff)                         |
 | $419f         | *Mode Switch Ramp Value Rate* (0x07)                        |
-| $41a0         | *Mode Switch Ramp Value Increment* (0x01)                   |
+| $41a0         | *Mode Switch Ramp Value Step* (0x01)                   |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$41a1]]         | *Mode Switch Ramp Action at Min* (0xfc)                     |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$41a2]]         | *Mode Switch Ramp Action at Max* (0xfc)                     |
 | $41a3         | *Mode Switch Ramp Select* (0x01)                            |
@@ -444,7 +444,7 @@ All entries in *bold* have been mapped and are useful.
 | $41a6         | *Channel B: Current Intensity Modulation Min* (0xcd)        |
 | $41a7         | *Channel B: Current Intensity Modulation Max* (0xff)        |
 | $41a8         | *Channel B: Current Intensity Modulation Rate* (0x01)       |
-| $41a9         | *Channel B: Current Intensity Modulation Increment* (0x01)  |
+| $41a9         | *Channel B: Current Intensity Modulation Step* (0x01)  |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$41aa]]         | *Channel B: Current Intensity Action at Min* (0xff)         |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$41ab]]         | *Channel B: Current Intensity Action at Max* (0xff)         |
 | $41ac         | *Channel B: Current Intensity Modulation Select* (0x00)     |
@@ -453,7 +453,7 @@ All entries in *bold* have been mapped and are useful.
 | $41af         | *Channel B: Current Frequency Modulation Min* (0x09)        |
 | $41b0         | *Channel B: Current Frequency Modulation Max* (0x64)        |
 | $41b1         | *Channel B: Current Frequency Modulation Rate* (0x01)       |
-| $41b2         | *Channel B: Current Frequency Modulation Increment* (0x01)  |
+| $41b2         | *Channel B: Current Frequency Modulation Step* (0x01)  |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$41b3]]         | *Channel B: Current Frequency Modulation Action Min* (0xff) |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$41b4]]         | *Channel B: Current Frequency Modulation Action Max* (0xff) |
 | $41b5         | *Channel B: Current Frequency Modulation Select* (0x08)     |
@@ -462,7 +462,7 @@ All entries in *bold* have been mapped and are useful.
 | $41b8         | *Channel B: Current Width Modulation Min* (0x32)            |
 | $41b9         | *Channel B: Current Width Modulation Max* (0xc8)            |
 | $41ba         | *Channel B: Current Width Modulation Rate* (0x01)           |
-| $41bb         | *Channel B: Current Width Modulation Increment* (0x01)      |
+| $41bb         | *Channel B: Current Width Modulation Step* (0x01)      |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$41bc]]         | *Channel B: Current Width Modulation Action Min* (0xff)     |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$41bd]]         | *Channel B: Current Width Modulation Action Max* (0xff)     |
 | $41be         | *Channel B: Current Width Modulation Select* (0x04)         |
@@ -590,13 +590,13 @@ For the v1.6 firmware
 :END:
 Byte used for various functions
 
-| Bit| Description                                                |
-|----+------------------------------------------------------------|
-|  0 | Disable ADC (pots etc) (SYSTEM_FLAG_POTS_DISABLE_MASK)     |
-|  1 | If set then we jump to a new module number given in $4084  |
-|  2 | Can this program be shared with a slave unit               |
-|  3 | Disable Multi Adjust (SYSTEM_FLAG_MULTIA_POT_DISABLE_MASK) |
-|  4-7 | unused                                                     |
+| Bit | Description                                                |
+|-----+------------------------------------------------------------|
+|   0 | Disable ADC (pots etc) (SYSTEM_FLAG_POTS_DISABLE_MASK)     |
+|   1 | If set then we jump to a new module number given in $4084  |
+|   2 | Can this program be shared with a slave unit               |
+|   3 | Disable Multi Adjust (SYSTEM_FLAG_MULTIA_POT_DISABLE_MASK) |
+| 4-7 | unused                                                     |
 
 If bit 0 is set the ADC data is ignored, so effectively disabling the
 the front panel potentiometers.  You can then send commands to change
@@ -613,16 +613,16 @@ write to $4065 (CurrentLevel B 0-255), to set the MA write to $420D
 :END:
 Byte used for various functions
 
-| Bit| Description                                                |
-|----+------------------------------------------------------------|
-|  0 | ??                                                         |
-|  1 | ??                                                         |
-|  2 | set if we are a linked slave                               |
-|  3 | ??                                                         |
-|  4 | ??                                                         |
-|  5 | ??                                                         |
-|  6 | in slave mode determines which registers to send (toggles) |
-|  7 | ??                                                         |
+| Bit | Description                                                |
+|-----+------------------------------------------------------------|
+|   0 | ??                                                         |
+|   1 | ??                                                         |
+|   2 | set if we are a linked slave                               |
+|   3 | ??                                                         |
+|   4 | ??                                                         |
+|   5 | ??                                                         |
+|   6 | in slave mode determines which registers to send (toggles) |
+|   7 | ??                                                         |
 
 ** $4011 - Register 17, flags
 :PROPERTIES:
@@ -630,16 +630,16 @@ Byte used for various functions
 :END:
 Byte used for various functions
 
-| Bit| Description                                                |
-|----+------------------------------------------------------------|
-|  0 | when module loading to apply module to channel A           |
-|  1 | when module loading to apply module to channel B           |
-|  2 | used to tell main code that the timer has triggered        |
-|  3 | set while ADC conversion is running                        |
-|  4 | ??                                                         |
-|  5 | set if received a full serial command to parse             |
-|  6 | set if serial comms error                                  |
-|  7 | set if we are a linked master                              |
+| Bit | Description                                         |
+|-----+-----------------------------------------------------|
+|   0 | when module loading to apply module to channel A    |
+|   1 | when module loading to apply module to channel B    |
+|   2 | used to tell main code that the timer has triggered |
+|   3 | set while ADC conversion is running                 |
+|   4 | ??                                                  |
+|   5 | set if received a full serial command to parse      |
+|   6 | set if serial comms error                           |
+|   7 | set if we are a linked master                       |
 
 ** $4029 - UBRRL I/O Register
 :PROPERTIES:
@@ -666,57 +666,57 @@ longer working properly (checksum errors).
 :PROPERTIES:
 :ID:       dd33adae-a5d8-4595-904f-ae30fef992fb
 :END:
-| Value | Description                                    |
-|-------+------------------------------------------------|
-|  0x01 | In startup screen or in a menu                 |
-|  0x02 | No menu, program is running and displaying     |
+| Value | Description                                |
+|-------+--------------------------------------------|
+|  0x01 | In startup screen or in a menu             |
+|  0x02 | No menu, program is running and displaying |
 ** $4070 and $4071 - Box Command
 :PROPERTIES:
 :ID:       06849b84-e7c5-441c-aa8d-80f86252ce0b
 :END:
-| Value | Description                                    |
-|-------+------------------------------------------------|
-|  0x00 | Start "Favourite" Routine                      |
-|  0x01 | do nothing                                     |
-|  0x02 | Display Status Screen                          |
-|  0x03 | Select current Menu Item                       |
-|  0x04 | Exit Menu                                      |
-|  0x05 | Same as 0x00                                   |
-|  0x06 | Set Power Level                                |
-|  0x07 | Edit Advanced Parameter                        |
-|  0x08 | display next menu item                         |
-|  0x09 | display previous menu item                     |
-|  0x0a | Show Main Menu                                 |
-|  0x0b | Jump to split mode settings menu               |
-|  0x0c | Activates Split Mode                           |
-|  0x0d | Advanced Value Up                              |
-|  0x0e | Advanced Value Down                            |
-|  0x0f | Show Advanced Menu                             |
-|  0x10 | Switch to Next mode                            |
-|  0x11 | Switch to Previous mode                        |
-|  0x12 | New Mode                                       |
-|  0x13 | Write Character to LCD                         |
-|  0x14 | Write Number to LCD                            |
-|  0x15 | Write String from Stringtable to LCD           |
-|  0x16 | Load module                                    |
-|  0x17 | Not used (error)                               |
-|  0x18 | Clear module (Mute)                            |
-|  0x19 | Swap Channel A and B                           |
-|  0x1a | Copy Channel A to Channel B                    |
-|  0x1b | Copy Channel B to Channel A                    |
-|  0x1c | Copy defaults from EEPROM                      |
-|  0x1d | Sets up running module registers               |
-|  0x1e | Handles single instruction from a module       |
-|  0x1f | General way to call these functions            |
-|  0x20 | Advanced Setting Update                        |
-|  0x21 | Start Ramp                                     |
-|  0x22 | Does an ADC conversion                         |
-|  0x23 | Set LCD position                               |
-|  0x24 | (redundant)                                    |
-|  0x25 | Not used (error)                               |
-|  0x26 | Not used (error)                               |
-|  0x27 | Not used (error)                               |
-|  0xff | No command                                     |
+| Value | Description                              |
+|-------+------------------------------------------|
+|  0x00 | Start "Favourite" Routine                |
+|  0x01 | do nothing                               |
+|  0x02 | Display Status Screen                    |
+|  0x03 | Select current Menu Item                 |
+|  0x04 | Exit Menu                                |
+|  0x05 | Same as 0x00                             |
+|  0x06 | Set Power Level                          |
+|  0x07 | Edit Advanced Parameter                  |
+|  0x08 | display next menu item                   |
+|  0x09 | display previous menu item               |
+|  0x0a | Show Main Menu                           |
+|  0x0b | Jump to split mode settings menu         |
+|  0x0c | Activates Split Mode                     |
+|  0x0d | Advanced Value Up                        |
+|  0x0e | Advanced Value Down                      |
+|  0x0f | Show Advanced Menu                       |
+|  0x10 | Switch to Next mode                      |
+|  0x11 | Switch to Previous mode                  |
+|  0x12 | New Mode                                 |
+|  0x13 | Write Character to LCD                   |
+|  0x14 | Write Number to LCD                      |
+|  0x15 | Write String from Stringtable to LCD     |
+|  0x16 | Load module                              |
+|  0x17 | Not used (error)                         |
+|  0x18 | Clear module (Mute)                      |
+|  0x19 | Swap Channel A and B                     |
+|  0x1a | Copy Channel A to Channel B              |
+|  0x1b | Copy Channel B to Channel A              |
+|  0x1c | Copy defaults from EEPROM                |
+|  0x1d | Sets up running module registers         |
+|  0x1e | Handles single instruction from a module |
+|  0x1f | General way to call these functions      |
+|  0x20 | Advanced Setting Update                  |
+|  0x21 | Start Ramp                               |
+|  0x22 | Does an ADC conversion                   |
+|  0x23 | Set LCD position                         |
+|  0x24 | (redundant)                              |
+|  0x25 | Not used (error)                         |
+|  0x26 | Not used (error)                         |
+|  0x27 | Not used (error)                         |
+|  0xff | No command                               |
 
 Set $4070 to the value above for the command you want to execute.  This
 location is checked in the main loop many times a second.  If you want to
@@ -735,9 +735,9 @@ Module number is read from $4182
 
 | Level  | $4078 |
 |--------+-------|
-| low    | 0x6b  |
-| normal | 0x6c  |
-| high   | 0x6d  |
+| low    |  0x6b |
+| normal |  0x6c |
+| high   |  0x6d |
 
 *Note: Parameters for the LCD write command*
 
@@ -826,12 +826,41 @@ Sets which channel gating commands will control.
 |  0x02 | Channel B   |
 |  0x03 | Channel A+B |
 
-** $40a1, $40a2, $40aa, $40ab, $40b3, $40b4, $40bc, $40bd - Range End Action
+** $409c-$40bf - Main Variables
+
+The box output is determined by a group of four variables: Ramp, Intensity, Frequency, Width.
+Each variable has several parameters that determine the current value and how to change
+that value.  Once a module has set up these parameters, the variables get updated
+automatically as configured.  The variables may get set to a static value, they may
+ramp or or down or loop over time, vary according to the other channel, or the MA
+knob.
+
+| Parameter | Name    | Description |
+|-----------+---------+-------------|
+|         0 | Value   | The current value of the variable |
+|         1 | Min     | Minimum value, if reached an action is performed |
+|         2 | Max     | Maximum value, if reached an action is performed |
+|         3 | Rate    | Rate of update, based on one of three timers selected by Select |
+|         4 | Step    | Used to set direction and speed of update |
+|         5 | At Min  | What to do when minimum value is reached |
+|         6 | At Max  | What to do when maximum value is reached |
+|         7 | Select  | Determines how to update the variable |
+|         8 | Timer   | The current timer value used when updating |
+
+Defaults when a module starts:
+
+| Variable  | value | min | max | rate | step | at min         | at max         | select |
+|-----------+-------+-----+-----+------+------+----------------+----------------+--------+
+| Ramp      | 0x9c  | 0x9c| 0xff|  0x07|  0x01| 0xfc (stop)    | 0xfc (stop)    | 0x01   |
+| Intensity | 0xff  | 0xcd| 0xff|  0x01|  0x01| 0xff (reverse) | 0xff (reverse) | 0x00   |
+| Frequency | 0x16  | 0x09| 0x64|  0x01|  0x01| 0xff (reverse) | 0xff (reverse) | 0x08   |
+| Width     | 0x82  | 0x32| 0xc8|  0x01|  0x01| 0xff (reverse) | 0xff (reverse) | 0x04   |
+
+*** Min Action / Max Action
 :PROPERTIES:
 :ID:       90e753ea-ceff-4b85-a7c2-d1bad201809d
 :END:
-For each of the variables such as Intensity, Frequency, Ramp and so
-on, this byte specifies what to do when the current value reaches
+This byte specifies what to do when the current value reaches
 the end of the range (either the maximum or minimum depending on what
 variable is being used).
 
