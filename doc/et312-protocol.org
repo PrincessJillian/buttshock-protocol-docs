@@ -926,13 +926,13 @@ variable is being used).
 As an example, The "Mode" waves has a single module which uses the defaults as
 above, but modifies them as follows (for this example we'll just show channel A):
 
-* sets the MA knob range from ($4086) 0x01 - ($4087) 0x40, 
-* sets the Width step ($40bb) to 0x02
-* sets the Width select ($40be) to 0x41 (244Hz timer, rate is from MA knob).  So the Width will go from 0x32 to 0xc8 in 0x01 steps at 244Hz, then back down, repeating.  Note though that the minimum width is actually 0x46, so the width value will "stick" at 0 for a little while before coming back up.
-* sets the Frequency max to ($40b0) to 0x80
-* sets the Frequency select ($40b5) to 0x41 (244Hz timer, rate is from MA knob).  So the Frequency will go from 0x09 to 0x80 in 0x01 steps at 244Hz, then back down, repeating.
-* doesn't change Ramp variable (so the default ramp will start at 0x9c and go up to 0xff in 0x01 steps, at 244Hz/7)
-* doesn't change Intensity variable (so will be static at 0xff)
+- sets the MA knob range from ($4086) 0x01 - ($4087) 0x40, 
+- sets the Width step ($40bb) to 0x02
+- sets the Width select ($40be) to 0x41 (244Hz timer, rate is from MA knob).  So the Width will go from 0x32 to 0xc8 in 0x01 steps at 244Hz, then back down, repeating.  Note though that the minimum width is actually 0x46, so the width value will "stick" at 0 for a little while before coming back up.
+- sets the Frequency max to ($40b0) to 0x80
+- sets the Frequency select ($40b5) to 0x41 (244Hz timer, rate is from MA knob).  So the Frequency will go from 0x09 to 0x80 in 0x01 steps at 244Hz, then back down, repeating.
+- doesn't change Ramp variable (so the default ramp will start at 0x9c and go up to 0xff in 0x01 steps, at 244Hz/7)
+- doesn't change Intensity variable (so will be static at 0xff)
 
 ** $41f4 - Power Levels
 :PROPERTIES:
