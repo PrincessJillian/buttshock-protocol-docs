@@ -383,7 +383,7 @@ All entries in *bold* have been mapped and are useful.
 | $409d         | *Mode Switch Ramp Value Min* (0x9c)                         |
 | $409e         | *Mode Switch Ramp Value Max* (0xff)                         |
 | $409f         | *Mode Switch Ramp Value Rate* (0x07)                        |
-| $40a0         | *Mode Switch Ramp Value Step* (0x01)                   |
+| $40a0         | *Mode Switch Ramp Value Step* (0x01)                        |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$40a1]]         | *Mode Switch Ramp Action at Min* (0xfc)                     |
 | [[( 1/7 ) Link: id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$40a2]]         | *Mode Switch Ramp Action at Max* (0xfc)                     |
 | $40a3         | *Mode Switch Ramp Select* (0x01)                            |
@@ -392,7 +392,7 @@ All entries in *bold* have been mapped and are useful.
 | $40a6         | *Channel A: Current Intensity Modulation Min* (0xcd)        |
 | $40a7         | *Channel A: Current Intensity Modulation Max* (0xff)        |
 | $40a8         | *Channel A: Current Intensity Modulation Rate* (0x01)       |
-| $40a9         | *Channel A: Current Intensity Modulation Step* (0x01)  |
+| $40a9         | *Channel A: Current Intensity Modulation Step* (0x01)       |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$40aa]]         | *Channel A: Current Intensity Action at Min* (0xff)         |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$40ab]]         | *Channel A: Current Intensity Action at Max* (0xff)         |
 | $40ac         | *Channel A: Current Intensity Modulation Select* (0x00)     |
@@ -401,7 +401,7 @@ All entries in *bold* have been mapped and are useful.
 | $40af         | *Channel A: Current Frequency Modulation Min* (0x09)        |
 | $40b0         | *Channel A: Current Frequency Modulation Max* (0x64)        |
 | $40b1         | *Channel A: Current Frequency Modulation Rate* (0x01)       |
-| $40b2         | *Channel A: Current Frequency Modulation Step* (0x01)  |
+| $40b2         | *Channel A: Current Frequency Modulation Step* (0x01)       |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$40b3]]         | *Channel A: Current Frequency Modulation Action Min* (0xff) |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$40b4]]         | *Channel A: Current Frequency Modulation Action Max* (0xff) |
 | $40b5         | *Channel A: Current Frequency Modulation Select* (0x08)     |
@@ -410,7 +410,7 @@ All entries in *bold* have been mapped and are useful.
 | $40b8         | *Channel A: Current Width Modulation Min* (0x32)            |
 | $40b9         | *Channel A: Current Width Modulation Max* (0xc8)            |
 | $40ba         | *Channel A: Current Width Modulation Rate* (0x01)           |
-| $40bb         | *Channel A: Current Width Modulation Step* (0x01)      |
+| $40bb         | *Channel A: Current Width Modulation Step* (0x01)           |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$40bc]]         | *Channel A: Current Width Modulation Action Min* (0xff)     |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$40bd]]         | *Channel A: Current Width Modulation Action Max* (0xff)     |
 | $40be         | *Channel A: Current Width Modulation Select* (0x04)         |
@@ -435,7 +435,7 @@ All entries in *bold* have been mapped and are useful.
 | $419d         | *Mode Switch Ramp Value Min* (0x9c)                         |
 | $419e         | *Mode Switch Ramp Value Max* (0xff)                         |
 | $419f         | *Mode Switch Ramp Value Rate* (0x07)                        |
-| $41a0         | *Mode Switch Ramp Value Step* (0x01)                   |
+| $41a0         | *Mode Switch Ramp Value Step* (0x01)                        |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$41a1]]         | *Mode Switch Ramp Action at Min* (0xfc)                     |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$41a2]]         | *Mode Switch Ramp Action at Max* (0xfc)                     |
 | $41a3         | *Mode Switch Ramp Select* (0x01)                            |
@@ -444,7 +444,7 @@ All entries in *bold* have been mapped and are useful.
 | $41a6         | *Channel B: Current Intensity Modulation Min* (0xcd)        |
 | $41a7         | *Channel B: Current Intensity Modulation Max* (0xff)        |
 | $41a8         | *Channel B: Current Intensity Modulation Rate* (0x01)       |
-| $41a9         | *Channel B: Current Intensity Modulation Step* (0x01)  |
+| $41a9         | *Channel B: Current Intensity Modulation Step* (0x01)       |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$41aa]]         | *Channel B: Current Intensity Action at Min* (0xff)         |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$41ab]]         | *Channel B: Current Intensity Action at Max* (0xff)         |
 | $41ac         | *Channel B: Current Intensity Modulation Select* (0x00)     |
@@ -453,7 +453,7 @@ All entries in *bold* have been mapped and are useful.
 | $41af         | *Channel B: Current Frequency Modulation Min* (0x09)        |
 | $41b0         | *Channel B: Current Frequency Modulation Max* (0x64)        |
 | $41b1         | *Channel B: Current Frequency Modulation Rate* (0x01)       |
-| $41b2         | *Channel B: Current Frequency Modulation Step* (0x01)  |
+| $41b2         | *Channel B: Current Frequency Modulation Step* (0x01)       |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$41b3]]         | *Channel B: Current Frequency Modulation Action Min* (0xff) |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$41b4]]         | *Channel B: Current Frequency Modulation Action Max* (0xff) |
 | $41b5         | *Channel B: Current Frequency Modulation Select* (0x08)     |
@@ -462,7 +462,7 @@ All entries in *bold* have been mapped and are useful.
 | $41b8         | *Channel B: Current Width Modulation Min* (0x32)            |
 | $41b9         | *Channel B: Current Width Modulation Max* (0xc8)            |
 | $41ba         | *Channel B: Current Width Modulation Rate* (0x01)           |
-| $41bb         | *Channel B: Current Width Modulation Step* (0x01)      |
+| $41bb         | *Channel B: Current Width Modulation Step* (0x01)           |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$41bc]]         | *Channel B: Current Width Modulation Action Min* (0xff)     |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$41bd]]         | *Channel B: Current Width Modulation Action Max* (0xff)     |
 | $41be         | *Channel B: Current Width Modulation Select* (0x04)         |
@@ -835,28 +835,51 @@ automatically as configured.  The variables may get set to a static value, they 
 ramp or or down or loop over time, vary according to the other channel, or the MA
 knob.
 
-| Parameter | Name    | Description |
-|-----------+---------+-------------|
-|         0 | Value   | The current value of the variable |
-|         1 | Min     | Minimum value, if reached an action is performed |
-|         2 | Max     | Maximum value, if reached an action is performed |
-|         3 | Rate    | Rate of update, based on one of three timers selected by Select |
-|         4 | Step    | Used to set direction and speed of update |
-|         5 | At Min  | What to do when minimum value is reached |
-|         6 | At Max  | What to do when maximum value is reached |
-|         7 | Select  | Determines how to update the variable |
-|         8 | Timer   | The current timer value used when updating |
+| Parameter | Name   | Description                                                     |
+|-----------+--------+-----------------------------------------------------------------|
+|         0 | Value  | The current value of the variable                               |
+|         1 | Min    | Minimum value, if reached an action is performed                |
+|         2 | Max    | Maximum value, if reached an action is performed                |
+|         3 | Rate   | Rate of update, based on one of three timers selected by Select |
+|         4 | Step   | Used to set direction and speed of update                       |
+|         5 | At Min | What to do when minimum value is reached                        |
+|         6 | At Max | What to do when maximum value is reached                        |
+|         7 | Select | Determines how to update the variable                           |
+|         8 | Timer  | Timer count for rate                                            |
 
-Defaults when a module starts:
+Defaults when a mode starts:
 
-| Variable  | value | min | max | rate | step | at min         | at max         | select |
-|-----------+-------+-----+-----+------+------+----------------+----------------+--------+
-| Ramp      | 0x9c  | 0x9c| 0xff|  0x07|  0x01| 0xfc (stop)    | 0xfc (stop)    | 0x01   |
-| Intensity | 0xff  | 0xcd| 0xff|  0x01|  0x01| 0xff (reverse) | 0xff (reverse) | 0x00   |
-| Frequency | 0x16  | 0x09| 0x64|  0x01|  0x01| 0xff (reverse) | 0xff (reverse) | 0x08   |
-| Width     | 0x82  | 0x32| 0xc8|  0x01|  0x01| 0xff (reverse) | 0xff (reverse) | 0x04   |
+| Variable  | value |  min |  max | rate | step | at min         | at max         | select |
+|-----------+-------+------+------+------+------+----------------+----------------+--------|
+| Ramp      |  0x9c | 0x9c | 0xff | 0x07 | 0x01 | 0xfc (stop)    | 0xfc (stop)    |   0x01 (use rate parameter, 244Hz timer)|
+| Intensity |  0xff | 0xcd | 0xff | 0x01 | 0x01 | 0xff (reverse) | 0xff (reverse) |   0x00 (static)|
+| Frequency |  0x16 | 0x09 | 0x64 | 0x01 | 0x01 | 0xff (reverse) | 0xff (reverse) |   0x08 (use MA knob)|
+| Width     |  0x82 | 0x32 | 0xc8 | 0x01 | 0x01 | 0xff (reverse) | 0xff (reverse) |   0x04 (use advanced parameter default)|
 
-*** Min Action / Max Action
+*** Select
+
+| Bit 0 | Bit 1 | Description   |
+|-------+-------+---------------|
+|     0 |     0 | Set the value to an absolute value determined by the other bits |
+|     0 |     1 | Update the value based on timer at $4088 (244Hz) |
+|     1 |     0 | Update the value based on timer at $4088 divided by 8 (30.5Hz)|
+|     1 |     1 | Update the value based on timer at $4089 (.953Hz) | 
+
+Absolute value when Bit 0 and Bit 1 are 0:
+
+| Value  | Description |
+|--------+-------------|
+| 0x00   | Leave value alone, nop |
+| 0x04   | Set the value to advanced_parameter default for this variable |
+| 0x08   | Set the value to the current MA knob value |
+| 0x0c   | Copy from the other channels value |
+| 0x14   | Set the value to the inverse of the advanced_parameter default |
+| 0x18	 | Set the value to the inverse of the current MA knob value |
+| 0x1c	 | Inverse of the other channels value |
+
+Rest of Select bits to be completed
+
+*** At Min / At Max
 :PROPERTIES:
 :ID:       90e753ea-ceff-4b85-a7c2-d1bad201809d
 :END:
