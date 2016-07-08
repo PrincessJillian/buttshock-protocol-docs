@@ -920,55 +920,21 @@ variable is being used).
 |      0xfd | Loop back round (if below min, set to max; if above max, set to min) |
 |      0xfe | Reverse direction, toggle gate, and continue                         |
 |      0xff | Reverse direction and continue                                       |
-** $40a5 - Current Level
-1 byte, Range 128-255
-(Range taken from erosoutsider perl script)
-** $40a6 - Minimum Level
-1 byte, Range 128-255
-(Range taken from erosoutsider perl script)
-** $40a7 - Maximum Level
-1 byte, Range 128-255
-(Range taken from erosoutsider perl script)
-** $40a8 - Level Rate
-1 byte, Range 0-255, 0 is fastest
-(Range taken from erosoutsider perl script)
-** $40ac - Level Options
-Bits 0-4 (upper nibble): Min Options
-Bits 5-8 (lower nibble): Rate Options
-(Range taken from erosoutsider perl script)
-** $40ae - Frequency
-1 byte, Range 8-255 (?!), 8 is fastest
-(Range taken from erosoutsider perl script)
-** $40af - Maximum Frequency
-1 byte, Range 8-255 (?!), 8 is fastest
-(Range taken from erosoutsider perl script)
-** $40b0 - Minimum Frequency
-1 byte, Range 8-255 (?!), 8 is fastest
-(Range taken from erosoutsider perl script)
-** $40b1 - Frequency Rate
-1 byte, Range 0-255, 0 is fastest
-(Range taken from erosoutsider perl script)
-** $40b5 - Frequency Options
-Bits 0-4 (upper nibble): Val Options
-Bits 5-8 (lower nibble): Rate Options
-(Range taken from erosoutsider perl script)
-** $40b7 - Current Pulse Width
-1 byte, Range 64-196 (?!)
-(Range taken from erosoutsider perl script)
-** $40b8 - Minimum Pulse Width
-1 byte, Range 64-196 (?!)
-(Range taken from erosoutsider perl script)
-** $40b9 - Maximum Pulse Width
-1 byte, Range 64-196 (?!)
-(Range taken from erosoutsider perl script)
-** $40ba - Pulse Width Rate
-1 byte, Range 0-255, 0 is fastest
-(Range taken from erosoutsider perl script)
-** $40be - Width Options
-Bits 0-4 (upper nibble): Val Options
-Bits 5-8 (lower nibble): Rate Options
-(Range taken from erosoutsider perl script)
-** $41F4 - Power Levels
+
+*** Example
+
+As an example, The "Mode" waves has a single module which uses the defaults as
+above, but modifies them as follows (for this example we'll just show channel A):
+
+* sets the MA knob range from ($4086) 0x01 - ($4087) 0x40, 
+* sets the Width step ($40bb) to 0x02
+* sets the Width select ($40be) to 0x41 (244Hz timer, rate is from MA knob).  So the Width will go from 0x32 to 0xc8 in 0x01 steps at 244Hz, then back down, repeating.  Note though that the minimum width is actually 0x46, so the width value will "stick" at 0 for a little while before coming back up.
+* sets the Frequency max to ($40b0) to 0x80
+* sets the Frequency select ($40b5) to 0x41 (244Hz timer, rate is from MA knob).  So the Frequency will go from 0x09 to 0x80 in 0x01 steps at 244Hz, then back down, repeating.
+* doesn't change Ramp variable (so the default ramp will start at 0x9c and go up to 0xff in 0x01 steps, at 244Hz/7)
+* doesn't change Intensity variable (so will be static at 0xff)
+
+** $41f4 - Power Levels
 :PROPERTIES:
 :ID:       72ea60b4-9deb-4808-ac9a-5f0f988c51fe
 :END:
