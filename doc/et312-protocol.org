@@ -879,19 +879,31 @@ Absolute value when Bit 0 and Bit 1 are 0:
 
 Timer based updates when Bit 0 and Bit 1 are both not 0.
 
-| bit 7 | bit 6 | bit 5 | Description |
-|-------+-------+-------+-------------|
-|     0 |     0 |     0 | Rate is from parameter (example $40ba) |
-|     0 |     0 |     1 | Rate is from advanced_parameter default |
-|     0 |     1 |     0 | Rate is from MA value |
-|     0 |     1 |     1 | Rate is rate from other channel |
-|     1 |     0 |     0 | Rate is inverse of parameter (example $40ba) |
+| bit 7 | bit 6 | bit 5 | Description                                   |
+|-------+-------+-------+-----------------------------------------------|
+|     0 |     0 |     0 | Rate is from parameter (example $40ba)        |
+|     0 |     0 |     1 | Rate is from advanced_parameter default       |
+|     0 |     1 |     0 | Rate is from MA value                         |
+|     0 |     1 |     1 | Rate is rate from other channel               |
+|     1 |     0 |     0 | Rate is inverse of parameter (example $40ba)  |
 |     1 |     0 |     1 | Rate is inverse of advanced_parameter default |
-|     1 |     1 |     0 | Rate is inverse of MA value |
-|     1 |     1 |     1 | Rate is inverse of rate from other channel |
+|     1 |     1 |     0 | Rate is inverse of MA value                   |
+|     1 |     1 |     1 | Rate is inverse of rate from other channel    |
 
 Each time we reach the "rate" for the selected timer we add the step
-(can be negative) to the current value.  We do more things too, documented later.
+(can be negative) to the current value.  We then look to see if we want
+to update the "min" value depending on the bits 2, 3, 4:
+
+| bit 4 | bit 3 | bit 2 | Description                                      |
+|-------+-------+-------+--------------------------------------------------|
+|     0 |     0 |     0 | Don't change min                                 |
+|     0 |     0 |     1 | Set min to advanced_parameter default            |
+|     0 |     1 |     0 | Set min to MA value                              |
+|     0 |     1 |     1 | Set min to min of other channel                  |
+|     1 |     0 |     0 | Invert current min value                         |
+|     1 |     0 |     1 | Set min to inverse of advanced_parameter default |
+|     1 |     1 |     0 | Set min to inverse MA value                      |
+|     1 |     1 |     1 | Set min to inverse of min of other channel       |
 
 *** At Min / At Max
 :PROPERTIES:
