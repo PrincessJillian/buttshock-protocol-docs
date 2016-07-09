@@ -61,7 +61,9 @@ is 11 bytes, up to 11 0x0s may need to be sent.
 
 *** Key Exchange
 
-After the handshake ends, XOR keys must be exchanged. This involves
+After the handshake ends, you can then send "Read Byte" commands
+without performing a key exchange.  If you wish to "Write Bytes"
+then XOR keys must be exchanged. This involves
 sending a 3 byte sequence to the box, and receiving 3 bytes back:
 
 - [0x2f, 0xVV, 0xWW] sent to ET312
@@ -970,5 +972,7 @@ as new connections without needing the box to be power cycled.
 Do this by sending command below to Write Bytes, setting location
 $4213 to 0x00.
 ** Peeking before Key Exchange
+Most client software performs a key handshake.  However, if your application only
+wants to read bytes there is no need to perform a handshake and exchange keys.
 ** Writing to the LCD
 ** Baud Rate Changes
