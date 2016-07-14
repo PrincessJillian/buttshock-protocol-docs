@@ -3,7 +3,7 @@
 #+AUTHOR:   Kyle Machulis
 #+EMAIL:    kyle at machul dot is
 #+OPTIONS:  H:4 num:nil toc:t \n:nil @:t ::t |:t ^:{} -:t f:t *:t
-#+OPTIONS:  skip:nil d:(HIDE) tags:not-in-toc
+#+OPTIONS:  skip:nil d:(HIDE) tags:not-in-toc author:nil date:nil creator:nil
 #+LANGUAGE: en
 #+STARTUP:  align fold nodlcheck content
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/readtheorg/css/htmlize.css"/>
@@ -387,7 +387,7 @@ All entries in *bold* have been mapped and are useful.
 | $409f         | *Mode Switch Ramp Value Rate* (0x07)                        |
 | $40a0         | *Mode Switch Ramp Value Step* (0x01)                        |
 | [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$40a1]]         | *Mode Switch Ramp Action at Min* (0xfc)                     |
-| [[( 1/7 ) Link: id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$40a2]]         | *Mode Switch Ramp Action at Max* (0xfc)                     |
+| [[id:90e753ea-ceff-4b85-a7c2-d1bad201809d][$40a2]]         | *Mode Switch Ramp Action at Max* (0xfc)                     |
 | $40a3         | *Mode Switch Ramp Select* (0x01)                            |
 | $40a4         | *Mode Switch Ramp Current Timer* (0x00)                     |
 | $40a5         | *Channel A: Current Intensity Modulation Value* (0xff)      |
