@@ -72,9 +72,10 @@ sending a 3 byte sequence to the box, and receiving 3 bytes back:
 Where:
 
 - 0xVV is a random unsigned 8-bit number, chosen by the host, used as
-  the first key
+  the first key. Note that the final key will have the nibbles of this
+  value flipped (see [[id:92c2e9d2-bf6c-4a8e-b732-0eed8cba2406][Key Usage]] section).
 - 0xXX is a random unsigned 8-bit number, chosen by the ET312, used as 
-  the second key
+  the second key.
 - 0xWW/0xYY is a checksum, the 8-bit unsigned sum of the first two
   bytes, wrapped if the sum is > 255.
 
@@ -93,15 +94,23 @@ simply use 0 for the host key, which simplifies calculation of
 encryption.
 
 *** Key Usage (Protocol Encryption)
+:PROPERTIES:
+:ID:       92c2e9d2-bf6c-4a8e-b732-0eed8cba2406
+:END:
 
 Once the keys are agreed upon, all further communication going from
 host to ET312 is required to be encoded using the following scheme,
 using ^ as an XOR operator:
 
-Data Byte ^ (Host Key ^ Box Key ^ 0x55)
+Data Byte ^ (Host Key with nibbles flipped ^ Box Key ^ 0x55)
 
 The part of the expression in parenthesis will be constant after key
 exchange, and can be pre-calculated and stored.
+
+The value sent as the host key in the key exchange will need to have
+the nibbles flipped when this final key is calculated. For instance,
+if the value sent to the ET312 during exchange is 0x12, when
+calculating the key, the value used should be 0x21.
 
 Only data sent from host to ET312 requires encryption, all data
 received from the ET312 will be cleartext.
