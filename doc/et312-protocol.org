@@ -184,30 +184,41 @@ from 0x045f, which is gcc's RAM end.
 
 ** Read Bytes
 
-Reading a byte happens via a command with 3 byte length (minus checksum)
+Reading a byte happens via a command with 3 byte length (plus checksum, the 8-bit unsigned sum of the first two bytes, wrapped if the sum is > 255.)
 
-0x3c 0xGG 0xHH
+0x3c 0xGG 0xHH 0xCC
 
 - 0xHH - High byte of address
 - 0xII - Low byte of address
+- 0xCC - Checksum 
+
+The box will then respond with two bytes (plus checksum, as above)
+
+0x22 0xVV 0xCC
+
+- 0xVV - Content of requested address
+- 0xCC - Checksum 
 
 ** Write Bytes
 
-Writing a byte happens via a command with 4 byte length (minus checksum)
+Writing a byte happens via a command with 4 byte length (plus checksum)
 
-0xGd 0xHH 0xII [0xJJ 0xKK...]
+0xGd 0xHH 0xII [0xJJ 0xKK...] 0xCC
 
 - 0xGd - High nibble is amount of data to write to address plus 0x3, low
   nibble is always 0x0d
 - 0xHH - High byte of address
 - 0xII - Low byte of address
 - [0xJJ 0xKK]... - Value(s) to set address to
+- 0xCC - Checksum
+
+The box will then respond with 0x06 (ACK).
 
 For instance, if we wanted to write 2 bytes, 0xFE 0xFF, starting
 $4010, the command would look like
 
 #+BEGIN_EXAMPLE
-0x5d 0x40 0x10 0xfe 0xff
+0x5d 0x40 0x10 0xfe 0xff 0xaa
 #+END_EXAMPLE
 
 - 0x5d is the write command with amount (0x3d + 0x20 since we're
@@ -215,6 +226,7 @@ $4010, the command would look like
 - 0x40 0x10 is our 16-bit address ($4010)
 - 0xfe 0xff is the data we want to write to $4010 and $4011,
   respectively.
+- 0xaa is the checksum 
 
 * Memory Layout Tables
 
