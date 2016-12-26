@@ -836,18 +836,30 @@ can do a write of 0x4 0x12 to $4070 with the same effect)
 - 0x05 - CONTROLFLAG_PHASE_MASK
 - 0x20 - CONTROLFLAG_DISABLE_SWITCHES_MASK
 
-** $4098 - Current Channel Gate Time On
-Sets the time on for the current gate ($409A).
-** $4099 - Current Channel Gate Time Off
-Sets the time on for the current gate ($409A).
-** $409A - Current Channel Gate
-Sets which channel gating commands will control.
+** $4098-$409b - Current Channel Gate
 
-| Value | Description |
-|-------+-------------|
-|  0x01 | Channel A   |
-|  0x02 | Channel B   |
-|  0x03 | Channel A+B |
+The output for each channel can be gated (turned on and off continously) with a
+variable speed determined by the value of the Gate Select.
+
+Select $409a:
+
+| Bit 1 | Bit 0 | Description |
+|-------+-------+-------------|
+|     0 |     0 | No gating   |
+|     0 |     1 | Use the $4088 (244Hz) timer for gating |
+|     1 |     0 | Use the $4088 div 8 (30.5Hz) timer for gating |
+|     1 |     1 | Use the $4089 (.953Hz) timer for gating |
+
+If not other bits in Select are set then the on and off time come from $4098 (on, default 0x3e) and $4099 (off, default 0x3e)
+
+| Bit | Description |
+|-----+-------------|
+|   2 | Off time is taken from the advanced parameter tempo default |
+|   3 | Off time follows the value of the MA knob |
+|   4 | Not used |
+|   5 | On time is taken from the advanced parameter effect default |
+|   6 | On time follows the value of the MA knob |
+|   7 | Not used |
 
 ** $409c-$40bf - Main Variables
 
@@ -881,14 +893,14 @@ Defaults when a mode starts:
 
 *** Select
 
-| Bit 0 | Bit 1 | Description                                                     |
+| Bit 1 | Bit 0 | Description                                                     |
 |-------+-------+-----------------------------------------------------------------|
 |     0 |     0 | Set the value to an absolute value determined by the other bits |
 |     0 |     1 | Update the value based on timer at $4088 (244Hz)                |
 |     1 |     0 | Update the value based on timer at $4088 divided by 8 (30.5Hz)  |
 |     1 |     1 | Update the value based on timer at $4089 (.953Hz)               |
 
-Absolute value when Bit 0 and Bit 1 are 0:
+Absolute value when Bit 0 and Bit 1 are both 0:
 
 | Value | Description                                                    |
 |-------+----------------------------------------------------------------|
@@ -900,7 +912,7 @@ Absolute value when Bit 0 and Bit 1 are 0:
 |  0x18 | Set the value to the inverse of the current MA knob value      |
 |  0x1c | Inverse of the other channels value                            |
 
-Timer based updates when Bit 0 and Bit 1 are both not 0.
+Timer based updates when either Bit 0 or Bit 1 are 1:
 
 | bit 7 | bit 6 | bit 5 | Description                                   |
 |-------+-------+-------+-----------------------------------------------|
@@ -915,7 +927,7 @@ Timer based updates when Bit 0 and Bit 1 are both not 0.
 
 Each time we reach the "rate" for the selected timer we add the step
 (can be negative) to the current value.  We then look to see if we want
-to update the "min" value depending on the bits 2, 3, 4:
+to update the "min" value depending on the bits 2-4:
 
 | bit 4 | bit 3 | bit 2 | Description                                      |
 |-------+-------+-------+--------------------------------------------------|
@@ -946,9 +958,9 @@ variable is being used).
 
 *** Example
 
-As an example, The "Mode" waves has a single module for channel A (#12) and a
-single module for channel B (#13) which uses the defaults as
-above, but modifies them as follows.  Module 12:
+As an example, The "Mode" waves has a single module for channel A (#11) and a
+single module for channel B (#12) which uses the defaults as
+above, but modifies them as follows.  Module 11:
 
 - sets the MA knob range from ($4086) 0x01 - ($4087) 0x40, 
 - sets the A Width step ($40bb) to 0x02
@@ -958,7 +970,7 @@ above, but modifies them as follows.  Module 12:
 - doesn't change Ramp variable (so the default ramp will start at 0x9c and go up to 0xff in 0x01 steps, at 244Hz/7)
 - doesn't change Intensity variable (so will be static at 0xff)
 
-Module 13:
+Module 12:
 
 - sets the B Width step ($41bb) to 0x03.  So the B Width will go from 0x32 to 0xc8 in 0x03 steps at the advanced parameter default rate, then back down, repeating.
 - sets the B Frequency max ($41b0) to 0x40.  So the B Frequency will go from 0x09 to 0x40 in 0x01 steps, then back down, repeating.
