@@ -443,7 +443,8 @@ All entries in *bold* have been mapped and are useful.
 | $4181         | *Write LCD Position*                                        |
 | $4182         | *Parameter r26 for box command*                             |
 | $4183         | *Parameter r27 for box command*                             |
-| $4184 - $418f | unused                                                      |
+| $4184         | set to random number during Random 1 Program                |
+| $4185 - $418f | unused                                                      |
 | $4190         | *Channel B: Current Gate Value* (0 when no output)          |
 | $4191 - $4193 | unused                                                      |
 | $4194         | *Next module timer current* (0x00)                          |
@@ -843,23 +844,23 @@ variable speed determined by the value of the Gate Select.
 
 Select $409a:
 
-| Bit 1 | Bit 0 | Description |
-|-------+-------+-------------|
-|     0 |     0 | No gating   |
-|     0 |     1 | Use the $4088 (244Hz) timer for gating |
+| Bit 1 | Bit 0 | Description                                   |
+|-------+-------+-----------------------------------------------|
+|     0 |     0 | No gating                                     |
+|     0 |     1 | Use the $4088 (244Hz) timer for gating        |
 |     1 |     0 | Use the $4088 div 8 (30.5Hz) timer for gating |
-|     1 |     1 | Use the $4089 (.953Hz) timer for gating |
+|     1 |     1 | Use the $4089 (.953Hz) timer for gating       |
 
 If not other bits in Select are set then the on and off time come from $4098 (on, default 0x3e) and $4099 (off, default 0x3e)
 
-| Bit | Description |
-|-----+-------------|
+| Bit | Description                                                 |
+|-----+-------------------------------------------------------------|
 |   2 | Off time is taken from the advanced parameter tempo default |
-|   3 | Off time follows the value of the MA knob |
-|   4 | Not used |
+|   3 | Off time follows the value of the MA knob                   |
+|   4 | Not used                                                    |
 |   5 | On time is taken from the advanced parameter effect default |
-|   6 | On time follows the value of the MA knob |
-|   7 | Not used |
+|   6 | On time follows the value of the MA knob                    |
+|   7 | Not used                                                    |
 
 ** $409c-$40bf - Main Variables
 
@@ -890,6 +891,8 @@ Defaults when a mode starts:
 | Intensity |  0xff | 0xcd | 0xff | 0x01 | 0x01 | 0xff (reverse) | 0xff (reverse) | 0x00 (static)                          |
 | Frequency |  0x16 | 0x09 | 0x64 | 0x01 | 0x01 | 0xff (reverse) | 0xff (reverse) | 0x08 (use MA knob)                     |
 | Width     |  0x82 | 0x32 | 0xc8 | 0x01 | 0x01 | 0xff (reverse) | 0xff (reverse) | 0x04 (use advanced parameter default)  |
+
+[[https://github.com/metafetish/buttshock-et312-firmware/blob/master/doc/programs.org][Examples showing how these are used in Programs]]
 
 *** Select
 
@@ -955,26 +958,6 @@ variable is being used).
 |      0xfd | Loop back round (if below min, set to max; if above max, set to min) |
 |      0xfe | Reverse direction, toggle gate, and continue                         |
 |      0xff | Reverse direction and continue                                       |
-
-*** Example
-
-As an example, The "Mode" waves has a single module for channel A (#11) and a
-single module for channel B (#12) which uses the defaults as
-above, but modifies them as follows.  Module 11:
-
-- sets the MA knob range from ($4086) 0x01 - ($4087) 0x40, 
-- sets the A Width step ($40bb) to 0x02
-- sets the A Width select ($40be) to 0x41 (244Hz timer, rate is from MA knob).  So the A Width will go from 0x32 to 0xc8 in 0x02 steps at 244Hz, then back down, repeating.  Note though that the minimum width is actually 0x46, so the width value will "stick" at 0 for a little while before coming back up.
-- sets the A Frequency max ($40b0) to 0x80
-- sets the A Frequency select ($40b5) to 0x41 (244Hz timer, rate is from MA knob).  So the A Frequency will go from 0x09 to 0x80 in 0x01 steps at 244Hz, then back down, repeating.
-- doesn't change Ramp variable (so the default ramp will start at 0x9c and go up to 0xff in 0x01 steps, at 244Hz/7)
-- doesn't change Intensity variable (so will be static at 0xff)
-
-Module 12:
-
-- sets the B Width step ($41bb) to 0x03.  So the B Width will go from 0x32 to 0xc8 in 0x03 steps at the advanced parameter default rate, then back down, repeating.
-- sets the B Frequency max ($41b0) to 0x40.  So the B Frequency will go from 0x09 to 0x40 in 0x01 steps, then back down, repeating.
-- doesn't change the B Intensity variable (so will be static at 0xff)
 
 ** $41f4 - Power Levels
 :PROPERTIES:
