@@ -32,13 +32,13 @@ protocol. Otherwise, the jack will register as an audio input jack.
 Similarly, to use the jack as audio once again, the box should be
 turned off and back on first, in order to reestablish audio mode.
 ** Handshake
-When the box is powered on, the ET-232 will send a single byte:
+When the box is powered on, the ET-232 will send three bytes:
 
 #+BEGIN_EXAMPLE
-0xcc
+0x00 0x43 0x43 (or '\0' 'C' 'C')
 #+END_EXAMPLE
 
-Assuming this is transferred correctly, the box then listens for and
+Assuming these are transferred correctly, the box then listens for and
 responds to commands. Unlike the ET-312, the ET-232 does not use an
 encrypted protocol.
 
